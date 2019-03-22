@@ -47,10 +47,10 @@
   /* ------------------------------------ */
 
   @import url('https://fonts.googleapis.com/css?family=Gothic+A1|Kaushan+Script|Libre+Baskerville|Lobster');
-
-  .body{
-	/* font-family: 'Gothic A1', sans-serif; */
+.body{
+	font-family: 'Gothic A1', sans-serif;
     font-size:16px;
+    
 	}
 	p{
 	color:#6c6c6f;
@@ -60,12 +60,12 @@
 .navbar-brand  span{
 	color: #FF9900;
 	font-size:25px;font-weight:700;letter-spacing:0.1em;
-    /* font-family: 'Kaushan Script','Helvetica Neue',Helvetica,Arial,cursive; */
+    font-family: 'Kaushan Script','Helvetica Neue',Helvetica,Arial,cursive;
 }
 .navbar-brand {
 	color: #fff;
 	font-size:25px;
-    /* font-family: 'Kaushan Script','Helvetica Neue',Helvetica,Arial,cursive; */
+    font-family: 'Kaushan Script','Helvetica Neue',Helvetica,Arial,cursive;
 	font-weight:700;
 	letter-spacing:0.1em;
 }
@@ -76,7 +76,7 @@
     font-weight: 500;
     letter-spacing: 1px;
     color: #fff;
-   /* font-family: 'Gothic A1', sans-serif; */
+   font-family: 'Gothic A1', sans-serif;
 }
 .navbar-nav .nav-item .nav-link:hover{color:#fed136;}
 .navbar-expand-md .navbar-nav .dropdown-menu{

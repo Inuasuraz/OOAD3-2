@@ -14,10 +14,15 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" type="text/javascript" src="/js/instructorEdit.js">
-    <title>Document</title>
+    <title>Room Edit</title>
+    <style>
+        td,th{
+            text-align: center;
+        }
+    </style>
 </head>
 
-<body style="background-image: url(/img/background2.png)">
+<body style="background-image: url(/img/background2.png)" onload="" >
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="banner"
         style="background-color: #1B1B1B;height:60px">
@@ -77,38 +82,51 @@
 
         <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
             <br>
-
-            <form method="post" action="/instructorEdit/submit">
+            <form method="post" action="/roomEdit/submit/<%=data[0].name%>">
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom01">รหัสประจำตัว</label>
-                        <input type="text" class="form-control" id="validationCustom01" placeholder="Code" required name="id">
+                            <label for="validationCustom00">วัน</label>
+                            <select class="browser-default custom-select" required name="day" id="validationCustom00">
+                                    <option selected value="">เลือกวัน</option>
+                                    <option value="monday">วันจันทร์</option>
+                                    <option value="tuesday">วันอังคาร</option>
+                                    <option value="wednesday">วันพุธ</option>
+                                    <option value="thursday">วันพฤหัสบดี</option>
+                                    <option value="friday">วันศุกร์</option>
+                                    <option value="saturday">วันเสาร์</option>
+                                    <option value="sunday">วันอาทิตย์</option>
+                                  </select>
                     </div>
+                    
 
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">ชื่อ</label>
-                        <input type="text" class="form-control" id="validationCustom02" placeholder="Firstname" required name="firstname">
+                        <label for="validationCustom01">เวลา</label>
+                        <select class="browser-default custom-select" required name="time" id="validationCustom01">
+                        <option selected value="">เลือกเวลา</option>
+                        <option value="q1">8.00-10.00</option>
+                        <option value="q2">10.00-12.00</option>
+                        <option value="q3">13.00-15.00</option>
+                        <option value="q4">15.00-17.00</option>
+                        </select>
                     </div>
-
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">นามสกุล</label>
-                        <input type="text" class="form-control" id="validationCustom02" placeholder="Lastname" required name="lastname">
+                            <p style="float:right;font-size: 36px;color: #FF9900">ห้อง: <%=data[0].name%></p>   
                     </div>
+                    
                 </div>
 
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom03">คณะ</label>
-                        <input type="text" class="form-control" id="validationCustom03" placeholder="Faculty" required name="faculty">
+                        <label for="validationCustom02">รหัสวิชา</label>
+                        <input type="text" class="form-control" id="validationCustom02" placeholder="รหัสวิชา" required name="num">
                     </div>
-
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom04">สาขา</label>
-                        <input type="text" class="form-control" id="validationCustom04" placeholder="Branch" required  name="branch">
+                        <label for="validationCustom03">ชื่อวิชา</label>
+                        <input type="text" class="form-control" id="validationCustom03" placeholder="ชื่อรายวิชา" required name="sub">
                     </div>
 
                     <div style="margin-left: 23%; margin-top: 3%">
-                        <button type="submit" class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900">
+                        <button type="submit" class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900" onclick="window.location.reload()">
                             <i class="fa fa-plus"></i> 
                             Add New
                         </button>
@@ -116,46 +134,75 @@
                 </div>
 
             </form>
+             <!-------------------- table ---------------------->
 
-
-            <!-------------------- table ---------------------->
-
-            <table class="table table-hover" style="background-color:white">
+             <table class="table table-hover" style="background-color:white">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">รหัสประจำตัว</th>
-                        <th scope="col">ชื่อ - นามสกุล</th>
-                        <th scope="col">คณะ</th>
-                        <th scope="col">สาขา</th>
-                        <th scope="col">ตัวเลือก</th>
+                        <th scope="col" style="width:20%">วัน</th>
+                        <th scope="col" style="width:20%">8.00-10.00</th>
+                        <th scope="col" style="width:20%">10.00-12.00</th>
+                        <th scope="col" style="width:20%">13.00-15.00</th>
+                        <th scope="col" style="width:20%">15.00-17.00</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(let i=0; i<data.length; i++) {%>
-                    <tr>
-                        <th scope="row"><%= i+1 %></th>
-                        <td><%= data[i].user_id %></td>
-                        <td><%= data[i].firstname %> <%= data[i].lastname %></td>
-                        <td><%= data[i].faculty %></td>
-                        <td><%= data[i].branch %></td>
-                        <td>
-                          
-                            <a class="edit" title="Edit" data-toggle="tooltip" onclick="upd('<%= data[i].user_id %>')"><i class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip"  onclick="del('<%= data[i].user_id %>')"><i class="material-icons">&#xE872;</i></a></td>
-                    </tr>
-                    <% } %>
+                        <tr>
+                            <th scope="row">วันจันทร์</th>
+                            <td><%= data[0].monday[0].num %> <br> <%= data[0].monday[0].sub %></td>
+                            <td><%= data[0].monday[1].num %> <br> <%= data[0].monday[1].sub %></td>
+                            <td><%= data[0].monday[2].num %> <br> <%= data[0].monday[2].sub %></td>
+                            <td><%= data[0].monday[3].num %> <br> <%= data[0].monday[3].sub %></td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">วันอังคาร</th>
+                            <td><%= data[0].tuesday[0].num %> <br> <%= data[0].tuesday[0].sub %></td>
+                            <td><%= data[0].tuesday[1].num %> <br> <%= data[0].tuesday[1].sub %></td>
+                            <td><%= data[0].tuesday[2].num %> <br> <%= data[0].tuesday[2].sub %></td>
+                            <td><%= data[0].tuesday[3].num %> <br> <%= data[0].tuesday[3].sub %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">วันพุธ</th>
+                            <td><%= data[0].wednesday[0].num %> <br> <%= data[0].wednesday[0].sub %></td>
+                            <td><%= data[0].wednesday[1].num %> <br> <%= data[0].wednesday[1].sub %></td>
+                            <td><%= data[0].wednesday[2].num %> <br> <%= data[0].wednesday[2].sub %></td>
+                            <td><%= data[0].wednesday[3].num %> <br> <%= data[0].wednesday[3].sub %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">วันพฤหัสบดี</th>
+                            <td><%= data[0].thursday[0].num %> <br> <%= data[0].thursday[0].sub %></td>
+                            <td><%= data[0].thursday[1].num %> <br> <%= data[0].thursday[1].sub %></td>
+                            <td><%= data[0].thursday[2].num %> <br> <%= data[0].thursday[2].sub %></td>
+                            <td><%= data[0].thursday[3].num %> <br> <%= data[0].thursday[3].sub %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">วันศุกร์</th>
+                            <td><%= data[0].friday[0].num %> <br> <%= data[0].friday[0].sub %></td>
+                            <td><%= data[0].friday[1].num %> <br> <%= data[0].friday[1].sub %></td>
+                            <td><%= data[0].friday[2].num %> <br> <%= data[0].friday[2].sub %></td>
+                            <td><%= data[0].friday[3].num %> <br> <%= data[0].friday[3].sub %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">วันเสาร์</th>
+                            <td><%= data[0].saturday[0].num %> <br> <%= data[0].saturday[0].sub %></td>
+                            <td><%= data[0].saturday[1].num %> <br> <%= data[0].saturday[1].sub %></td>
+                            <td><%= data[0].saturday[2].num %> <br> <%= data[0].saturday[2].sub %></td>
+                            <td><%= data[0].saturday[3].num %> <br> <%= data[0].saturday[3].sub %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">วันอาทิตย์</th>
+                            <td><%= data[0].sunday[0].num %> <br> <%= data[0].sunday[0].sub %></td>
+                            <td><%= data[0].sunday[1].num %> <br> <%= data[0].sunday[1].sub %></td>
+                            <td><%= data[0].sunday[2].num %> <br> <%= data[0].sunday[2].sub %></td>
+                            <td><%= data[0].sunday[3].num %> <br> <%= data[0].sunday[3].sub %></td>
+                        </tr>
                 </tbody>
             </table>
 
 
 
             <br>
-
-
-            <!-- add button -->
-
-
 
         </div>
 
@@ -182,9 +229,6 @@
                     </div>
                     <div class="item">
                         <i class="fas fa-user-graduate"></i> จัดการอาจารย์
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-building"></i> จัดการตึก
                     </div>
                     <div class="item">
                         <i class="fas fa-tools"></i> จัดการห้องสอบ
@@ -278,19 +322,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
-        function del(id){
-            console.log(id)
-            window.location.href = "/instructorEdit/delete/" +id;
-        }
-    
-        function upd(id){
-            console.log(id)
-            // window.location.href ="/instructorEdit/update/" +id;
-        }
-    
-        if("<%= status %>" == 1 ){
-            console.log("EIEI")
-            swal ( "Oops" , "<%= message %>" ,  "error" )
-        }
-    
+    function find(data){
+        console.log(data)
+    }
 </script>
