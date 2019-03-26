@@ -3,14 +3,14 @@ const app = express();
 const User = require('../models/user');
 const Instructor = require('../models/instructor');
 const Room = require('../models/room');
-const Router2 = express.Router();
+const Router = express.Router();
 var username;
-Router2.route('/').get(function (req,res){
+Router.route('/').get(function (req,res){
     res.render('loginPage',{status: 0 , message : ""})
  });
 
 
-Router2.post('/main',(req,res)=>{
+Router.post('/main',(req,res)=>{
    username = req.body.username
    let password = req.body.password
 
@@ -31,14 +31,14 @@ Router2.post('/main',(req,res)=>{
    });
 });
 
-Router2.get('/instructorEdit',(req,res)=>{
+Router.get('/instructorEdit',(req,res)=>{
     Instructor.find({}, (err,result)=>{
         console.log(result);
         res.render('instructorEdit' , {status: 0 , message : "0", data : result , username});
     });
 });
 
-Router2.get('/instructorEdit/delete/:id',async (req,res)=>{
+Router.get('/instructorEdit/delete/:id',async (req,res)=>{
     Instructor.findOne({user_id : req.params.id},await function(err,result){
         result.remove();
         console.log(result);    
@@ -63,7 +63,7 @@ Router2.get('/instructorEdit/delete/:id',async (req,res)=>{
 
 // ------
 
-Router2.post('/instructorEdit/submit',(req,res)=>{
+Router.post('/instructorEdit/submit',(req,res)=>{
     const newInstructor = new Instructor({
         user_id : req.body.id,
         firstname : req.body.firstname,
@@ -74,10 +74,16 @@ Router2.post('/instructorEdit/submit',(req,res)=>{
 
     Instructor.findOne({ user_id : req.body.id }, (err,result)=>{
         if(result){
-            console.log("user_id is already to use")
+
+            Instructor.findOneAndUpdate({user_id: req.body.id}, {"$set": {"firstname": req.body.firstname, "lastname": req.body.lastname, "faculty": req.body.faculty, "branch": req.body.branch }}, {upsert:true}, function(err, doc){
+                if (err) console.log("ERR")
+                else console.log("OK")
+            });
+
             Instructor.find({}, (err,result)=>{
-                // console.log(result);
-                res.render('instructorEdit' , {status: 1 , message : "User is already to use", data : result , username});
+
+                res.render('instructorEdit' , {status: 2 , message : "เพิ่มข้อมูลสำเร็จ", data : result , username});
+
             });
             
         }else{
@@ -85,7 +91,7 @@ Router2.post('/instructorEdit/submit',(req,res)=>{
                 if(err){ console.log(err) }
                 else{
                     console.log(data);
-                    res.redirect('/instructorEdit');
+                     res.render('instructorEdit' , {status: 2 , message : "เพิ่มข้อมูลสำเร็จ", data : result , username});
                 }
             });
         }
@@ -94,30 +100,30 @@ Router2.post('/instructorEdit/submit',(req,res)=>{
    
 });
 
-Router2.get('/mainPage',(req,res)=>{
+Router.get('/mainPage',(req,res)=>{
     res.render('mainPage',{username})
 });
 
 
 //-----Sunny-----
 
-Router2.get('/buildingEdit',(req,res)=>{
+Router.get('/buildingEdit',(req,res)=>{
     Room.find({}, (err,result)=>{
         console.log(result);
         res.render('buildingEdit' , {status: 0 , message : "0", data : result , username});
     });
 });
 
-Router2.get('/roomEdit/:id',(req,res)=>{
+Router.get('/roomEdit/:id',(req,res)=>{
     console.log(req.params.id)
     Room.find({name:req.params.id}, (err,result)=>{
         console.log(result);
-        res.render('roomEdit' , {data : result , username});
+        res.render('roomEdit' , { status: 0 , message : "0", data : result , username});
     });
 })
 
-Router2.get('/roomEdit/del/:id',async (req,res)=>{
-    room.findOne({user_id : req.params.id},await function(err,result){
+Router.get('/roomEdit/del/:id',async (req,res)=>{
+    Room.findOne({user_id : req.params.id},await function(err,result){
         result.remove();
         console.log(result);    
         
@@ -125,7 +131,7 @@ Router2.get('/roomEdit/del/:id',async (req,res)=>{
     });
 });
 
-Router2.post('/roomEdit/submit/:id',(req,res)=>{
+Router.post('/roomEdit/submit/:id',(req,res)=>{
     var day = req.body.day;
     var time = req.body.time;
     var num = req.body.num;
@@ -219,19 +225,19 @@ Router2.post('/roomEdit/submit/:id',(req,res)=>{
     // });
 });
 
-Router2.post('/roomEdit/open/:id', (req,res)=>{
+Router.post('/roomEdit/open/:id', (req,res)=>{
     Room.findOne({name : req.params.id}, function(err,result){
         console.log(result);
-          res.send('roomEdit' , {data : result , username});
+          res.send('roomEdit' , { status: 0 , message : "0",data : result , username});
     });
 });
 
 
-/* Router2.get('/buildingEdit/roomEdit/:name',(req,res)=>{
+/* Router.get('/buildingEdit/roomEdit/:name',(req,res)=>{
     Room.findOne({name : req.params.name}, (err,result)=>{
         console.log(result);
         res.render('roomEdit' , {status: 0 , message : "0", data : result , username});
     });
 }); */
 
-module.exports = Router2;
+module.exports = Router;
