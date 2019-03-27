@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/instructorEdit.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
@@ -17,7 +18,7 @@
     <title>Document</title>
 </head>
 
-<body style="background-image: url(/img/background2.png)">
+<body style="background-image: url(/img/background2.png); font-family: 'Kanit', sans-serif;">
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="banner"
         style="background-color: #1B1B1B;height:60px">
@@ -81,37 +82,39 @@
             <form method="post" action="/instructorEdit/submit">
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom01">รหัสประจำตัว</label>
-                        <input type="text" class="form-control" id="validationCustom01" placeholder="Code" required name="id">
+                        <label for="id">รหัสประจำตัว</label>
+                        <input type="text" class="form-control" id="id" placeholder="Code" required name="id">
                     </div>
 
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">ชื่อ</label>
-                        <input type="text" class="form-control" id="validationCustom02" placeholder="Firstname" required name="firstname">
+                        <label for="firstname">ชื่อ</label>
+                        <input type="text" class="form-control" id="firstname" placeholder="Firstname" required name="firstname">
                     </div>
 
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">นามสกุล</label>
-                        <input type="text" class="form-control" id="validationCustom02" placeholder="Lastname" required name="lastname">
+                        <label for="lastname">นามสกุล</label>
+                        <input type="text" class="form-control" id="lastname" placeholder="Lastname" required name="lastname">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom03">คณะ</label>
-                        <input type="text" class="form-control" id="validationCustom03" placeholder="Faculty" required name="faculty">
+                        <label for="faculty">คณะ</label>
+                        <input type="text" class="form-control" id="faculty" placeholder="Faculty" required name="faculty">
                     </div>
 
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom04">สาขา</label>
-                        <input type="text" class="form-control" id="validationCustom04" placeholder="Branch" required  name="branch">
+                        <label for="branch">สาขา</label>
+                        <input type="text" class="form-control" id="branch" placeholder="Branch" required  name="branch">
                     </div>
 
-                    <div style="margin-left: 23%; margin-top: 3%">
-                        <button type="submit" class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900">
-                            <i class="fa fa-plus"></i> 
-                            Add New
-                        </button>
+                    <div class="col-md-4 mb-3" style="margin-top: 3%">
+
+                            <button type="submit" class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right">
+                                    <i class="fa fa-plus"></i> 
+                                    Add New / Edit Data
+                                </button>
+                        
                     </div>
                 </div>
 
@@ -141,7 +144,7 @@
                         <td><%= data[i].branch %></td>
                         <td>
                           
-                            <a class="edit" title="Edit" data-toggle="tooltip" onclick="upd('<%= data[i].user_id %>')"><i class="material-icons">&#xE254;</i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip" onclick="showDetail('<%= data[i].user_id %>','<%= data[i].firstname %>','<%= data[i].lastname %>','<%= data[i].faculty %>','<%= data[i].branch %>')"><i class="material-icons">&#xE254;</i></a>
                             <a class="delete" title="Delete" data-toggle="tooltip"  onclick="del('<%= data[i].user_id %>')"><i class="material-icons">&#xE872;</i></a></td>
                     </tr>
                     <% } %>
@@ -182,9 +185,6 @@
                     </div>
                     <div class="item">
                         <i class="fas fa-user-graduate"></i> จัดการอาจารย์
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-building"></i> จัดการตึก
                     </div>
                     <div class="item">
                         <i class="fas fa-tools"></i> จัดการห้องสอบ
@@ -291,6 +291,21 @@
         if("<%= status %>" == 1 ){
             console.log("EIEI")
             swal ( "Oops" , "<%= message %>" ,  "error" )
+            message = "";
+            status = 0;
+            
+        }else if ("<%= status %>" == 2){
+            swal("Success", "<%= message %>", "success");
+            message = "";
+            status = 0;
         }
-    
+
+        function showDetail(id, firstname, lastname, faculty, branch){
+            document.getElementById("id").value = id;
+            document.getElementById("firstname").value = firstname;
+            document.getElementById("lastname").value = lastname;
+            document.getElementById("faculty").value = faculty;
+            document.getElementById("branch").value = branch;
+        }
+        
 </script>
