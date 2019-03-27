@@ -85,10 +85,10 @@ Router.post('/instructorEdit/submit',(req,res)=>{
             });
             
         }else{
-            newInstructor.save((err, data)=>{
+            newInstructor.save((err, result)=>{
                 if(err){ console.log(err) }
                 else{
-                    console.log(data);
+                    console.log(result);
                      res.render('instructorEdit' , {status: 2 , message : "เพิ่มข้อมูลสำเร็จ", data : result , username});
                 }
             });
@@ -136,10 +136,10 @@ Router.post('/studentEdit/submit',(req,res)=>{
             });
             
         }else{
-            newStudent.save((err, data)=>{
+            newStudent.save((err, result)=>{
                 if(err){ console.log(err) }
                 else{
-                    console.log(data);
+                    console.log(result);
                      res.render('studentEdit' , {status: 2 , message : "เพิ่มข้อมูลสำเร็จ", data : result , username});
                 }
             });
