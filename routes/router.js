@@ -4,11 +4,16 @@ const User = require('../models/user');
 const Instructor = require('../models/instructor');
 const Room = require('../models/room');
 const Router = express.Router();
+const Student = require('../models/student');
+
 var username;
+
+
 Router.route('/').get(function (req,res){
     res.render('loginPage',{status: 0 , message : ""})
  });
 
+//  ---------------------- Main -----------------------------
 
 Router.post('/main',(req,res)=>{
    username = req.body.username
@@ -31,6 +36,15 @@ Router.post('/main',(req,res)=>{
    });
 });
 
+
+Router.get('/mainPage',(req,res)=>{
+    res.render('mainPage',{username})
+});
+
+// -----------------------------------------------------------------
+
+// ---------------------- InstructorEdit ----------------------------
+
 Router.get('/instructorEdit',(req,res)=>{
     Instructor.find({}, (err,result)=>{
         console.log(result);
@@ -46,22 +60,6 @@ Router.get('/instructorEdit/delete/:id',async (req,res)=>{
         res.redirect('/instructorEdit');
     });
 });
-
-// -------
-
-
-// app.get('/instructorEdit/update/:id',(req,res)=>{
-//     console.log(req.params.id)
-// //     Instructor.findOne({user_id : req.params.id}, (err,result)=>{
-// //         if(err){console.log(err)}
-// //         if(result){
-// //             console.log(res.body.username)
-// //         }
-// //    });
-// res.redirect("/instructorEdit");
-// });
-
-// ------
 
 Router.post('/instructorEdit/submit',(req,res)=>{
     const newInstructor = new Instructor({
@@ -82,7 +80,7 @@ Router.post('/instructorEdit/submit',(req,res)=>{
 
             Instructor.find({}, (err,result)=>{
 
-                res.render('instructorEdit' , {status: 2 , message : "เพิ่มข้อมูลสำเร็จ", data : result , username});
+                res.render('instructorEdit' , {status: 2 , message : "แก้ไขข้อมูลสำเร็จ", data : result , username});
 
             });
             
@@ -100,10 +98,68 @@ Router.post('/instructorEdit/submit',(req,res)=>{
    
 });
 
-Router.get('/mainPage',(req,res)=>{
-    res.render('mainPage',{username})
+// -------------------------------------------------------------------
+
+
+// ---------------------- studentEdit ---------------------------------
+
+Router.get('/studentEdit',(req,res)=>{
+    Student.find({}, (err,result)=>{
+        // console.log(result);
+        res.render('studentEdit' , {status: 0 , message : "0", data : result , username});
+    });
 });
 
+Router.post('/studentEdit/submit',(req,res)=>{
+    const newStudent = new Student({
+        user_id : req.body.id,
+        firstname : req.body.firstname,
+        lastname : req.body.lastname,
+        faculty : req.body.faculty,
+        branch : req.body.branch,
+        year : req.body.year
+    });
+
+    Student.findOne({ user_id : req.body.id }, (err,result)=>{
+        if(result){
+
+            Student.findOneAndUpdate({user_id: req.body.id}, {"$set": {"firstname": req.body.firstname, "lastname": req.body.lastname, "faculty": req.body.faculty, "branch": req.body.branch, "year": req.body.year }}, {upsert:true}, function(err, doc){
+                if (err) console.log("ERR")
+                else console.log("OK")
+            });
+
+            Student.find({}, (err,result)=>{
+
+                res.render('studentEdit' , {status: 2 , message : "แก้ไขข้อมูลสำเร็จ", data : result , username});
+                // res.redirect('/studentEdit')
+
+            });
+            
+        }else{
+            newStudent.save((err, data)=>{
+                if(err){ console.log(err) }
+                else{
+                    console.log(data);
+                     res.render('studentEdit' , {status: 2 , message : "เพิ่มข้อมูลสำเร็จ", data : result , username});
+                }
+            });
+        }
+    });
+
+   
+});
+
+Router.get('/studentEdit/delete/:id',async (req,res)=>{
+    Student.findOne({user_id : req.params.id},await function(err,result){
+        result.remove();
+      
+        console.log(result);
+        console.log("HELLO")
+            
+        
+        res.redirect('/studentEdit');
+    });
+});
 
 //-----Sunny-----
 

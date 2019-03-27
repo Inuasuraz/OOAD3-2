@@ -11,10 +11,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/instructorEdit.css">
+    <link rel="stylesheet" type="text/css" href="/css/studentEdit.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/javascript" src="/js/instructorEdit.js">
+    <link rel="stylesheet" type="text/javascript" src="/js/studentEdit.js">
     <title>Document</title>
 </head>
 
@@ -79,7 +79,7 @@
         <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
             <br>
 
-            <form method="post" action="/instructorEdit/submit">
+            <form method="post" action="/studentEdit/submit">
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="id">รหัสประจำตัว</label>
@@ -108,6 +108,23 @@
                         <input type="text" class="form-control" id="branch" placeholder="Branch" required  name="branch">
                     </div>
 
+                    <div class="col-md-4 mb-3">
+                        <label for="branch">ชั้นปี</label>
+                        <input type="text" class="form-control" id="year" placeholder="Year" required  name="year">
+                    </div>
+
+                    
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                       
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                  
+                    </div>
+
                     <div class="col-md-4 mb-3" style="margin-top: 3%">
 
                             <button type="submit" class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right">
@@ -131,6 +148,7 @@
                         <th scope="col">ชื่อ - นามสกุล</th>
                         <th scope="col">คณะ</th>
                         <th scope="col">สาขา</th>
+                        <th scope="col">ชั้นปี</th>
                         <th scope="col">ตัวเลือก</th>
                     </tr>
                 </thead>
@@ -142,9 +160,10 @@
                         <td><%= data[i].firstname %> <%= data[i].lastname %></td>
                         <td><%= data[i].faculty %></td>
                         <td><%= data[i].branch %></td>
+                        <td><%= data[i].year %></td>
                         <td>
                           
-                            <a class="edit" title="Edit" data-toggle="tooltip" onclick="showDetail('<%= data[i].user_id %>','<%= data[i].firstname %>','<%= data[i].lastname %>','<%= data[i].faculty %>','<%= data[i].branch %>')"><i class="material-icons">&#xE254;</i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip" onclick="showDetail('<%= data[i].user_id %>','<%= data[i].firstname %>','<%= data[i].lastname %>','<%= data[i].faculty %>','<%= data[i].branch %>','<%= data[i].year %>')"><i class="material-icons">&#xE254;</i></a>
                             <a class="delete" title="Delete" data-toggle="tooltip"  onclick="del('<%= data[i].user_id %>')"><i class="material-icons">&#xE872;</i></a></td>
                     </tr>
                     <% } %>
@@ -284,7 +303,7 @@
 <script>
         function del(id){
             console.log(id)
-            window.location.href = "/instructorEdit/delete/" +id;
+            window.location.href = "/studentEdit/delete/" +id;
         }
     
         function upd(id){
@@ -293,23 +312,25 @@
         }
     
         if("<%= status %>" == 1 ){
-            console.log("EIEI")
-            swal ( "Oops" , "<%= message %>" ,  "error" ).then(()=> window.location.href = "/instructorEdit")
+            swal ( "Oops" , "<%= message %>" ,  "error").then(()=> window.location.href = "/studentEdit")
             message = "";
             status = 0;
+            // window.location.href = "/studentEdit"
             
         }else if ("<%= status %>" == 2){
-            swal("Success", "<%= message %>", "success").then(()=> window.location.href = "/instructorEdit");
+            swal("Success", "<%= message %>", "success").then(()=> window.location.href = "/studentEdit")
             message = "";
             status = 0;
+            // window.location.href = "/studentEdit"
         }
 
-        function showDetail(id, firstname, lastname, faculty, branch){
+        function showDetail(id, firstname, lastname, faculty, branch,year){
             document.getElementById("id").value = id;
             document.getElementById("firstname").value = firstname;
             document.getElementById("lastname").value = lastname;
             document.getElementById("faculty").value = faculty;
             document.getElementById("branch").value = branch;
+            document.getElementById("year").value = year;
         }
         
 </script>
