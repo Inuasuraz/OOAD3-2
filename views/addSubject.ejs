@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/studentEdit.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/javascript" src="/js/studentEdit.js">
+    <title>Document</title>
+</head>
+
+<body style="background-image: url(/img/background2.png); font-family: 'Kanit', sans-serif;">
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="banner"
+        style="background-color: #1B1B1B;height:60px">
+        <div class="container">
+            <!-- Brand -->
+            <a class="navbar-brand" href="/mainPage"><img src="/img/icon.png" style="height:50px"></a>
+
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-user"></i> &nbsp; <%= username %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i> &nbsp; log out</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- <div class="banner">
+        <div class="container">
+            <div class="banner-text">
+
+
+            </div>
+        </div>
+    </div> -->
+    <section style="margin-top:10%">
+        <div class="container">
+         
+        </div>
+
+        <br>
+
+
+        <!---------------------------- form ------------------------------>
+
+        <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
+            <br>
+
+            <form method="post" action="/addSubject/submit">
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="code">รหัสวิชา</label>
+                        <input type="text" class="form-control" id="code" placeholder="Code" required name="code">
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="name">ชื่อวิชา</label>
+                        <input type="text" class="form-control" id="name" placeholder="Firstname" required name="name">
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="year">ปี</label>
+                        <input readonly type="text" class="form-control" id="year" placeholder="Lastname" required name="year">
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                           
+                        </div>
+    
+                        <div class="col-md-4 mb-3">
+                      
+                        </div>
+    
+                        <div class="col-md-4 mb-3" style="margin-top: 3%">
+    
+                                <button type="submit" id="button" class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right">
+                                        <i class="fa fa-plus"></i> 
+                                        Add New
+                                </button>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+
+               
+
+            </form>
+
+
+            <!-------------------- table ---------------------->
+
+
+
+
+
+
+            <!-- add button -->
+
+
+
+        </div>
+
+        <br>
+        </div> <!-- /container -->
+
+
+
+    </section>
+
+
+    <!-- navbar -->
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+
+            <div id="sidebar-wrapper" class="sidebar-toggle">
+
+                <div class="left">
+                    <div class="item active">
+                        <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
+                    </div>
+                    
+                    <a href="/studentEdit" style="text-decoration: none"><div class="item">
+                            <i class="fas fa-user-graduate"></i> จัดการนิสิต
+                    </div></a>
+                    <a href="/instructorEdit" style="text-decoration: none"><div class="item">
+                            <i class="fas fa-user-graduate"></i> จัดการอาจารย์
+                    </div></a>
+                    <!-- <a href="/buildingEdit" style="text-decoration: none"><div class="item">
+                        <i class="fas fa-building"></i> จัดการตึก
+                    </div></a> -->
+                    <a href="/addYear" style="text-decoration: none"><div class="item">
+                        <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
+                    </div></a>
+                    <a href="/yearSelect" style="text-decoration: none"><div class="item">
+                        <i class="fas fa-book-open"></i> จัดการคอร์ส
+                    </div></a>
+                    <div class="item">
+                            <i class="fas fa-tools"></i> จัดการห้องสอบ
+                    </div>
+                    <div class="item">
+                            <i class="fas fa-chair"></i> จัดการที่นั่งสอบ
+                    </div>
+                    <div class="item">
+                            <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
+                    </div>
+                    <div class="item">
+                            <i class="fas fa-user-check"></i> เช็คชื่อนิสิต
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+</body>
+
+</html>
+
+<style>
+    .right {
+        top: 50%;
+        float: left;
+        transform: translateY(125%);
+    }
+
+    .left {
+        background: #1B1B1B;
+        display: inline-block;
+        white-space: nowrap;
+        width: 50px;
+        transition: width .5s;
+    }
+
+    .right {
+        background: #fff;
+        width: 350px;
+        transition: width 1s;
+        border-style: solid;
+        border-color: #ccc;
+        border-width: 1px;
+    }
+
+    .left:hover {
+        width: 250px;
+    }
+
+    .item:hover {
+        background-color: #FF9900;
+        color: white
+    }
+
+    .left .fas {
+        margin: 15px;
+        width: 20px;
+    }
+
+    .left .fas:hover {
+        color: white;
+    }
+
+    i.fas {
+        font-size: 17px;
+        vertical-align: middle !important;
+    }
+
+    .item {
+        height: 50px;
+        overflow: hidden;
+        color: #FF9900;
+    }
+</style>
+
+
+
+
+<script src="/jquery/dist/jquery.slim.min.js"></script>
+<script src="/popper.js/dist/popper.min.js"></script>
+<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+        function del(id){
+            console.log(id)
+            window.location.href = "/studentEdit/delete/" +id;
+        }
+    
+        function upd(id){
+            console.log(id)
+            // window.location.href ="/instructorEdit/update/" +id;
+        }
+
+        document.getElementById("year").value = '<%= year%>';
+
+        if("<%= status %>" == 1 ){
+            swal ( "Oops" , "<%= message %>" ,  "error").then(()=> window.location.href = "/studentEdit")
+            message = "";
+            status = 0;
+            
+        }else if ("<%= status %>" == 2){
+            swal("Success", "<%= message %>", "success").then(()=> window.location.href = "/studentEdit")
+            message = "";
+            status = 0;
+
+        }else if ("<%= status %>" == 3){
+            document.getElementById("code").value = '<%= code %>';
+            document.getElementById("name").value = '<%= name %>';
+
+            status = 0;
+        }
+
+        function showDetail(id, firstname, lastname, faculty, branch,year){
+            document.getElementById("id").value = id;
+            document.getElementById("firstname").value = firstname;
+            document.getElementById("lastname").value = lastname;
+        }
+        
+</script>
