@@ -102,6 +102,30 @@ Router.post('/instructorEdit/submit', (req, res) => {
 
 // -------------------------------------------------------------------
 
+// studentEdit2
+Router.get('/addStudentEdit',(req,res) =>{
+    var id = req.body.id
+    var firstname = req.body.firstname
+    var lastname = req.body.lastname
+    var faculty = req.body.faculty
+    var branch = req.body.branch
+    var year = req.body.year
+    res.render('addStudentEdit',{ status: 0, message: "0", username,id,firstname,lastname,faculty,branch,year })
+})
+
+Router.post('/addStudentEdit',(req,res) =>{
+    var id = req.body.id
+    var firstname = req.body.firstname
+    var lastname = req.body.lastname
+    var faculty = req.body.faculty
+    var branch = req.body.branch
+    var year = req.body.year
+
+    console.log(firstname)
+    console.log(lastname)
+
+    res.render('addStudentEdit',{ status: 3, message: "0", username,id,firstname,lastname,faculty,branch,year})
+})
 
 // ---------------------- studentEdit ---------------------------------
 
@@ -112,7 +136,7 @@ Router.get('/studentEdit', (req, res) => {
     });
 });
 
-Router.post('/studentEdit/submit', (req, res) => {
+Router.post('/addStudentEdit/submit', (req, res) => {
     const newStudent = new Student({
         user_id: req.body.id,
         firstname: req.body.firstname,
@@ -296,6 +320,8 @@ Router.post('/roomEdit/submit/:id', (req, res) => {
 
     // });
 });
+
+
 
 //  Year Select (Sunny)
 Router.get('/yearSelect', (req, res) => {
