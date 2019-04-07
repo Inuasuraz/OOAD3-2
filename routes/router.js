@@ -353,6 +353,25 @@ Router.get('/semesterEdit/delete/:id', async (req, res) => {
     });
 });
 
+Router.get('/addYear',(req,res) =>{
+    res.render('addYear', { status: 0, message: "0", username})
+})
+
+Router.post('/addYear/add',(req,res) =>{
+    var add = req.body.year+"/"+req.body.term
+    Year.find({'year':add},(req,result) =>{
+        if (result){
+
+        }else{
+            var newYear = new Year({
+                year: add
+            })
+            Year.insertMany(newYear)
+        }
+    })
+    res.redirect('/mainPage')
+})
+
 
 //-------------------------ARMMY----------------------------------------------------
 
