@@ -9,15 +9,16 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/instructorEdit.css">
+    <link rel="stylesheet" type="text/css" href="/css/studentEdit.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/javascript" src="/js/instructorEdit.js">
-    <title>Building Edit</title>
+    <link rel="stylesheet" type="text/javascript" src="/js/studentEdit.js">
+    <title>Document</title>
 </head>
 
-<body style="background-image: url(/img/background2.png)">
+<body style="background-image: url(/img/background2.png); font-family: 'Kanit', sans-serif;">
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="banner"
         style="background-color: #1B1B1B;height:60px">
@@ -56,18 +57,7 @@
     </div> -->
     <section style="margin-top:10%">
         <div class="container">
-            <form class="form">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search" aria-label="Search"
-                        style="padding-left: 20px; border-radius: 40px;" id="mysearch">
-                    <div class="input-group-addon"
-                        style="margin-left: 5px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
-                        <button class="btn btn-warning btn-sm" type="submit"
-                            style="border-radius: 20px;transform: translateY(10%)" id="search-btn"><i
-                                class="fa fa-search"></i></button>
-                    </div>
-                </div>
-            </form>
+         
         </div>
 
         <br>
@@ -77,35 +67,68 @@
 
         <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
             <br>
-             <!-------------------- table ---------------------->
 
-             <table class="table table-hover" style="background-color:white">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">ห้อง</th>
-                        <th scope="col">ประเภทห้อง</th>
-                        <th scope="col">ตัวเลือก</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    <% for(let i=0; i < data.length; i++) {%>
-                    <tr>
-                        <th scope="row"><%= i+1 %></th>
-                        <td><%= data[i].name %></td>
-                        <td><%= data[i].roomType %></td>
-                        <td>
-                            <a class="edit" title="Edit" data-toggle="tooltip" href="classEdit/<%= data[i].name %>"><i class="material-icons">&#xE254;</i></a>
-                        </td>
-                    </tr>
-                    <% } %>
-                </tbody>
-            </table>
+            <form method="post" action="/addRoom/submit">
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="code">ตึก</label>
+                        <input type="text" class="form-control" id="building" placeholder="Building" required name="building">
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="name">ห้อง</label>
+                        <input type="text" class="form-control" id="room" placeholder="Room" required name="room">
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="id">ประเภทห้อง</label>
+                        <select class="browser-default custom-select" required name="type" id="type">
+                            <option selected value="">เลือกประเภทห้อง</option>
+                            <option value='Lab'>Lab</data></option>
+                            <option value='Lecture'>Lecture</data></option> 
+                        </select>   
+                    </div>
+                </div>
 
 
+                <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label for="year">ปี</label>
+                            <input readonly type="text" class="form-control" id="year" placeholder="Year" required name="year">
+                        </div>
+    
+                        <div class="col-md-4 mb-3">
+                           
+                        </div>
+    
+                        <div class="col-md-4 mb-3" style="margin-top: 3%">
+    
+                                <button type="submit" id="button" class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right">
+                                        <i class="fa fa-plus"></i> 
+                                        Add New
+                                </button>
+                            
+                        </div>
+                    </div>
+                </form>
+            
+            </div>
 
-            <br>
+               
+
+            
+
+
+            <!-------------------- table ---------------------->
+
+
+
+
+
+
+            <!-- add button -->
+
+
 
         </div>
 
@@ -233,6 +256,37 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
- 
+        function del(id){
+            console.log(id)
+            window.location.href = "/studentEdit/delete/" +id;
+        }
+    
+        function upd(id){
+            console.log(id)
+            // window.location.href ="/instructorEdit/update/" +id;
+        }
 
+        document.getElementById("year").value = '<%= year%>';
+
+        if("<%= status %>" == 1 ){
+            swal ( "Oops" , "<%= message %>" ,  "error").then(()=> window.location.href = "/studentEdit")
+            message = "";
+            status = 0;
+            
+        }else if ("<%= status %>" == 2){
+            swal("Success", "<%= message %>", "success").then(()=> window.location.href = "/studentEdit")
+            message = "";
+            status = 0;
+
+        }else if ("<%= status %>" == 3){
+
+            status = 0;
+        }
+
+        function showDetail(id, firstname, lastname, faculty, branch,year){
+            document.getElementById("id").value = id;
+            document.getElementById("firstname").value = firstname;
+            document.getElementById("lastname").value = lastname;
+        }
+        
 </script>

@@ -1,12 +1,13 @@
 const express = require('express');
 const User = require('../models/user');
 const Instructor = require('../models/instructor');
-const Room = require('../models/room');
+const Class = require('../models/class');
 const Router = express.Router();
 const Student = require('../models/student');
 const Year = require('../models/year');
 const Course = require('../models/course')
 const Subject = require('../models/subject')
+const Room = require('../models/room')
 var ObjectId = require('mongodb').ObjectID;
 
 var username;
@@ -222,22 +223,22 @@ Router.get('/studentEdit/delete/:id', async (req, res) => {
 //-----Sunny-----
 
 Router.get('/buildingEdit', (req, res) => {
-    Room.find({}, (err, result) => {
+    Class.find({}, (err, result) => {
         console.log(result);
         res.render('buildingEdit', { status: 0, message: "0", data: result, username });
     });
 });
 
-Router.get('/roomEdit/:id', (req, res) => {
+Router.get('/classEdit/:id', (req, res) => {
     console.log(req.params.id)
-    Room.find({ name: req.params.id }, (err, result) => {
+    Class.find({ name: req.params.id }, (err, result) => {
         console.log(result);
-        res.render('roomEdit', { status: 0, message: "0", data: result, username });
+        res.render('classEdit', { status: 0, message: "0", data: result, username });
     });
 })
 
-Router.get('/roomEdit/del/:id', async (req, res) => {
-    Room.findOne({ user_id: req.params.id }, await function (err, result) {
+Router.get('/classEdit/del/:id', async (req, res) => {
+    Class.findOne({ user_id: req.params.id }, await function (err, result) {
         result.remove();
         console.log(result);
 
@@ -245,7 +246,7 @@ Router.get('/roomEdit/del/:id', async (req, res) => {
     });
 });
 
-Router.post('/roomEdit/submit/:id', (req, res) => {
+Router.post('/classEdit/submit/:id', (req, res) => {
     var day = req.body.day;
     var time = req.body.time;
     var num = req.body.num;
@@ -257,7 +258,7 @@ Router.post('/roomEdit/submit/:id', (req, res) => {
     console.log(sub)
     if (day == "monday") {
         console.log("1")
-        Room.updateOne({ 'name': req.params.id, 'monday._id': time }, {
+        Class.updateOne({ 'name': req.params.id, 'monday._id': time }, {
             $set: {
                 'monday.$.sub': sub,
                 'monday.$.num': num
@@ -267,7 +268,7 @@ Router.post('/roomEdit/submit/:id', (req, res) => {
         });
     } else if (day == "tuesday") {
         console.log("2")
-        Room.updateOne({ 'name': req.params.id, 'tuesday._id': time }, {
+        Class.updateOne({ 'name': req.params.id, 'tuesday._id': time }, {
             $set: {
                 'tuesday.$.sub': sub,
                 'tuesday.$.num': num
@@ -277,7 +278,7 @@ Router.post('/roomEdit/submit/:id', (req, res) => {
         });
     } else if (day == "wednesday") {
         console.log("3")
-        Room.updateOne({ 'name': req.params.id, 'wednesday._id': time }, {
+        Class.updateOne({ 'name': req.params.id, 'wednesday._id': time }, {
             $set: {
                 'wednesday.$.sub': sub,
                 'wednesday.$.num': num
@@ -287,7 +288,7 @@ Router.post('/roomEdit/submit/:id', (req, res) => {
         });
     } else if (day == "thursday") {
         console.log("4")
-        Room.updateOne({ 'name': req.params.id, 'thursday._id': time }, {
+        Class.updateOne({ 'name': req.params.id, 'thursday._id': time }, {
             $set: {
                 'thursday.$.sub': sub,
                 'thursday.$.num': num
@@ -297,7 +298,7 @@ Router.post('/roomEdit/submit/:id', (req, res) => {
         });
     } else if (day == "friday") {
         console.log("5")
-        Room.updateOne({ 'name': req.params.id, 'friday._id': time }, {
+        Class.updateOne({ 'name': req.params.id, 'friday._id': time }, {
             $set: {
                 'friday.$.sub': sub,
                 'friday.$.num': num
@@ -307,7 +308,7 @@ Router.post('/roomEdit/submit/:id', (req, res) => {
         });
     } else if (day == "saturday") {
         console.log("6")
-        Room.updateOne({ 'name': req.params.id, 'saturday._id': time }, {
+        Class.updateOne({ 'name': req.params.id, 'saturday._id': time }, {
             $set: {
                 'saturday.$.sub': sub,
                 'saturday.$.num': num
@@ -317,7 +318,7 @@ Router.post('/roomEdit/submit/:id', (req, res) => {
         });
     } else if (day == "sunday") {
         console.log("7")
-        Room.updateOne({ 'name': req.params.id, 'sunday._id': time }, {
+        Class.updateOne({ 'name': req.params.id, 'sunday._id': time }, {
             $set: {
                 'sunday.$.sub': sub,
                 'sunday.$.num': num
@@ -474,13 +475,88 @@ Router.get('/semesterEdit/delete/:id/:index', (req, res) => {
 
 });
 
+//----------------ADD Room------------
+Router.get('/roomYearSelect', (req, res) => {
+    Year.find({}, (err, result) => {
+        res.render(('roomYearSelect'), { status: 0, message: "0", data: result, username })
+    })
+})
+
+Router.get('/roomEdit', (req, res) => {
+
+    Room.find({ 'year': year }, (err, result2) => {
+        res.render('roomEdit', { status: 0, message: "0", data: result2, username, year })
+    })
+
+})
+
+Router.post('/roomEdit',(req,res) =>{
+    year = req.body.year
+
+    Room.find({ 'year': year },(err,result) => {
+        console.log(result)
+        res.render(('roomEdit'),{ status: 0, message: "0", data: result, username,year })
+    })
+})
+
+Router.get('/addRoom',(req,res) =>{
+    res.render('addRoom',{ status: 0, message: "0", username,year })
+})
+
+Router.post('/addRoom/submit', (req, res) => {
+    const newRoom = new Room({
+        building: req.body.building ,
+        name: req.body.room,
+        roomType: req.body.type,
+        year: req.body.year
+    });
+
+    Room.findOne({ name: req.body.name }, (err, result) => {
+        if (result) {
+            Room.findOneAndUpdate({ name: req.body.room }, { "$set": { "building": req.body.building, "roomType": req.body.type, "year": req.body.year } }, { upsert: true }, function (err, doc) {
+                if (err) console.log("ERR")
+                else console.log("OK")
+            });
+
+            Subject.find({}, (err, result) => {
+
+                // res.render('studentEdit', { status: 2, message: "แก้ไขข้อมูลสำเร็จ", data: result, username });
+                res.redirect('/roomEdit')
+
+            });
+
+        } else {
+            newRoom.save((err, result) => {
+                if (err) { console.log(err) }
+                else {
+                    console.log(result);
+                    res.redirect('/roomEdit')
+                }
+            });
+        }
+    });
+});
+
+Router.get('/roomEdit/delete/:id', async (req, res) => {
+    Room.findOne({ name: req.params.id }, await function (err, result) {
+        result.remove();
+
+        console.log(result);
+        console.log("HELLO")
+
+
+        res.redirect('/roomEdit');
+    });
+});
+
+//----------------End Add Room------------
+
 
 //----------------ADD SUBJECT------------
 Router.get('/subjectYearSelect', (req, res) => {
     Year.find({}, (err, result) => {
         res.render(('subjectYearSelect'), { status: 0, message: "0", data: result, username })
     })
-
 })
 
 Router.get('/subjectEdit', (req, res) => {
@@ -510,10 +586,6 @@ Router.post('/addSubject',(req,res) =>{
         var name = req.body.name
         res.render('addSubject',{ status: 3, message: "0", username,code,name,year})
 })
-
-
-
-
 
 
 Router.post('/addSubject/submit', (req, res) => {
@@ -566,7 +638,7 @@ Router.get('/subjectEdit/delete/:id', async (req, res) => {
 
 //------------------------------End Of Arm-----------------------------------------
 
-Router.post('/roomEdit/open/:id', (req, res) => {
+Router.post('/classEdit/open/:id', (req, res) => {
 
 
     Course.findOneAndUpdate({ subject_code: req.params.id }, {
@@ -589,7 +661,7 @@ Router.post('/roomEdit/open/:id', (req, res) => {
 
 
 /* Router.get('/buildingEdit/roomEdit/:name',(req,res)=>{
-    Room.findOne({name : req.params.name}, (err,result)=>{
+    Class.findOne({name : req.params.name}, (err,result)=>{
         console.log(result);
         res.render('roomEdit' , {status: 0 , message : "0", data : result , username});
     });
