@@ -54,6 +54,35 @@ Router.get('/instructorEdit', (req, res) => {
     });
 });
 
+//-------------------- Instructor Add ------------------------
+
+Router.get('/addInstructorEdit',(req,res) =>{
+    var id = req.body.id
+    var firstname = req.body.firstname
+    var lastname = req.body.lastname
+    var faculty = req.body.faculty
+    var branch = req.body.branch
+    var year = req.body.year
+    res.render('addInstructorEdit',{ status: 0, message: "0", username,id,firstname,lastname,faculty,branch,year })
+})
+
+Router.post('/addInstructorEdit',(req,res) =>{
+    var id = req.body.id
+    var firstname = req.body.firstname
+    var lastname = req.body.lastname
+    var faculty = req.body.faculty
+    var branch = req.body.branch
+
+    console.log(firstname)
+    console.log(lastname)
+
+    res.render('addInstructorEdit',{ status: 3, message: "0", username,id,firstname,lastname,faculty,branch,year})
+})
+
+
+//--------------------------------------------------------
+
+
 Router.get('/instructorEdit/delete/:id', async (req, res) => {
     Instructor.findOne({ user_id: req.params.id }, await function (err, result) {
         result.remove();
@@ -63,7 +92,7 @@ Router.get('/instructorEdit/delete/:id', async (req, res) => {
     });
 });
 
-Router.post('/instructorEdit/submit', (req, res) => {
+Router.post('/addinstructorEdit/submit', (req, res) => {
     const newInstructor = new Instructor({
         user_id: req.body.id,
         firstname: req.body.firstname,
@@ -296,29 +325,6 @@ Router.post('/roomEdit/submit/:id', (req, res) => {
     }
     res.redirect(req.get('referer'));
 
-    // Room.findOne({name: req.params.id},(err,result)=>{
-    //     console.log(result)
-    //     res.redirect('/roomEdit');
-    // })
-
-    // Room.updateOne({name : req.params.id},{ $set:{
-    //     day:{
-    //         time: {
-    //             "sub": sub,
-    //             "num": num
-    //         }
-    //     }
-    // }}, function(err,result){
-    //     console.log(result);
-    // });
-    // Room.findOne({name: req.params.id},(err,result)=>{
-    //     if(err){
-    //         console.log(err)
-    //     }else{
-    //         console.log(result)
-    //     }
-
-    // });
 });
 
 
