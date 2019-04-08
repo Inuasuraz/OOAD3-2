@@ -394,9 +394,9 @@ Router.get('/addYear',(req,res) =>{
 
 Router.post('/addYear/add',(req,res) =>{
     var add = req.body.year+"/"+req.body.term
-    Year.find({'year':add},(req,result) =>{
+    Year.findOne({'year':add},(req,result) =>{
         if (result){
-
+            console.log(result)
         }else{
             var newYear = new Year({
                 year: add
