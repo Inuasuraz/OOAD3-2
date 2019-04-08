@@ -56,20 +56,7 @@
         </div>
     </div> -->
     <section style="margin-top:10%">
-        <div class="container">
-            <form class="form">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search" aria-label="Search"
-                        style="padding-left: 20px; border-radius: 40px;" id="mysearch">
-                    <div class="input-group-addon"
-                        style="margin-left: 5px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
-                        <button class="btn btn-warning btn-sm" type="submit"
-                            style="border-radius: 20px;transform: translateY(10%)" id="search-btn"><i
-                                class="fa fa-search"></i></button>
-                    </div>
-                </div>
-            </form>
-        </div>
+
 
         <br>
 
@@ -79,97 +66,43 @@
         <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
             <br>
 
-            <div style="display:none">
-                
-                <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                        <label for="id">รหัสประจำตัว</label>
-                        <input type="text" class="form-control" id="id" placeholder="Code" required name="id">
+            <form method="POST" action="/subjectEdit">
+                <div class="form-row justify-content-center">
+                    <div class="col-md-8 mb-4 " >
+                        <label style="font-size:40px" for="id">จัดการวิชา</label>
+                    </div>
+                    <div class="col-md-5 mb-3 " >
+                        <label for="id">ปีการศึกษา/ภาคเรียน</label>
+                        <select class="browser-default custom-select" required name="year" id="validationCustom00">
+                            <option selected value="">เลือกปีการศึกษา/ภาคเรียน</option>
+                            <% for(let i=0; i < data.length; i++) {%>
+                                <option value='<%=data[i].year %>'><%= data[i].year %></data></option> 
+                            <% } %>
+                            
+                        </select>   
                     </div>
 
-                    <div class="col-md-4 mb-3">
-                        <label for="firstname">ชื่อ</label>
-                        <input type="text" class="form-control" id="firstname" placeholder="Firstname" required name="firstname">
-                    </div>
+                    
 
-                    <div class="col-md-4 mb-3">
-                        <label for="lastname">นามสกุล</label>
-                        <input type="text" class="form-control" id="lastname" placeholder="Lastname" required name="lastname">
-                    </div>
+                  
                 </div>
 
-                <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                        <label for="faculty">คณะ</label>
-                        <input type="text" class="form-control" id="faculty" placeholder="Faculty" required name="faculty">
+            
+                <br>
+                <div class="form-row justify-content-center" >
+                    <div class="col-md-5 mb-5" style="text-align:center;">
+                        <button type="submit" class="btn btn-info " style="background-color: #FF9900 ; border: #FF9900 ; width: 40%;">
+                            <i class="far fa-check-square"></i>
+                            Select
+                        </button>
                     </div>
-
-                    <div class="col-md-4 mb-3">
-                        <label for="branch">สาขา</label>
-                        <input type="text" class="form-control" id="branch" placeholder="Branch" required  name="branch">
-                    </div>
-
-                    <div class="col-md-4 mb-3" style="margin-top: 3%">
-
-                           
-                        
-                    </div>
+                    
                 </div>
 
-            </div>
+            </form>
 
-            <button type="submit" class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right"  onclick="add()">
-                    <i class="fa fa-plus"></i> 
-                    Add New
-            </button>
-            <br /><br />
 
             <!-------------------- table ---------------------->
-
-            <table class="table table-hover" style="background-color:white">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">รหัสประจำตัว</th>
-                        <th scope="col">ชื่อ - นามสกุล</th>
-                        <th scope="col">คณะ</th>
-                        <th scope="col">สาขา</th>
-                        <th scope="col">ตัวเลือก</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for(let i=0; i < data.length; i++) {%>
-                    <tr>
-                        <th scope="row"><%= i+1 %></th>
-                        <form action="/addInstructorEdit" method="POST">
-                        <td><%= data[i].user_id %></td>
-                        <td><%= data[i].firstname %> <%= data[i].lastname %></td>
-                        <td><%= data[i].faculty %></td>
-                        <td><%= data[i].branch %></td>
-                        <div style="display:none">
-                                <input type="text" name="id" value="<%= data[i].user_id %>"></input>
-                                <input type="text" name="firstname" value="<%= data[i].firstname %>"></input>
-                                <input type="text" name="lastname" value="<%= data[i].lastname %>"></input>
-                                <input type="text" name="faculty" value="<%= data[i].faculty %>"></input>
-                                <input type="text" name="branch" value="<%= data[i].branch %>"></input>
-                        </div>
-                        <td>
-                          
-                                <button type="submit" style="padding: 0;
-                                border: none;
-                                background: none;"><a  class="edit" title="Edit" data-toggle="tooltip">
-                                    <i class="material-icons">&#xE254;</i></a></button>
-                        </form>
-                            <a class="delete" title="Delete" data-toggle="tooltip"  onclick="del('<%= data[i].user_id %>')"><i class="material-icons">&#xE872;</i></a></td>
-                    </tr>
-                    <% } %>
-                </tbody>
-            </table>
-
-
-
-            <br>
-
 
             <!-- add button -->
 
@@ -210,6 +143,9 @@
                     </div></a>
                     <a href="/yearSelect" style="text-decoration: none"><div class="item">
                         <i class="fas fa-book-open"></i> จัดการคอร์ส
+                    </div></a>
+                    <a href="/subjectYearSelect" style="text-decoration: none"><div class="item">
+                            <i class="fas fa-book-open"></i> จัดการวิชา
                     </div></a>
                     <div class="item">
                             <i class="fas fa-tools"></i> จัดการห้องสอบ
@@ -309,10 +245,6 @@
         function upd(id){
             console.log(id)
             // window.location.href ="/instructorEdit/update/" +id;
-        }
-
-        function add(){
-        window.location.href = "/addInstructorEdit";
         }
     
         if("<%= status %>" == 1 ){
