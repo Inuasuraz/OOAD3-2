@@ -334,60 +334,59 @@ Router.post('/classEdit/submit/:id', (req, res) => {
 
 
 //  Year Select (Sunny)
+Router.get('/yearSelect', (req, res) => {
+    Year.find({}, (err, result) => {
+        res.render(('yearSelect'), { status: 0, message: "0", data: result, username })
+    })
 
-// Router.get('/yearSelect', (req, res) => {
-//     Year.find({}, (err, result) => {
-//         res.render(('yearSelect'), { status: 0, message: "0", data: result, username })
-//     })
+})  
 
-// })  
+Router.post('/semesterEdit', (req, res) => {
+    year = req.body.year
+    Instructor.find({}, (err, result1) => {
+        Course.find({ 'year': year }, (err, result2) => {
+            res.render('semesterEdit', { status: 0, message: "0", data: result2, teacher: result1, username, year })
+        })
 
-// Router.post('/semesterEdit', (req, res) => {
-//     year = req.body.year
-//     Instructor.find({}, (err, result1) => {
-//         Course.find({ 'year': year }, (err, result2) => {
-//             res.render('semesterEdit', { status: 0, message: "0", data: result2, teacher: result1, username, year })
-//         })
+    })
 
-//     })
+})
 
-// })
+Router.get('/semesterEdit', (req, res) => {
+    Instructor.find({}, (err, result1) => {
+        Course.find({ 'year': year }, (err, result2) => {
+            res.render('semesterEdit', { status: 0, message: "0", data: result2, teacher: result1, username, year })
+        })
+    })
 
-// Router.get('/semesterEdit', (req, res) => {
-//     Instructor.find({}, (err, result1) => {
-//         Course.find({ 'year': year }, (err, result2) => {
-//             res.render('semesterEdit', { status: 0, message: "0", data: result2, teacher: result1, username, year })
-//         })
-//     })
+})
 
-// })
+Router.post('/semesterEdit/add', (req, res) => {
+    var subject_code = req.body.code
+    var subject_name = req.body.name
+    var group = req.body.group
+    var teacher1 = req.body.teacher1
+    var teacher2 = req.body.teacher2
+    var count = req.body.count
+    var newSubjectForCourse = new Course({
+        year: year,
+        subject_code: subject_code,
+        subject_name: subject_name,
+        group: group,
+        teacher1: teacher1,
+        teacher2: teacher2,
+        nisit: []
+    })
+    Course.insertMany(newSubjectForCourse)
+    res.redirect('/semesterEdit');
+})
 
-// Router.post('/semesterEdit/add', (req, res) => {
-//     var subject_code = req.body.code
-//     var subject_name = req.body.name
-//     var group = req.body.group
-//     var teacher1 = req.body.teacher1
-//     var teacher2 = req.body.teacher2
-//     var count = req.body.count
-//     var newSubjectForCourse = new Course({
-//         year: year,
-//         subject_code: subject_code,
-//         subject_name: subject_name,
-//         group: group,
-//         teacher1: teacher1,
-//         teacher2: teacher2,
-//         nisit: []
-//     })
-//     Course.insertMany(newSubjectForCourse)
-//     res.redirect('/semesterEdit');
-// })
+Router.get('/semesterEdit/delete/:id', async (req, res) => {
+    Course.findOneAndDelete(ObjectId(req.params.id), (err, result) => {
+        res.redirect(req.get('referer'));
 
-// Router.get('/semesterEdit/delete/:id', async (req, res) => {
-//     Course.findOneAndDelete(ObjectId(req.params.id), (err, result) => {
-//         res.redirect(req.get('referer'));
-
-//     });
-// });
+    });
+});
 
 Router.get('/addYear',(req,res) =>{
     res.render('addYear', { status: 0, message: "0", username})
@@ -475,29 +474,7 @@ Router.get('/semesterEdit/delete/:id/:index', (req, res) => {
     });
 
 });
-//----------------ADD COURSE----------
-Router.get('/courseYearSelect' , (req, res) => {
-    Year.find({}, (err, result) => {
-        res.render(('courseYearSelect'), {status: 0, message:0, data: result, username})
-    })
-})
 
-Router.post('/courseEdit', (req, res) => {
-    if(year == null){
-        year = req.body.year
-    }
-    
-    Course.find({'year' : year}).populate('subject').populate('instructor').populate('room').populate('student').exec( (err, result) => {
-        res.render('courseEdit', { status: 0, message: "0", data: result, username, year })
-    })
-
-})
-
-Router.get('/addCourse/addSubject', (req, res) => {
-    Subject.find({'year': year}, (err, result) => {
-        res.render(('courseAddSubject'), { status: 0, message: "0", data: result, username,year })
-    } )
-})
 //----------------ADD Room------------
 Router.get('/roomYearSelect', (req, res) => {
     Year.find({}, (err, result) => {
@@ -517,6 +494,7 @@ Router.post('/roomEdit',(req,res) =>{
     year = req.body.year
 
     Room.find({ 'year': year },(err,result) => {
+        console.log(result)
         res.render(('roomEdit'),{ status: 0, message: "0", data: result, username,year })
     })
 })
@@ -571,9 +549,10 @@ Router.get('/roomEdit/delete/:id', async (req, res) => {
     });
 });
 
+//----------------End Add Room------------
+
 
 //----------------ADD SUBJECT------------
-
 Router.get('/subjectYearSelect', (req, res) => {
     Year.find({}, (err, result) => {
         res.render(('subjectYearSelect'), { status: 0, message: "0", data: result, username })
