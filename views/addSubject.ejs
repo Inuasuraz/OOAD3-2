@@ -111,25 +111,10 @@
                
 
             </form>
-
-
-            <!-------------------- table ---------------------->
-
-
-
-
-
-
-            <!-- add button -->
-
-
-
         </div>
 
         <br>
-        </div> <!-- /container -->
-
-
+        </div> 
 
     </section>
 
@@ -275,6 +260,7 @@
         }else if ("<%= status %>" == 3){
             document.getElementById("code").value = '<%= code %>';
             document.getElementById("name").value = '<%= name %>';
+            document.getElementById("button").innerHTML = "EDIT"
 
             status = 0;
         }

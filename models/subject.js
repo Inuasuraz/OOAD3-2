@@ -11,5 +11,5 @@ const subjectSchema = new Schema({
     }
 })
 
-const Subject = mongoose.model('subjects', subjectSchema);
+const Subject = mongoose.model('subject', subjectSchema);
 module.exports = Subject;
