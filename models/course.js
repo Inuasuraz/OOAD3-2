@@ -9,43 +9,25 @@ const courseSchema = new Schema({
     year: {
         type: String
     },
-    subject_code: {
-        type: String
-    },
-    subject_name: {
-        type: String
+    subject: {
+        type: Schema.Types.ObjectId,
+        ref: 'subject'
     },
     group: {
         type: String
     },
-    teacher1: {
-        type: String
-    },
-    teacher2: {
-        type: String
-    },
-    nisit: [
-        {
-        user_id: {
-            type: String
-        },
-        firstname:{
-            type: String
-        },
-        lastname:{
-            type: String
-        },
-        faculty:{
-            type: String
-        },
-        branch:{
-            type: String
-        },
-        year:{
-            type: String
-        }
-        }
-    ]
+    instructor: [{
+        type: Schema.Types.ObjectId,
+        ref: 'instructor'
+    }],
+    student: [{
+        type: Schema.Types.ObjectId,
+        ref: 'student'
+    }],
+    room: {
+        type: Schema.Types.ObjectId,
+        ref: 'room'
+    }
 })
 
 const Course = mongoose.model('course', courseSchema);
