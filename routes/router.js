@@ -13,6 +13,13 @@ var ObjectId = require('mongodb').ObjectID;
 var username;
 var year;
 
+//Variable about course
+var subjectId;
+var instructorId;
+var group;
+var student;
+var room;
+
 
 
 Router.route('/').get(function (req, res) {
@@ -497,6 +504,38 @@ Router.get('/addCourse/addSubject', (req, res) => {
     Subject.find({'year': year}, (err, result) => {
         res.render(('courseAddSubject'), { status: 0, message: "0", data: result, username,year })
     } )
+})
+
+Router.post('/addCourse/addInstructor', (req, res) => {
+    Subject.findOne({'code': req.body.code}, (err, result) => {
+        subjectId = result._id;
+        Instructor.find({}, (err, result2) =>{
+            res.render(('courseAddInstructor'), { 
+                status: 0, 
+                message: "0", 
+                data: result2, 
+                username,
+                year ,
+                course:{ subject: subjectId }
+            })
+        })
+    })
+})
+
+Router.post('/addCourse/addRoom', (req,res) => {
+    instructorId = req.body.checkbox;
+    Room.find({'year': year}, (err, result) => {
+        res.render(('courseAddRoom'), { 
+            status: 0, 
+            message: "0", 
+            data: result,
+            username,
+            year ,
+            course:{ subject: subjectId,
+                     instructor: instructorId}
+        })
+    })
+
 })
 //----------------ADD Room------------
 Router.get('/roomYearSelect', (req, res) => {
