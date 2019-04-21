@@ -109,15 +109,15 @@
                 <tbody>
                     <% for(let i=0; i < data.length; i++) {%>
                     <tr>
-                        <form action="/addSubject" method="POST">
-                            <td><%= data[i].course.subject %></td>
-                            <td><%= data[i].course.subject %></td>
+                        <form action="/exam/examStudent" method="POST">
+                            <td><%= data[i].course.subject.code %></td>
+                            <td><%= data[i].course.subject.name %></td>
                             <td><%= data[i].start %> &nbsp; - &nbsp;<%= data[i].end %></td>
                             <td><%= data[i].room.name %></td>
                             <td><%= data[i].date %></td>
                             <td>
                                     <div style="display:none;">
-                                            <input type="text" name="courseId" value="<%= data[i]._id %>"></input>
+                                            <input type="text" name="examId" value="<%= data[i]._id %>"></input>
                                     </div>
                                     <button type="submit" style="padding: 0;
                                         border: none;
@@ -305,7 +305,7 @@
 
     function del(code) {
         console.log(code)
-        window.location.href = "/courseEdit/delete/" + code;
+        window.location.href = "/examEdit/delete/" + code;
     }
 
 

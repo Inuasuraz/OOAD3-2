@@ -496,12 +496,12 @@ Router.get('/courseYearSelect', (req, res) => {
 })
 
 Router.post('/courseEdit', (req, res) => {
-    if (year == null) { 
+    if (year == null) {
         year = req.body.year
-    }else{
-        if(year == req.body.year){
+    } else {
+        if (year == req.body.year) {
 
-        }else{
+        } else {
             year = req.body.year
         }
     }
@@ -590,23 +590,23 @@ Router.post('/addCourse/addFinish', (req, res) => {
     })
 })
 
-Router.post('/courseEdit/addStudent', (req,res) => {
+Router.post('/courseEdit/addStudent', (req, res) => {
     courseId = req.body.courseId;
 
-    Course.findOne({ '_id' : courseId}).populate('student').exec((err, result) => {
+    Course.findOne({ '_id': courseId }).populate('student').exec((err, result) => {
         res.render('courseAddStudent', { status: 0, message: "2", data: result.student, username, year })
     })
 })
 
-Router.get('/courseEdit/addStudent', (req,res) => {
+Router.get('/courseEdit/addStudent', (req, res) => {
 
-    Course.findOne({ '_id' : courseId}).populate('student').exec((err, result) => {
+    Course.findOne({ '_id': courseId }).populate('student').exec((err, result) => {
         res.render('courseAddStudent', { status: 0, message: "2", data: result.student, username, year })
     })
 })
 
 Router.get('/courseEdit/addStudentEdit', (req, res) => {
-    
+
 
     var id = req.body.id
     var firstname = req.body.firstname
@@ -617,7 +617,7 @@ Router.get('/courseEdit/addStudentEdit', (req, res) => {
 })
 
 Router.post('/courseEdit/addStudentEdit', (req, res) => {
-    
+
 
     var id = req.body.id
     var firstname = req.body.firstname
@@ -642,7 +642,7 @@ Router.post('/courseEdit/addStudent/add', (req, res) => {
     Student.findOne({ user_id: req.body.id }, (err, result) => {
         if (result) {
             Student.findOneAndUpdate({ user_id: req.body.id }, { "$set": { "firstname": req.body.firstname, "lastname": req.body.lastname, "faculty": req.body.faculty, "branch": req.body.branch, "year": req.body.year } }, { upsert: true }, function (err, doc) {
-               Course.findOne({ student: result._id, year: year}, (err, result2) => {
+                Course.findOne({ student: result._id, year: year }, (err, result2) => {
                     if (result2) {
                         console.log(result2 + "a;lkfjasld;kfj;kf")
                         res.redirect('/courseEdit/addStudent')
@@ -657,7 +657,7 @@ Router.post('/courseEdit/addStudent/add', (req, res) => {
                         });
                     }
                 })
-    
+
             });
 
         } else {
@@ -670,12 +670,12 @@ Router.post('/courseEdit/addStudent/add', (req, res) => {
                             student: result._id
                         }
                     }, function (err, doc) {
-                        if (err){
+                        if (err) {
                             console.log(err)
-                        }else{
+                        } else {
                             res.redirect('/courseEdit/addStudent')
-                            
-                        } 
+
+                        }
                     });
                 }
             });
@@ -686,14 +686,14 @@ Router.post('/courseEdit/addStudent/add', (req, res) => {
 
 })
 
-Router.get('/courseEdit/delete/:id', (req, res) =>{
-    Course.findOne({ _id: req.params.id },  (err, result) =>{
+Router.get('/courseEdit/delete/:id', (req, res) => {
+    Course.findOne({ _id: req.params.id }, (err, result) => {
         result.remove();
         res.redirect('/courseEdit');
     });
 })
 
-Router.get('/courseEdit/deleteStudent/:id', (req, res) =>{
+Router.get('/courseEdit/deleteStudent/:id', (req, res) => {
     Course.findOneAndUpdate({ _id: courseId }, { $pull: { student: req.params.id } }, { safe: true }, function (err, doc) {
         if (err) console.log(err)
         else res.redirect(req.get('referer'));
@@ -872,24 +872,30 @@ Router.get('/exam/examYearSelect', (req, res) => {
 })
 
 Router.post('/exam/examEdit', (req, res) => {
-    if (year == null) { 
+    if (year == null) {
         year = req.body.year
-    }else{
-        if(year == req.body.year){
+    } else {
+        if (year == req.body.year) {
 
-        }else{
+        } else {
             year = req.body.year
         }
     }
 
-    Exam.find({ 'year': year }).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+    Exam.find({ 'year': year }).populate({
+        path: 'course',
+        populate: [{ path: 'subject' }]
+    }).populate('room').exec((err, result) => {
         res.render('exam/examEdit', { status: 0, message: "0", data: result, username, year })
     })
 
 })
 
 Router.get('/exam/examEdit', (req, res) => {
-    Exam.find({ 'year': year }).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+    Exam.find({ 'year': year }).populate({
+        path: 'course',
+        populate: [{ path: 'subject' }]
+    }).populate('room').exec((err, result) => {
         res.render('exam/examEdit', { status: 0, message: "0", data: result, username, year })
     })
 
@@ -901,7 +907,7 @@ Router.get('/exam/addExam', (req, res) => {
     })
 })
 
-Router.post('/exam/addExam/addExamRoom',(req,res) =>{
+Router.post('/exam/addExam/addExamRoom', (req, res) => {
     courseId2 = req.body.id
     console.log(courseId2)
     Room.find({ 'year': year }, (err, result) => {
@@ -916,14 +922,14 @@ Router.post('/exam/addExam/addExamRoom',(req,res) =>{
 
 })
 
-Router.post('/exam/addExam/addDate',(req,res) =>{
+Router.post('/exam/addExam/addDate', (req, res) => {
     examRoom = req.body.roomId
     console.log(examRoom)
-    res.render('exam/addExamDate',{ status: 0, message: "0", username, year })
+    res.render('exam/addExamDate', { status: 0, message: "0", username, year })
 
 })
 
-Router.post('/exam/addExam/finish',(req,res) =>{
+Router.post('/exam/addExam/finish', (req, res) => {
     Exam.findOne({}, (err, result) => {
         if (result) {
             newExam = new Exam({
@@ -945,13 +951,30 @@ Router.post('/exam/addExam/finish',(req,res) =>{
             })
         }
         newExam.save((err, result) => {
-            if (err) { console.log(err) }
+            if (err) { console.log(err) } else {
+                res.redirect('/exam/examEdit')
+            }
         });
     })
-    Exam.find({ 'year': year }).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
-        res.render('exam/examEdit', { status: 0, message: "0", data: result, username, year })
-    })
+
 })
+
+Router.get('/examEdit/delete/:id', (req, res) => {
+    Exam.findOne({ _id: req.params.id }, (err, result) => {
+        result.remove()
+        res.redirect('/exam/examEdit');
+    });
+
+})
+
+Router.post('/exam/examStudent',(req,res) =>{
+    Exam.find({_id: req.body.examId}).populate({
+        path: 'course',
+        populate: [{ path: 'student' }]}).exec((err, result) => {
+            res.render(('exam/examStudent'), { status: 0, message: "0", data: result, username, year })
+        })
+})
+
 // end Exam
 
 Router.post('/classEdit/open/:id', (req, res) => {
