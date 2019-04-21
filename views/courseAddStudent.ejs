@@ -153,7 +153,7 @@
                     <% for(let i=0; i < data.length; i++) {%>
                     <tr>
                         <th scope="row"><%= i+1 %></th>
-                        <form action="/addStudentEdit" method="POST">
+                        <form action="/courseEdit/addStudentEdit" method="POST">
                         <td><%= data[i].user_id %></td>
                         <td><%= data[i].firstname %> <%= data[i].lastname %></td>
                         <td><%= data[i].faculty %></td>
@@ -176,7 +176,7 @@
                                 <i class="material-icons">&#xE254;</i></a></button>
                         </form>
                             <a class="delete" title="Delete" data-toggle="tooltip"
-                                onclick="del('<%= data[i].user_id %>')"><i class="material-icons">&#xE872;</i></a>
+                                onclick="del('<%= data[i]._id %>')"><i class="material-icons">&#xE872;</i></a>
                             </td>
                     </tr>
                     <% } %>
@@ -203,55 +203,54 @@
 
 
     <!-- navbar -->
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container">
-
-            <div id="sidebar-wrapper" class="sidebar-toggle">
-
-                <div class="left">
-                    <div class="item active">
-                        <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
-                    </div>
-
-                    <a href="/studentEdit" style="text-decoration: none">
-                        <div class="item">
-                            <i class="fas fa-user-graduate"></i> จัดการนิสิต
-                        </div>
-                    </a>
-                    <a href="/instructorEdit" style="text-decoration: none">
-                        <div class="item">
-                            <i class="fas fa-user-graduate"></i> จัดการอาจารย์
-                        </div>
-                    </a>
-                    <!-- <a href="/buildingEdit" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-building"></i> จัดการตึก
-                    </div></a> -->
-                    <a href="/addYear" style="text-decoration: none">
-                        <div class="item">
+    <nav class="navbar navbar-default" role="navigation" >
+            <div class="container" >
+    
+                <div id="sidebar-wrapper" class="sidebar-toggle">
+    
+                    <div class="left">
+                        <!-- <div class="item active">
+                            <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
+                        </div> -->
+                        
+                        <!-- <a href="/studentEdit" style="text-decoration: none"><div class="item">
+                                <i class="fas fa-user-graduate"></i> จัดการนิสิต
+                        </div></a> -->
+                        <a href="/instructorEdit" style="text-decoration: none"><div class="item">
+                                <i class="fas fa-user-graduate"></i> จัดการอาจารย์
+                        </div></a>
+                        <!-- <a href="/buildingEdit" style="text-decoration: none"><div class="item">
+                            <i class="fas fa-building"></i> จัดการตึก
+                        </div></a> -->
+                        <a href="/addYear" style="text-decoration: none"><div class="item">
                             <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
-                        </div>
-                    </a>
-                    <a href="/yearSelect" style="text-decoration: none">
-                        <div class="item">
+                        </div></a>
+                        <a href="/roomYearSelect" style="text-decoration: none"><div class="item">
+                            <i class="fas fa-couch"></i> จัดการห้อง
+                        </div></a>
+                        <a href="/subjectYearSelect" style="text-decoration: none"><div class="item">
+                            <i class="fas fa-book"></i> จัดการวิชา
+                        </div></a>
+                        <a href="/courseYearSelect" style="text-decoration: none"><div class="item">
                             <i class="fas fa-book-open"></i> จัดการคอร์ส
+                        </div></a>
+                        <div class="item">
+                                <i class="fas fa-tools"></i> จัดการห้องสอบ
                         </div>
-                    </a>
-                    <div class="item">
-                        <i class="fas fa-tools"></i> จัดการห้องสอบ
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-chair"></i> จัดการที่นั่งสอบ
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-user-check"></i> เช็คชื่อนิสิต
+                        <div class="item">
+                                <i class="fas fa-chair"></i> จัดการที่นั่งสอบ
+                        </div>
+                        <!-- <div class="item">
+                                <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
+                        </div>
+                        <div class="item">
+                                <i class="fas fa-user-check"></i> เช็คชื่อนิสิต
+                        </div> -->
                     </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    
 
 
 
@@ -328,7 +327,7 @@
 <script>
     function del(id) {
         console.log(id)
-        window.location.href = "/studentEdit/delete/" + id;
+        window.location.href = "/courseEdit/deleteStudent/" + id;
     }
 
     function upd(id) {

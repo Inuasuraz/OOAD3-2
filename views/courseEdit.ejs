@@ -133,7 +133,7 @@
 
                                 </div>
                         </form>
-                        <a class="delete" title="Delete" data-toggle="tooltip" onclick="del('<%= data[i].code %>%>')"><i
+                        <a class="delete" title="Delete" data-toggle="tooltip" onclick="del('<%= data[i]._id %>%>')"><i
                                 class="material-icons">&#xE872;</i></a></td>
 
 
@@ -306,7 +306,7 @@
 
     function del(code) {
         console.log(code)
-        window.location.href = "/subjectEdit/delete/" + code;
+        window.location.href = "/courseEdit/delete/" + code;
     }
 
 

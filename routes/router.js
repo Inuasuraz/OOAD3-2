@@ -495,8 +495,14 @@ Router.get('/courseYearSelect', (req, res) => {
 })
 
 Router.post('/courseEdit', (req, res) => {
-    if (year == null) {
+    if (year == null) { 
         year = req.body.year
+    }else{
+        if(year == req.body.year){
+
+        }else{
+            year = req.body.year
+        }
     }
 
     Course.find({ 'year': year }).populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
@@ -609,6 +615,17 @@ Router.get('/courseEdit/addStudentEdit', (req, res) => {
     res.render(('courseAddStudentEdit'), { status: 0, message: "0", username, id, firstname, lastname, faculty, branch, year, courseId })
 })
 
+Router.post('/courseEdit/addStudentEdit', (req, res) => {
+    
+
+    var id = req.body.id
+    var firstname = req.body.firstname
+    var lastname = req.body.lastname
+    var faculty = req.body.faculty
+    var branch = req.body.branch
+    res.render(('courseAddStudentEdit'), { status: 3, message: "0", username, id, firstname, lastname, faculty, branch, year, courseId })
+})
+
 Router.post('/courseEdit/addStudent/add', (req, res) => {
     console.log(courseId)
 
@@ -624,28 +641,29 @@ Router.post('/courseEdit/addStudent/add', (req, res) => {
     Student.findOne({ user_id: req.body.id }, (err, result) => {
         if (result) {
             Student.findOneAndUpdate({ user_id: req.body.id }, { "$set": { "firstname": req.body.firstname, "lastname": req.body.lastname, "faculty": req.body.faculty, "branch": req.body.branch, "year": req.body.year } }, { upsert: true }, function (err, doc) {
-                if (err) console.log("ERR")
+               Course.findOne({ student: result._id, year: year}, (err, result2) => {
+                    if (result2) {
+                        console.log(result2 + "a;lkfjasld;kfj;kf")
+                        res.redirect('/courseEdit/addStudent')
+                    } else {
+                        Course.findOneAndUpdate({ _id: courseId }, {
+                            $push: {
+                                student: result._id
+                            }
+                        }, function (err, doc) {
+                            if (err) console.log(err)
+                            else res.redirect('/courseEdit/addStudent')
+                        });
+                    }
+                })
+    
             });
-            Course.findOne({ student: result._id }, (err, result2) => {
-                if (result2) {
-                    res.redirect('/courseEdit/addStudent')
-                } else {
-                    Course.findOneAndUpdate({ _id: courseId }, {
-                        $push: {
-                            student: result._id
-                        }
-                    }, function (err, doc) {
-                        if (err) console.log(err)
-                        else res.redirect('/courseEdit/addStudent')
-                    });
-                }
-            })
-
 
         } else {
             newStudent.save((err, result) => {
                 if (err) { console.log(err) }
                 else {
+
                     Course.findOneAndUpdate({ _id: courseId }, {
                         $push: {
                             student: result._id
@@ -665,24 +683,20 @@ Router.post('/courseEdit/addStudent/add', (req, res) => {
         }
     });
 
+})
 
-    // Course.findOneAndUpdate({ _id: courseId }, {
-    //     $push: {
-    //         student:{
-    //             code: 1
-    //         }
-    //     }
-    // }, function (err, doc) {
-    //     if (err) console.log(err)
-    //     else console.log("OK")
-    // });
+Router.get('/courseEdit/delete/:id', (req, res) =>{
+    Course.findOne({ _id: req.params.id },  (err, result) =>{
+        result.remove();
+        res.redirect('/courseEdit');
+    });
+})
 
-    // Subject.find({}, (err, result) => {
-
-    //     // res.render('studentEdit', { status: 2, message: "แก้ไขข้อมูลสำเร็จ", data: result, username });
-    //     res.redirect('/roomEdit')
-
-    // });
+Router.get('/courseEdit/deleteStudent/:id', (req, res) =>{
+    Course.findOneAndUpdate({ _id: courseId }, { $pull: { student: req.params.id } }, { safe: true }, function (err, doc) {
+        if (err) console.log(err)
+        else res.redirect(req.get('referer'));
+    });
 })
 //----------------ADD Room------------
 Router.get('/roomYearSelect', (req, res) => {
