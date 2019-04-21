@@ -929,7 +929,7 @@ Router.post('/exam/addExam/finish',(req,res) =>{
             newExam = new Exam({
                 year: year,
                 course: courseId2,
-                roomExam: examRoom,
+                room: examRoom,
                 date: req.body.date,
                 start: req.body.start,
                 end: req.body.end
@@ -938,7 +938,7 @@ Router.post('/exam/addExam/finish',(req,res) =>{
             newExam = new Exam({
                 year: year,
                 course: courseId2,
-                roomExam: examRoom,
+                room: examRoom,
                 date: req.body.date,
                 start: req.body.start,
                 end: req.body.end

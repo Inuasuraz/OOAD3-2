@@ -10,7 +10,7 @@ const examSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'course'
     },
-    roomExam: {
+    room: {
         type: Schema.Types.ObjectId,
         ref: 'room'
     },
@@ -26,5 +26,5 @@ const examSchema = new Schema({
     
 })
 
-const Exam = mongoose.model('exams', examSchema);
+const Exam = mongoose.model('exam', examSchema);
 module.exports = Exam;
