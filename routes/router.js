@@ -8,6 +8,7 @@ const Year = require('../models/year');
 const Course = require('../models/course')
 const Subject = require('../models/subject')
 const Room = require('../models/room')
+const Exam = require('../models/exam')
 var ObjectId = require('mongodb').ObjectID;
 
 var username;
@@ -230,114 +231,114 @@ Router.get('/studentEdit/delete/:id', async (req, res) => {
 
 //-----Sunny-----
 
-Router.get('/buildingEdit', (req, res) => {
-    Class.find({}, (err, result) => {
-        console.log(result);
-        res.render('buildingEdit', { status: 0, message: "0", data: result, username });
-    });
-});
+// Router.get('/buildingEdit', (req, res) => {
+//     Class.find({}, (err, result) => {
+//         console.log(result);
+//         res.render('buildingEdit', { status: 0, message: "0", data: result, username });
+//     });
+// });
 
-Router.get('/classEdit/:id', (req, res) => {
-    console.log(req.params.id)
-    Class.find({ name: req.params.id }, (err, result) => {
-        console.log(result);
-        res.render('classEdit', { status: 0, message: "0", data: result, username });
-    });
-})
+// Router.get('/classEdit/:id', (req, res) => {
+//     console.log(req.params.id)
+//     Class.find({ name: req.params.id }, (err, result) => {
+//         console.log(result);
+//         res.render('classEdit', { status: 0, message: "0", data: result, username });
+//     });
+// })
 
-Router.get('/classEdit/del/:id', async (req, res) => {
-    Class.findOne({ user_id: req.params.id }, await function (err, result) {
-        result.remove();
-        console.log(result);
+// Router.get('/classEdit/del/:id', async (req, res) => {
+//     Class.findOne({ user_id: req.params.id }, await function (err, result) {
+//         result.remove();
+//         console.log(result);
 
-        res.redirect('/instructorEdit');
-    });
-});
+//         res.redirect('/instructorEdit');
+//     });
+// });
 
-Router.post('/classEdit/submit/:id', (req, res) => {
-    var day = req.body.day;
-    var time = req.body.time;
-    var num = req.body.num;
-    var sub = req.body.sub;
-    console.log(req.params.id)
-    console.log(day)
-    console.log(time)
-    console.log(num)
-    console.log(sub)
-    if (day == "monday") {
-        console.log("1")
-        Class.updateOne({ 'name': req.params.id, 'monday._id': time }, {
-            $set: {
-                'monday.$.sub': sub,
-                'monday.$.num': num
-            }
-        }, function (err, result) {
-            console.log(result);
-        });
-    } else if (day == "tuesday") {
-        console.log("2")
-        Class.updateOne({ 'name': req.params.id, 'tuesday._id': time }, {
-            $set: {
-                'tuesday.$.sub': sub,
-                'tuesday.$.num': num
-            }
-        }, function (err, result) {
-            console.log(result);
-        });
-    } else if (day == "wednesday") {
-        console.log("3")
-        Class.updateOne({ 'name': req.params.id, 'wednesday._id': time }, {
-            $set: {
-                'wednesday.$.sub': sub,
-                'wednesday.$.num': num
-            }
-        }, function (err, result) {
-            console.log(result);
-        });
-    } else if (day == "thursday") {
-        console.log("4")
-        Class.updateOne({ 'name': req.params.id, 'thursday._id': time }, {
-            $set: {
-                'thursday.$.sub': sub,
-                'thursday.$.num': num
-            }
-        }, function (err, result) {
-            console.log(result);
-        });
-    } else if (day == "friday") {
-        console.log("5")
-        Class.updateOne({ 'name': req.params.id, 'friday._id': time }, {
-            $set: {
-                'friday.$.sub': sub,
-                'friday.$.num': num
-            }
-        }, function (err, result) {
-            console.log(result);
-        });
-    } else if (day == "saturday") {
-        console.log("6")
-        Class.updateOne({ 'name': req.params.id, 'saturday._id': time }, {
-            $set: {
-                'saturday.$.sub': sub,
-                'saturday.$.num': num
-            }
-        }, function (err, result) {
-            console.log(result);
-        });
-    } else if (day == "sunday") {
-        console.log("7")
-        Class.updateOne({ 'name': req.params.id, 'sunday._id': time }, {
-            $set: {
-                'sunday.$.sub': sub,
-                'sunday.$.num': num
-            }
-        }, function (err, result) {
-            console.log(result);
-        });
-    }
-    res.redirect(req.get('referer'));
+// Router.post('/classEdit/submit/:id', (req, res) => {
+//     var day = req.body.day;
+//     var time = req.body.time;
+//     var num = req.body.num;
+//     var sub = req.body.sub;
+//     console.log(req.params.id)
+//     console.log(day)
+//     console.log(time)
+//     console.log(num)
+//     console.log(sub)
+//     if (day == "monday") {
+//         console.log("1")
+//         Class.updateOne({ 'name': req.params.id, 'monday._id': time }, {
+//             $set: {
+//                 'monday.$.sub': sub,
+//                 'monday.$.num': num
+//             }
+//         }, function (err, result) {
+//             console.log(result);
+//         });
+//     } else if (day == "tuesday") {
+//         console.log("2")
+//         Class.updateOne({ 'name': req.params.id, 'tuesday._id': time }, {
+//             $set: {
+//                 'tuesday.$.sub': sub,
+//                 'tuesday.$.num': num
+//             }
+//         }, function (err, result) {
+//             console.log(result);
+//         });
+//     } else if (day == "wednesday") {
+//         console.log("3")
+//         Class.updateOne({ 'name': req.params.id, 'wednesday._id': time }, {
+//             $set: {
+//                 'wednesday.$.sub': sub,
+//                 'wednesday.$.num': num
+//             }
+//         }, function (err, result) {
+//             console.log(result);
+//         });
+//     } else if (day == "thursday") {
+//         console.log("4")
+//         Class.updateOne({ 'name': req.params.id, 'thursday._id': time }, {
+//             $set: {
+//                 'thursday.$.sub': sub,
+//                 'thursday.$.num': num
+//             }
+//         }, function (err, result) {
+//             console.log(result);
+//         });
+//     } else if (day == "friday") {
+//         console.log("5")
+//         Class.updateOne({ 'name': req.params.id, 'friday._id': time }, {
+//             $set: {
+//                 'friday.$.sub': sub,
+//                 'friday.$.num': num
+//             }
+//         }, function (err, result) {
+//             console.log(result);
+//         });
+//     } else if (day == "saturday") {
+//         console.log("6")
+//         Class.updateOne({ 'name': req.params.id, 'saturday._id': time }, {
+//             $set: {
+//                 'saturday.$.sub': sub,
+//                 'saturday.$.num': num
+//             }
+//         }, function (err, result) {
+//             console.log(result);
+//         });
+//     } else if (day == "sunday") {
+//         console.log("7")
+//         Class.updateOne({ 'name': req.params.id, 'sunday._id': time }, {
+//             $set: {
+//                 'sunday.$.sub': sub,
+//                 'sunday.$.num': num
+//             }
+//         }, function (err, result) {
+//             console.log(result);
+//         });
+//     }
+//     res.redirect(req.get('referer'));
 
-});
+// });
 
 
 
@@ -698,6 +699,7 @@ Router.get('/courseEdit/deleteStudent/:id', (req, res) =>{
         else res.redirect(req.get('referer'));
     });
 })
+
 //----------------ADD Room------------
 Router.get('/roomYearSelect', (req, res) => {
     Year.find({}, (err, result) => {
@@ -858,6 +860,99 @@ Router.get('/subjectEdit/delete/:id', async (req, res) => {
 });
 
 //------------------------------End Of Arm-----------------------------------------
+
+// Exam
+var courseId2;
+var examRoom;
+
+Router.get('/exam/examYearSelect', (req, res) => {
+    Year.find({}, (err, result) => {
+        res.render(('exam/examYearSelect'), { status: 0, message: 0, data: result, username })
+    })
+})
+
+Router.post('/exam/examEdit', (req, res) => {
+    if (year == null) { 
+        year = req.body.year
+    }else{
+        if(year == req.body.year){
+
+        }else{
+            year = req.body.year
+        }
+    }
+
+    Exam.find({ 'year': year }).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+        res.render('exam/examEdit', { status: 0, message: "0", data: result, username, year })
+    })
+
+})
+
+Router.get('/exam/examEdit', (req, res) => {
+    Exam.find({ 'year': year }).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+        res.render('exam/examEdit', { status: 0, message: "0", data: result, username, year })
+    })
+
+})
+
+Router.get('/exam/addExam', (req, res) => {
+    Course.find({ 'year': year }).populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+        res.render(('exam/addExam'), { status: 0, message: "0", data: result, username, year })
+    })
+})
+
+Router.post('/exam/addExam/addExamRoom',(req,res) =>{
+    courseId2 = req.body.id
+    console.log(courseId2)
+    Room.find({ 'year': year }, (err, result) => {
+        res.render(('exam/addExamRoom'), {
+            status: 0,
+            message: "0",
+            data: result,
+            username,
+            year
+        })
+    })
+
+})
+
+Router.post('/exam/addExam/addDate',(req,res) =>{
+    examRoom = req.body.roomId
+    console.log(examRoom)
+    res.render('exam/addExamDate',{ status: 0, message: "0", username, year })
+
+})
+
+Router.post('/exam/addExam/finish',(req,res) =>{
+    Exam.findOne({}, (err, result) => {
+        if (result) {
+            newExam = new Exam({
+                year: year,
+                course: courseId2,
+                roomExam: examRoom,
+                date: req.body.date,
+                start: req.body.start,
+                end: req.body.end
+            })
+        } else {
+            newExam = new Exam({
+                year: year,
+                course: courseId2,
+                roomExam: examRoom,
+                date: req.body.date,
+                start: req.body.start,
+                end: req.body.end
+            })
+        }
+        newExam.save((err, result) => {
+            if (err) { console.log(err) }
+        });
+    })
+    Exam.find({ 'year': year }).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+        res.render('exam/examEdit', { status: 0, message: "0", data: result, username, year })
+    })
+})
+// end Exam
 
 Router.post('/classEdit/open/:id', (req, res) => {
 

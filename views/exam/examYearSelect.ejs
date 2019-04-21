@@ -6,13 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/instructorEdit.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" type="text/javascript" src="/js/instructorEdit.js">
     <title>Document</title>
 </head>
 
-<body style="background-image: url(/img/background2.png)">
+<body style="background-image: url(/img/background2.png); font-family: 'Kanit', sans-serif;">
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="banner"
         style="background-color: #1B1B1B;height:60px">
@@ -30,10 +36,10 @@
                 <ul class="navbar-nav ml-auto">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp; <%= username %></a>
+                        <a class="nav-link" href="#"><i class="fas fa-user"></i> &nbsp; <%= username %></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i>  &nbsp; log out</a>
+                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i> &nbsp; log out</a>
                     </li>
 
                 </ul>
@@ -48,17 +54,72 @@
 
             </div>
         </div>
-    </div>
-    <section id="about">
-        <div class="container">
-            <div class="text-intro">
-                
-            </div>
-        </div> -->
+    </div> -->
+    <section style="margin-top:10%">
 
 
-    <!-- navbar -->
-    <nav class="navbar navbar-default" role="navigation" >
+        <br>
+
+
+        <!---------------------------- form ------------------------------>
+
+        <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
+            <br>
+
+            <form method="POST" action="/exam/examEdit">
+                <div class="form-row justify-content-center">
+                    <div class="col-md-8 mb-4 " >
+                        <label style="font-size:40px" for="id">จัดการสอบ</label>
+                    </div>
+                    <div class="col-md-5 mb-3 " >
+                        <label for="id">ปีการศึกษา/ภาคเรียน</label>
+                        <select class="browser-default custom-select" required name="year" id="validationCustom00">
+                            <option selected value="">เลือกปีการศึกษา/ภาคเรียน</option>
+                            <% for(let i=0; i < data.length; i++) {%>
+                                <option value='<%=data[i].year %>'><%= data[i].year %></data></option> 
+                            <% } %>
+                            
+                        </select>   
+                    </div>
+
+                    
+
+                  
+                </div>
+
+            
+                <br>
+                <div class="form-row justify-content-center" >
+                    <div class="col-md-5 mb-5" style="text-align:center;">
+                        <button type="submit" class="btn btn-info " style="background-color: #FF9900 ; border: #FF9900 ; width: 40%;">
+                            <i class="far fa-check-square"></i>
+                            Select
+                        </button>
+                    </div>
+                    
+                </div>
+
+            </form>
+
+
+            <!-------------------- table ---------------------->
+
+            <!-- add button -->
+
+
+
+        </div>
+
+        <br>
+        </div> <!-- /container -->
+
+
+
+    </section>
+
+
+     <!-- navbar -->
+     <nav class="navbar navbar-default" role="navigation" >
         <div class="container" >
 
             <div id="sidebar-wrapper" class="sidebar-toggle">
@@ -66,9 +127,9 @@
                 <div class="left">
                     <!-- <div class="item active">
                         <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
-                    </div> -->
+                    </div>
                     
-                    <!-- <a href="/studentEdit" style="text-decoration: none"><div class="item">
+                    <a href="/studentEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-user-graduate"></i> จัดการนิสิต
                     </div></a> -->
                     <a href="/instructorEdit" style="text-decoration: none"><div class="item">
@@ -89,13 +150,12 @@
                     <a href="/courseYearSelect" style="text-decoration: none"><div class="item">
                         <i class="fas fa-book-open"></i> จัดการคอร์ส
                     </div></a>
-                    <a href="/exam/examYearSelect" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-chair"></i> จัดการสอบ
-                    </div></a>
                     <div class="item">
                             <i class="fas fa-tools"></i> จัดการห้องสอบ
                     </div>
-                    
+                    <div class="item">
+                            <i class="fas fa-chair"></i> จัดการที่นั่งสอบ
+                    </div>
                     <!-- <div class="item">
                             <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
                     </div>
@@ -108,7 +168,7 @@
     </nav>
 
 
-    
+
 
 </body>
 
@@ -116,7 +176,7 @@
 
 <style>
     .right {
-        top: 10%;
+        top: 50%;
         float: left;
         transform: translateY(125%);
     }
@@ -168,6 +228,46 @@
     }
 </style>
 
+
+
+
 <script src="/jquery/dist/jquery.slim.min.js"></script>
 <script src="/popper.js/dist/popper.min.js"></script>
 <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+        function del(id){
+            console.log(id)
+            window.location.href = "/instructorEdit/delete/" +id;
+        }
+    
+        function upd(id){
+            console.log(id)
+            // window.location.href ="/instructorEdit/update/" +id;
+        }
+    
+        if("<%= status %>" == 1 ){
+            console.log("EIEI")
+            swal ( "Oops" , "<%= message %>" ,  "error" ).then(()=> window.location.href = "/instructorEdit")
+            message = "";
+            status = 0;
+            
+        }else if ("<%= status %>" == 2){
+            swal("Success", "<%= message %>", "success").then(()=> window.location.href = "/instructorEdit");
+            message = "";
+            status = 0;
+        }
+
+        function showDetail(id, firstname, lastname, faculty, branch){
+            document.getElementById("id").value = id;
+            document.getElementById("firstname").value = firstname;
+            document.getElementById("lastname").value = lastname;
+            document.getElementById("faculty").value = faculty;
+            document.getElementById("branch").value = branch;
+        }
+        
+</script>
