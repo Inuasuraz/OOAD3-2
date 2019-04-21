@@ -3,9 +3,6 @@ const Schema = mongoose.Schema;
 
 const courseSchema = new Schema({
 
-    _id: {
-        type: String
-    },
     year: {
         type: String
     },

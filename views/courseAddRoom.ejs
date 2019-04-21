@@ -91,65 +91,64 @@
 
             <br> <br>
             <!-------------------- table ---------------------->
-            <form action="/addCourse/addRoom" method="POST">
-                <table class="table table-hover" style="background-color:white">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="width:20%">ชื่อห้อง</th>
-                            <th scope="col" style="width:20%">ตึก</th>
-                            <th scope="col" style="width:20%">ประเภท</th>
-                            <th scope="col" style="width:20%">เลือก</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for(let i=0; i < data.length; i++) {%>
-                        <tr>
 
+            <table class="table table-hover" style="background-color:white">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width:20%">ชื่อห้อง</th>
+                        <th scope="col" style="width:20%">ตึก</th>
+                        <th scope="col" style="width:20%">ประเภท</th>
+                        <th scope="col" style="width:20%">เลือก</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i < data.length; i++) {%>
+                    <tr>
+                        <form action="/addCourse/addFinish" method="POST">
                             <td><%= data[i].name %></td>
                             <td><%= data[i].building %></td>
                             <td><%= data[i].roomType %></td>
                             <td>
+                                <div style="display:none">
+                                    <input type="text" name="roomId" value="<%= data[i]._id  %>"></input>
+                                </div>
+
                                 <button type="submit" style="padding: 0;
                                 border: none;
                                 background: none;"><a class="edit" title="Choose" data-toggle="tooltip">
-                                    <i class="fa fa-cart-plus"></i></a>
+                                        <i class="fa fa-cart-plus"></i></a>
                                 </button>
                             </td>
-                        </tr>
-                        <% } %>
-                    </tbody>
-                </table>
-                <div class="form-row">
-                    <div class="col-md-4 mb-3">
+                        </form>
+                    </tr>
 
-                    </div>
+                    <% } %>
+                </tbody>
+            </table>
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
 
-                    <div class="col-md-4 mb-3">
-
-                    </div>
-
-                    <div class="col-md-4 mb-3" style="margin-top: 3%">
-
-                        <button type="submit" formaction="/addCourse/addGroup" id="button" class="btn btn-info add-new"
-                            style="background-color: #FF9900 ; border: #FF9900 ; float:right; padding-left: 7%; padding-right: 7%">
-                            <!-- <i class="fa fa-reply"></i> -->
-                            ต่อไป
-                        </button>
-                        <button type="submit" formaction="/courseEdit" id="button" class="btn btn-info add-new"
-                            style="background-color: #FF9900 ; border: #FF9900 ; float:right; margin-right: 5%;  ">
-                            ยกเลิก
-                        </button>
-
-
-                    </div>
                 </div>
 
+                <div class="col-md-4 mb-3">
+
+                </div>
+
+                <div class="col-md-4 mb-3" style="margin-top: 3%">
+                    <button type="submit" formaction="/courseEdit" id="button" class="btn btn-info add-new"
+                        style="background-color: #FF9900 ; border: #FF9900 ; float:right; margin-right: 5%;  ">
+                        ยกเลิก
+                    </button>
+
+
+                </div>
+            </div>
+
         </div>
 
         </div>
         <br>
         <br>
-        </form>
         </div> <!-- /container -->
 
 
