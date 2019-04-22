@@ -24,6 +24,7 @@ var courseId;
 
 
 var studentObjId;
+var teacherObjId;
 
 
 Router.route('/').get(function (req, res) {
@@ -59,8 +60,22 @@ Router.post('/main', (req, res) => {
                         res.render('loginPage', { status: 1, message: "Password is wrong" })
                     }
                 }else{
-                    console.log("Username not found");
-                    res.render('loginPage', { status: 1, message: "Username not found" })
+                    Instructor.findOne({'user_id': username},(err,result3) =>{
+                        if (err) { console.log(err) }
+                        if (result3) {
+                            teacherObjId = result3._id
+                            console.log(teacherObjId+" lnw")
+                            if (username === password) {
+                                res.render('teacher/mainTeacher', { username });
+                            } else {
+                                console.log("Password wrong");
+                                res.render('loginPage', { status: 1, message: "Password is wrong" })
+                            }
+                        }else{
+                            console.log("Username not found");
+                            res.render('loginPage', { status: 1, message: "Username not found" })
+                        }
+                    })
                 }
             })
             
@@ -1042,13 +1057,18 @@ Router.post('/student/studentExam', (req, res) => {
     courseId = req.body.courseId;
     var subjectId = req.body.subjectId
     var subjectName = req.body.subjectName
+    var examroom
 
     Exam.findOne({'course': courseId},(err,result)=>{
         console.log(result)
         if (result){
-            Course.findOne({ '_id': courseId }).populate('student').exec((err, result1) => {
-                res.render('student/studentExamList', { status: 0, message: "2", data: result1.student,data2: result, username, year ,subjectId,subjectName})
+            Room.findOne({'_id': result.room},(err,resultRoom) =>{
+                examroom = resultRoom
+                Course.findOne({ '_id': courseId }).populate('student').exec((err, result1) => {
+                    res.render('student/studentExamList', { status: 0, message: "2", data: result1.student,data2: result,room:resultRoom, username, year ,subjectId,subjectName})
+                })
             })
+            
         }else{
             Course.find({$and:[{"year":year},{student: { "$in" : [studentObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result1) => {
                 console.log(result)
@@ -1061,6 +1081,61 @@ Router.post('/student/studentExam', (req, res) => {
 })
 
 // end student
+
+//teacher
+Router.get('/teacher/mainTeacher',(req,res) =>{
+    res.render('teacher/mainTeacher', { username });
+})
+
+Router.get('/teacher/teacherYearSelect', (req, res) => {
+    Year.find({}, (err, result) => {
+        res.render(('teacher/teacherYearSelect'), { status: 0, message: 0, data: result, username })
+    })
+})
+
+Router.post('/teacher/teacherSubject',(req,res) =>{
+    if (year == null) {
+        year = req.body.year
+    } else {
+        if (year == req.body.year) {
+
+        } else {
+            year = req.body.year
+        }
+    }
+    Course.find({$and:[{"year":year},{instructor: { "$in" : [teacherObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+        console.log(result)
+        res.render('teacher/teacherSubject', { status: 0, message: "0", data: result, username, year })
+    })
+})
+
+Router.post('/teacher/teacherExam', (req, res) => {
+    courseId = req.body.courseId;
+    var subjectId = req.body.subjectId
+    var subjectName = req.body.subjectName
+    var examroom
+
+    Exam.findOne({'course': courseId},(err,result)=>{
+        console.log(result)
+        if (result){
+            Room.findOne({'_id': result.room},(err,resultRoom) =>{
+                examroom = resultRoom
+                Course.findOne({ '_id': courseId }).populate('student').exec((err, result1) => {
+                    res.render('teacher/teacherExamList', { status: 0, message: "2", data: result1.student,data2: result,room:resultRoom, username, year ,subjectId,subjectName})
+                })
+            })
+            
+        }else{
+            Course.find({$and:[{"year":year},{instructor: { "$in" : [teacherObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result1) => {
+                console.log(result)
+                res.render('teacher/teacherSubject', { status: 1, message: "ยังไม่มีการสอบ", data: result1, username, year })
+            })
+            
+        }
+    })
+    
+})
+//end teacher
 
 Router.post('/classEdit/open/:id', (req, res) => {
 
