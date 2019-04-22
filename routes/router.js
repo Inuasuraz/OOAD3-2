@@ -23,6 +23,8 @@ var roomId;
 var courseId;
 
 
+var studentObjId;
+
 
 Router.route('/').get(function (req, res) {
     res.render('loginPage', { status: 0, message: "" })
@@ -45,8 +47,23 @@ Router.post('/main', (req, res) => {
                 res.render('loginPage', { status: 1, message: "Password is wrong" })
             }
         } else {
-            console.log("Username not found");
-            res.render('loginPage', { status: 1, message: "Username not found" })
+            Student.findOne({'user_id': username},(err,result2) =>{
+                if (err) { console.log(err) }
+                if (result2) {
+                    studentObjId = result2._id
+                    console.log(studentObjId+" eiei")
+                    if (username === password) {
+                        res.render('student/mainStudent', { username });
+                    } else {
+                        console.log("Password wrong");
+                        res.render('loginPage', { status: 1, message: "Password is wrong" })
+                    }
+                }else{
+                    console.log("Username not found");
+                    res.render('loginPage', { status: 1, message: "Username not found" })
+                }
+            })
+            
         }
     });
 });
@@ -976,6 +993,74 @@ Router.post('/exam/examStudent',(req,res) =>{
 })
 
 // end Exam
+
+// student
+
+Router.get('/student/mainStudent',(req,res) =>{
+    res.render('student/mainStudent', { username });
+})
+
+Router.get('/student/studentYearSelect', (req, res) => {
+    Year.find({}, (err, result) => {
+        res.render(('student/studentYearSelect'), { status: 0, message: 0, data: result, username })
+    })
+})
+
+Router.post('/student/studentSubject',(req,res) =>{
+    if (year == null) {
+        year = req.body.year
+    } else {
+        if (year == req.body.year) {
+
+        } else {
+            year = req.body.year
+        }
+    }
+    Course.find({$and:[{"year":year},{student: { "$in" : [studentObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+        console.log(result)
+        res.render('student/studentSubject', { status: 0, message: "0", data: result, username, year })
+    })
+})
+
+Router.get('/student/studentSubject',(req,res) =>{
+    if (year == null) {
+        year = req.body.year
+    } else {
+        if (year == req.body.year) {
+
+        } else {
+            year = req.body.year
+        }
+    }
+    Course.find({$and:[{"year":year},{student: { "$in" : [studentObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+        console.log(result)
+        res.render('student/studentSubject', { status: 0, message: "0", data: result, username, year })
+    })
+})
+
+Router.post('/student/studentExam', (req, res) => {
+    courseId = req.body.courseId;
+    var subjectId = req.body.subjectId
+    var subjectName = req.body.subjectName
+
+    Exam.findOne({'course': courseId},(err,result)=>{
+        console.log(result)
+        if (result){
+            Course.findOne({ '_id': courseId }).populate('student').exec((err, result1) => {
+                res.render('student/studentExamList', { status: 0, message: "2", data: result1.student,data2: result, username, year ,subjectId,subjectName})
+            })
+        }else{
+            Course.find({$and:[{"year":year},{student: { "$in" : [studentObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result1) => {
+                console.log(result)
+                res.render('student/studentSubject', { status: 1, message: "ยังไม่มีการสอบ", data: result1, username, year })
+            })
+            
+        }
+    })
+    
+})
+
+// end student
 
 Router.post('/classEdit/open/:id', (req, res) => {
 
