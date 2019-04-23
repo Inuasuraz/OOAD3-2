@@ -589,13 +589,14 @@ Router.post('/addCourse/addRoom', (req, res) => {
 
 Router.post('/addCourse/addFinish', (req, res) => {
     roomId = req.body.roomId;
-    Course.findOne({ 'subject': subjectId }, (err, result) => {
+    Course.find({ 'subject': subjectId }, (err, result) => {
         if (result) {
-            group = parseInt(result.group) + 1
+            console.log(result)
+            group = result.length + 1
             newCourse = new Course({
                 year: year,
                 subject: subjectId,
-                group: parseInt(result.group) + 1,
+                group: group,
 
                 instructor: instructorId,
                 room: roomId,
@@ -626,6 +627,8 @@ Router.post('/courseEdit/addStudent', (req, res) => {
     courseId = req.body.courseId;
 
     Course.findOne({ '_id': courseId }).populate('student').exec((err, result) => {
+        group = result.group
+        subjectId = result.subject
         res.render('courseAddStudent', { status: 0, message: "2", data: result.student, username, year })
     })
 })
@@ -674,9 +677,8 @@ Router.post('/courseEdit/addStudent/add', (req, res) => {
     Student.findOne({ user_id: req.body.id }, (err, result) => {
         if (result) {
             Student.findOneAndUpdate({ user_id: req.body.id }, { "$set": { "firstname": req.body.firstname, "lastname": req.body.lastname, "faculty": req.body.faculty, "branch": req.body.branch, "year": req.body.year } }, { upsert: true }, function (err, doc) {
-                Course.findOne({ student: result._id, year: year }, (err, result2) => {
+                Course.findOne({ student: result._id, year: year ,group: group,subject: subjectId}, (err, result2) => {
                     if (result2) {
-                        console.log(result2 + "a;lkfjasld;kfj;kf")
                         res.redirect('/courseEdit/addStudent')
                     } else {
                         Course.findOneAndUpdate({ _id: courseId }, {
