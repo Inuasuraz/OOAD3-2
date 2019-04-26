@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const subjectSchema = new Schema({
-    subject_code : {
+    code : {
         type:String,
-    },
-    subject_name : {
+    },name : {
+        type:String
+    },year : {
         type:String
     }
 })
 
-const Subject = mongoose.model('subjects', subjectSchema);
+const Subject = mongoose.model('subject', subjectSchema);
 module.exports = Subject;

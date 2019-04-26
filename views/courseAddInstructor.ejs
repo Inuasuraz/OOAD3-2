@@ -9,16 +9,27 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/instructorEdit.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" type="text/javascript" src="/js/instructorEdit.js">
-    <title>Document</title>
+    <title>Room Edit</title>
+    <style>
+        td,
+        th {
+            text-align: center;
+        }
+    </style>
+    <script>
+        function del(id) {
+            console.log(id)
+            window.location.href = "/semesterEdit/delete/" + id;
+        }
+    </script>
 </head>
 
-<body style="background-image: url(/img/background2.png); font-family: 'Kanit', sans-serif;">
+<body style="background-image: url(/img/background2.png)" onload="">
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="banner"
         style="background-color: #1B1B1B;height:60px">
@@ -56,7 +67,9 @@
         </div>
     </div> -->
     <section style="margin-top:10%">
+        <div class="container">
 
+        </div>
 
         <br>
 
@@ -65,47 +78,80 @@
 
         <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
             <br>
-
-            <form method="POST" action="/addYear/add">
-                <div class="form-row justify-content-center">
-                    <div class="col-md-5 mb-3 ">
-                        <label style="font-size: 28px" for="id">เพิ่มปีการศึกษา/ภาคเรียน</label>
-                        <br />
-                        <label for="id">ปีการศึกษา</label>
-                        <input type="text" class="form-control" id="year" placeholder="Year" required name="year"
-                            onkeypress="isNumber(event)" maxlength="4">
-                        <br />
-                        <label for="id">เทอม</label>
-                        <input type="text" class="form-control" id="term" placeholder="Semester" required name="term"
-                            onkeypress="isNumber(event)" maxlength="1">
-                    </div>
+            <div class="form-row justify-content-center">
+                <div class="col-md-11 mb-2 ">
+                    <label style="font-size:40px; margin-right:5%" for="id">จัดการคอร์ส</label>
+                    <label style="font-size:40px" for="id"><%= year %></label>
                 </div>
 
-
-                <br>
-                <div class="form-row justify-content-center">
-                    <div class="col-md-5 mb-3" style="text-align:center;">
-                        <button type="submit" class="btn btn-info "
-                            style="background-color: #FF9900 ; border: #FF9900 ; width: 40%;">
-                            <i class="fa fa-plus"></i>
-                            Add
-                        </button>
-                    </div>
-
+                <div class="col-md-9 mb-1 ">
+                    <label style="font-size:30px; margin-right:10%" for="id">2.) เลือกผู้สอน</label>
                 </div>
+            </div>
 
-            </form>
-
-
+            <br> <br>
             <!-------------------- table ---------------------->
+            <form action="/addCourse/addRoom" method="POST">
+                <table class="table table-hover" style="background-color:white">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width:20%">ชื่อ</th>
+                            <th scope="col" style="width:20%">นามสกุล</th>
+                            <th scope="col" style="width:20%">คณะ</th>
+                            <th scope="col" style="width:20%">สาขา</th>
+                            <th scope="col" style="width:20%">เลือก</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(let i=0; i < data.length; i++) {%>
+                        <tr>
 
-            <!-- add button -->
+                            <td><%= data[i].firstname %></td>
+                            <td><%= data[i].lastname %></td>
+                            <td><%= data[i].faculty %></td>
+                            <td><%= data[i].branch %></td>
+                            <td>
+                                <input type="checkbox" name="checkbox" value='<%= data[i]._id %>'><br>
+                            </td>
 
 
+
+
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                    </div>
+
+                    <div class="col-md-4 mb-3" style="margin-top: 3%">
+
+                        <button type="submit" formaction="/addCourse/addRoom" id="button" class="btn btn-info add-new"
+                            style="background-color: #FF9900 ; border: #FF9900 ; float:right; padding-left: 7%; padding-right: 7%">
+                            <!-- <i class="fa fa-reply"></i> -->
+                            ต่อไป
+                        </button>
+                        <button type="submit" formaction="/courseEdit" formmethod="GET" id="button" class="btn btn-info add-new"
+                            style="background-color: #FF9900 ; border: #FF9900 ; float:right; margin-right: 5%;  ">
+                            ยกเลิก
+                        </button>
+
+
+                    </div>
+                </div>
 
         </div>
 
+        </div>
         <br>
+        <br>
+        </form>
         </div> <!-- /container -->
 
 
@@ -121,20 +167,20 @@
 
                 <div class="left">
                     <!-- <div class="item active">
-                            <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
-                        </div> -->
-
+                        <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
+                    </div> -->
+                    
                     <a href="/studentEdit" style="text-decoration: none"><div class="item">
-                                <i class="fas fa-user-graduate"></i> จัดการนิสิต
-                        </div></a>
+                            <i class="fas fa-user-graduate"></i> จัดการนิสิต
+                    </div></a>
                     <a href="/instructorEdit" style="text-decoration: none">
                         <div class="item">
                             <i class="fas fa-user-graduate"></i> จัดการอาจารย์
                         </div>
                     </a>
                     <!-- <a href="/buildingEdit" style="text-decoration: none"><div class="item">
-                            <i class="fas fa-building"></i> จัดการตึก
-                        </div></a> -->
+                        <i class="fas fa-building"></i> จัดการตึก
+                    </div></a> -->
                     <a href="/addYear" style="text-decoration: none">
                         <div class="item">
                             <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
@@ -162,16 +208,15 @@
                         <i class="fas fa-chair"></i> จัดการที่นั่งสอบ
                     </div>
                     <!-- <div class="item">
-                                <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
-                        </div>
-                        <div class="item">
-                                <i class="fas fa-user-check"></i> เช็คชื่อนิสิต
-                        </div> -->
+                            <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
+                    </div>
+                    <div class="item">
+                            <i class="fas fa-user-check"></i> เช็คชื่อนิสิต
+                    </div> -->
                 </div>
             </div>
         </div>
     </nav>
-
 
 
 
@@ -246,26 +291,17 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
-    function isNumber(evt) {
-        var ch = String.fromCharCode(evt.which);
+    if ("<%= status %>" == 0) {
 
-        if (!(/[0-9]/.test(ch))) {
-            evt.preventDefault();
-        }
+    } else if ("<%= status %>" == 1) {
+        swal("Oops", "<%= message %>", "error")
     }
 
-    if ("<%= status %>" == 1) {
-        console.log("EIEI")
-        swal("Oops", "<%= message %>", "error").then(() => window.location.href = "/instructorEdit")
-        message = "";
-        status = 0;
 
-    } else if ("<%= status %>" == 2) {
-        swal("Success", "<%= message %>", "success").then(() => window.location.href = "/instructorEdit");
-        message = "";
-        status = 0;
+    function del(code) {
+        console.log(code)
+        window.location.href = "/subjectEdit/delete/" + code;
     }
-
 
 
 </script>

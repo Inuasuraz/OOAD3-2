@@ -16,13 +16,20 @@
     <link rel="stylesheet" type="text/javascript" src="/js/instructorEdit.js">
     <title>Room Edit</title>
     <style>
-        td,th{
+        td,
+        th {
             text-align: center;
         }
     </style>
+    <script>
+        function del(id) {
+            console.log(id)
+            window.location.href = "/semesterEdit/delete/" + id;
+        }
+    </script>
 </head>
 
-<body style="background-image: url(/img/background2.png)" onload="" >
+<body style="background-image: url(/img/background2.png)" onload="">
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="banner"
         style="background-color: #1B1B1B;height:60px">
@@ -61,7 +68,7 @@
     </div> -->
     <section style="margin-top:10%">
         <div class="container">
-           
+
         </div>
 
         <br>
@@ -71,121 +78,47 @@
 
         <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
             <br>
-            <form method="post" action="/roomEdit/submit/<%=data[0].name%>">
-                <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                            <label for="validationCustom00">วัน</label>
-                            <select class="browser-default custom-select" required name="day" id="validationCustom00">
-                                    <option selected value="">เลือกวัน</option>
-                                    <option value="monday">วันจันทร์</option>
-                                    <option value="tuesday">วันอังคาร</option>
-                                    <option value="wednesday">วันพุธ</option>
-                                    <option value="thursday">วันพฤหัสบดี</option>
-                                    <option value="friday">วันศุกร์</option>
-                                    <option value="saturday">วันเสาร์</option>
-                                    <option value="sunday">วันอาทิตย์</option>
-                                  </select>
-                    </div>
-                    
-
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom01">เวลา</label>
-                        <select class="browser-default custom-select" required name="time" id="validationCustom01">
-                        <option selected value="">เลือกเวลา</option>
-                        <option value="q1">8.00-10.00</option>
-                        <option value="q2">10.00-12.00</option>
-                        <option value="q3">13.00-15.00</option>
-                        <option value="q4">15.00-17.00</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                            <p style="float:right;font-size: 36px;color: #FF9900">ห้อง: <%=data[0].name%></p>   
-                    </div>
-                    
+            <div class="form-row justify-content-center">
+                <div class="col-md-9 mb-3 ">
+                    <label style="font-size:40px; margin-right:10%" for="id">จัดการห้อง</label>
+                    <label style="font-size:40px" for="id"><%= year %></label>
                 </div>
 
-                <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">รหัสวิชา</label>
-                        <input type="text" class="form-control" id="validationCustom02" placeholder="รหัสวิชา" required name="num">
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom03">ชื่อวิชา</label>
-                        <input type="text" class="form-control" id="validationCustom03" placeholder="ชื่อรายวิชา" required name="sub">
-                    </div>
+            </div>
 
-                    <div style="margin-left: 23%; margin-top: 3%">
-                        <button type="submit" class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900" onclick="window.location.reload()">
-                            <i class="fa fa-plus"></i> 
-                            Add New
-                        </button>
-                    </div>
-                </div>
+            <button class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right"
+                onclick="add()">
+                <i class="fa fa-plus"></i>
+                Add New
+            </button>
+            <br> <br>
+            <!-------------------- table ---------------------->
 
-            </form>
-             <!-------------------- table ---------------------->
-
-             <table class="table table-hover" style="background-color:white">
+            <table class="table table-hover" style="background-color:white">
                 <thead>
                     <tr>
-                        <th scope="col" style="width:20%">วัน</th>
-                        <th scope="col" style="width:20%">8.00-10.00</th>
-                        <th scope="col" style="width:20%">10.00-12.00</th>
-                        <th scope="col" style="width:20%">13.00-15.00</th>
-                        <th scope="col" style="width:20%">15.00-17.00</th>
+                        <th scope="col" style="width:20%">ตึก</th>
+                        <th scope="col" style="width:20%">ห้อง</th>
+                        <th scope="col" style="width:20%">ประเภท</th>
+                        <th scope="col" style="width:20%">ตัวเลือก</th>
                     </tr>
                 </thead>
                 <tbody>
-                        <tr>
-                            <th scope="row">วันจันทร์</th>
-                            <td><%= data[0].monday[0].num %> <br> <%= data[0].monday[0].sub %></td>
-                            <td><%= data[0].monday[1].num %> <br> <%= data[0].monday[1].sub %></td>
-                            <td><%= data[0].monday[2].num %> <br> <%= data[0].monday[2].sub %></td>
-                            <td><%= data[0].monday[3].num %> <br> <%= data[0].monday[3].sub %></td>
-                        </tr>
+                    <% for(let i=0; i < data.length; i++) {%>
+                    <tr>
+                        <td><%= data[i].building %></td>
+                        <td><%= data[i].name %></td>
+                        <td><%= data[i].roomType %></td>
+                        <td>
+                            <a class="delete" title="Delete" data-toggle="tooltip"
+                                onclick="del('<%= data[i].name %>%>')"><i class="material-icons">&#xE872;</i></a>
+                        </td>
 
-                        <tr>
-                            <th scope="row">วันอังคาร</th>
-                            <td><%= data[0].tuesday[0].num %> <br> <%= data[0].tuesday[0].sub %></td>
-                            <td><%= data[0].tuesday[1].num %> <br> <%= data[0].tuesday[1].sub %></td>
-                            <td><%= data[0].tuesday[2].num %> <br> <%= data[0].tuesday[2].sub %></td>
-                            <td><%= data[0].tuesday[3].num %> <br> <%= data[0].tuesday[3].sub %></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">วันพุธ</th>
-                            <td><%= data[0].wednesday[0].num %> <br> <%= data[0].wednesday[0].sub %></td>
-                            <td><%= data[0].wednesday[1].num %> <br> <%= data[0].wednesday[1].sub %></td>
-                            <td><%= data[0].wednesday[2].num %> <br> <%= data[0].wednesday[2].sub %></td>
-                            <td><%= data[0].wednesday[3].num %> <br> <%= data[0].wednesday[3].sub %></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">วันพฤหัสบดี</th>
-                            <td><%= data[0].thursday[0].num %> <br> <%= data[0].thursday[0].sub %></td>
-                            <td><%= data[0].thursday[1].num %> <br> <%= data[0].thursday[1].sub %></td>
-                            <td><%= data[0].thursday[2].num %> <br> <%= data[0].thursday[2].sub %></td>
-                            <td><%= data[0].thursday[3].num %> <br> <%= data[0].thursday[3].sub %></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">วันศุกร์</th>
-                            <td><%= data[0].friday[0].num %> <br> <%= data[0].friday[0].sub %></td>
-                            <td><%= data[0].friday[1].num %> <br> <%= data[0].friday[1].sub %></td>
-                            <td><%= data[0].friday[2].num %> <br> <%= data[0].friday[2].sub %></td>
-                            <td><%= data[0].friday[3].num %> <br> <%= data[0].friday[3].sub %></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">วันเสาร์</th>
-                            <td><%= data[0].saturday[0].num %> <br> <%= data[0].saturday[0].sub %></td>
-                            <td><%= data[0].saturday[1].num %> <br> <%= data[0].saturday[1].sub %></td>
-                            <td><%= data[0].saturday[2].num %> <br> <%= data[0].saturday[2].sub %></td>
-                            <td><%= data[0].saturday[3].num %> <br> <%= data[0].saturday[3].sub %></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">วันอาทิตย์</th>
-                            <td><%= data[0].sunday[0].num %> <br> <%= data[0].sunday[0].sub %></td>
-                            <td><%= data[0].sunday[1].num %> <br> <%= data[0].sunday[1].sub %></td>
-                            <td><%= data[0].sunday[2].num %> <br> <%= data[0].sunday[2].sub %></td>
-                            <td><%= data[0].sunday[3].num %> <br> <%= data[0].sunday[3].sub %></td>
-                        </tr>
+
+                    </tr>
+                    <% } %>
+
+
                 </tbody>
             </table>
 
@@ -210,41 +143,58 @@
             <div id="sidebar-wrapper" class="sidebar-toggle">
 
                 <div class="left">
-                    <div class="item active">
-                        <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
-                    </div>
-                    
+                    <!-- <div class="item active">
+                            <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
+                        </div> -->
+
                     <a href="/studentEdit" style="text-decoration: none"><div class="item">
-                            <i class="fas fa-user-graduate"></i> จัดการนิสิต
-                    </div></a>
-                    <a href="/instructorEdit" style="text-decoration: none"><div class="item">
+                                <i class="fas fa-user-graduate"></i> จัดการนิสิต
+                        </div></a>
+                    <a href="/instructorEdit" style="text-decoration: none">
+                        <div class="item">
                             <i class="fas fa-user-graduate"></i> จัดการอาจารย์
-                    </div></a>
+                        </div>
+                    </a>
                     <!-- <a href="/buildingEdit" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-building"></i> จัดการตึก
-                    </div></a> -->
-                    <a href="/addYear" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
-                    </div></a>
-                    <a href="/yearSelect" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-book-open"></i> จัดการคอร์ส
-                    </div></a>
+                            <i class="fas fa-building"></i> จัดการตึก
+                        </div></a> -->
+                    <a href="/addYear" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
+                        </div>
+                    </a>
+                    <a href="/roomYearSelect" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-couch"></i> จัดการห้อง
+                        </div>
+                    </a>
+                    <a href="/subjectYearSelect" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-book"></i> จัดการวิชา
+                        </div>
+                    </a>
+                    <a href="/courseYearSelect" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-book-open"></i> จัดการคอร์ส
+                        </div>
+                    </a>
                     <div class="item">
-                            <i class="fas fa-tools"></i> จัดการห้องสอบ
+                        <i class="fas fa-tools"></i> จัดการห้องสอบ
                     </div>
                     <div class="item">
-                            <i class="fas fa-chair"></i> จัดการที่นั่งสอบ
+                        <i class="fas fa-chair"></i> จัดการที่นั่งสอบ
                     </div>
-                    <div class="item">
-                            <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
-                    </div>
-                    <div class="item">
-                            <i class="fas fa-user-check"></i> เช็คชื่อนิสิต
-                    </div>
+                    <!-- <div class="item">
+                                <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
+                        </div>
+                        <div class="item">
+                                <i class="fas fa-user-check"></i> เช็คชื่อนิสิต
+                        </div> -->
                 </div>
             </div>
         </div>
     </nav>
+
 
 
 
@@ -319,7 +269,20 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
-    function find(data){
-        console.log(data)
+    if ("<%= status %>" == 0) {
+
+    } else if ("<%= status %>" == 1) {
+        swal("Oops", "<%= message %>", "error")
     }
+
+    function add() {
+        window.location.href = "/addRoom";
+    }
+
+    function del(code) {
+        console.log(code)
+        window.location.href = "/roomEdit/delete/" + code;
+    }
+
+
 </script>

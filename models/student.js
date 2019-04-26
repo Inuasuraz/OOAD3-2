@@ -9,7 +9,7 @@ const studentSchema = new Schema({
         unique:true
     },
     firstname :{
-        type:String
+        
     },
     lastname :{
         type:String

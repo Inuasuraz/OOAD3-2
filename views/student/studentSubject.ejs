@@ -14,10 +14,22 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" type="text/javascript" src="/js/instructorEdit.js">
-    <title>Building Edit</title>
+    <title>Room Edit</title>
+    <style>
+        td,
+        th {
+            text-align: center;
+        }
+    </style>
+    <script>
+        function del(id) {
+            console.log(id)
+            window.location.href = "/semesterEdit/delete/" + id;
+        }
+    </script>
 </head>
 
-<body style="background-image: url(/img/background2.png)">
+<body style="background-image: url(/img/background2.png)" onload="">
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="banner"
         style="background-color: #1B1B1B;height:60px">
@@ -56,18 +68,7 @@
     </div> -->
     <section style="margin-top:10%">
         <div class="container">
-            <form class="form">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search" aria-label="Search"
-                        style="padding-left: 20px; border-radius: 40px;" id="mysearch">
-                    <div class="input-group-addon"
-                        style="margin-left: 5px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
-                        <button class="btn btn-warning btn-sm" type="submit"
-                            style="border-radius: 20px;transform: translateY(10%)" id="search-btn"><i
-                                class="fa fa-search"></i></button>
-                    </div>
-                </div>
-            </form>
+
         </div>
 
         <br>
@@ -77,29 +78,58 @@
 
         <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
             <br>
-             <!-------------------- table ---------------------->
+            <div class="form-row justify-content-center">
+                <div class="col-md-10 mb-3 ">
+                    <label style="font-size:40px; margin-right:5%" for="id">รายวิชา</label>
+                    <label style="font-size:40px" for="id"><%= year %></label>
+                </div>
 
-             <table class="table table-hover" style="background-color:white">
+            </div>
+
+            
+            <br> <br>
+            <!-------------------- table ---------------------->
+
+            <table class="table table-hover" style="background-color:white">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">ห้อง</th>
-                        <th scope="col">ประเภทห้อง</th>
-                        <th scope="col">ตัวเลือก</th>
+                        <th scope="col" style="width:20%">รหัสวิชา</th>
+                        <th scope="col" style="width:20%">ชื่อรายวิชา</th>
+                        <th scope="col" style="width:30%">ชื่ออาจารย์</th>
+                        <th scope="col" style="width:20%">ห้องเรียน</th>
+                        <th scope="col" style="width:20%">กลุ่มเรียน</th>
+                        <th scope="col" style="width:20%">รายชื่อ/ที่นั่งสอบ</th>
                     </tr>
                 </thead>
                 <tbody>
-                    
                     <% for(let i=0; i < data.length; i++) {%>
                     <tr>
-                        <th scope="row"><%= i+1 %></th>
-                        <td><%= data[i].name %></td>
-                        <td><%= data[i].roomType %></td>
-                        <td>
-                            <a class="edit" title="Edit" data-toggle="tooltip" href="roomEdit/<%= data[i].name %>"><i class="material-icons">&#xE254;</i></a>
-                        </td>
+                        <form action="/student/studentExam" method="POST">
+                            <td><%= data[i].subject.code %></td>
+                            <td><%= data[i].subject.name %></td>
+                            <td><%= data[i].instructor[0].firstname %> &nbsp; <%= data[i].instructor[0].lastname %></td>
+                            <td><%= data[i].room.name %></td>
+                            <td><%= data[i].group %></td>
+                            <td>
+                                    <div style="display:none;">
+                                            <input type="text" name="courseId" value="<%= data[i]._id %>"></input>
+                                            <input type="text" name="subjectId" value="<%= data[i].subject.code %>"></input>
+                                            <input type="text" name="subjectName" value="<%= data[i].subject.name %>"></input>
+                                    </div>
+                                    <button type="submit" formaction="/student/studentExam" style="padding: 0; border: none; background: none;">
+                                        <a  class="edit" title="Edit" data-toggle="tooltip">
+                                            <i class="fas fa-sticky-note"></i>
+                                        </a>
+                                    </button>
+                            </td>
+                            
+
+
+
                     </tr>
                     <% } %>
+
+
                 </tbody>
             </table>
 
@@ -118,43 +148,33 @@
 
 
     <!-- navbar -->
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container">
+    <nav class="navbar navbar-default" role="navigation" >
+        <div class="container" >
 
             <div id="sidebar-wrapper" class="sidebar-toggle">
 
                 <div class="left">
-                    <div class="item active">
+                    <!-- <div class="item active">
                         <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
-                    </div>
+                    </div> -->
                     
-                    <a href="/studentEdit" style="text-decoration: none"><div class="item">
+                    <!-- <a href="/studentEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-user-graduate"></i> จัดการนิสิต
-                    </div></a>
-                    <a href="/instructorEdit" style="text-decoration: none"><div class="item">
-                            <i class="fas fa-user-graduate"></i> จัดการอาจารย์
+                    </div></a> -->
+                    <a href="/student/studentYearSelect" style="text-decoration: none"><div class="item">
+                            <i class="fas fa-sticky-note"></i> รายวิชา
                     </div></a>
                     <!-- <a href="/buildingEdit" style="text-decoration: none"><div class="item">
                         <i class="fas fa-building"></i> จัดการตึก
                     </div></a> -->
-                    <a href="/addYear" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
-                    </div></a>
-                    <a href="/yearSelect" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-book-open"></i> จัดการคอร์ส
-                    </div></a>
-                    <div class="item">
-                            <i class="fas fa-tools"></i> จัดการห้องสอบ
-                    </div>
-                    <div class="item">
-                            <i class="fas fa-chair"></i> จัดการที่นั่งสอบ
-                    </div>
-                    <div class="item">
+                    
+                    
+                    <!-- <div class="item">
                             <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
                     </div>
                     <div class="item">
                             <i class="fas fa-user-check"></i> เช็คชื่อนิสิต
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -233,6 +253,23 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
- 
+    if ("<%= status %>" == 0) {
+
+    } else if ("<%= status %>" == 1) {
+        swal("Oops", "<%= message %>", "error")
+    }
+
+    if ("<%= message%>" == "2") {
+        swal("Success", "เพิ่มคอร์สสำเร็จ", "success").then(() => window.location.href = "/courseEdit")
+    }
+    function add() {
+        window.location.href = "addCourse/addSubject";
+    }
+
+    function del(code) {
+        console.log(code)
+        window.location.href = "/courseEdit/delete/" + code;
+    }
+
 
 </script>

@@ -66,29 +66,35 @@
         <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
             <br>
 
-            <form method="POST" action="/addYear/add">
+            <form method="POST" action="/subjectEdit">
                 <div class="form-row justify-content-center">
-                    <div class="col-md-5 mb-3 ">
-                        <label style="font-size: 28px" for="id">เพิ่มปีการศึกษา/ภาคเรียน</label>
-                        <br />
-                        <label for="id">ปีการศึกษา</label>
-                        <input type="text" class="form-control" id="year" placeholder="Year" required name="year"
-                            onkeypress="isNumber(event)" maxlength="4">
-                        <br />
-                        <label for="id">เทอม</label>
-                        <input type="text" class="form-control" id="term" placeholder="Semester" required name="term"
-                            onkeypress="isNumber(event)" maxlength="1">
+                    <div class="col-md-8 mb-4 ">
+                        <label style="font-size:40px" for="id">จัดการวิชา</label>
                     </div>
+                    <div class="col-md-5 mb-3 ">
+                        <label for="id">ปีการศึกษา/ภาคเรียน</label>
+                        <select class="browser-default custom-select" required name="year" id="validationCustom00">
+                            <option selected value="">เลือกปีการศึกษา/ภาคเรียน</option>
+                            <% for(let i=0; i < data.length; i++) {%>
+                            <option value='<%=data[i].year %>'><%= data[i].year %></data></option>
+                            <% } %>
+
+                        </select>
+                    </div>
+
+
+
+
                 </div>
 
 
                 <br>
                 <div class="form-row justify-content-center">
-                    <div class="col-md-5 mb-3" style="text-align:center;">
+                    <div class="col-md-5 mb-5" style="text-align:center;">
                         <button type="submit" class="btn btn-info "
                             style="background-color: #FF9900 ; border: #FF9900 ; width: 40%;">
-                            <i class="fa fa-plus"></i>
-                            Add
+                            <i class="far fa-check-square"></i>
+                            Select
                         </button>
                     </div>
 
@@ -246,12 +252,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
-    function isNumber(evt) {
-        var ch = String.fromCharCode(evt.which);
+    function del(id) {
+        console.log(id)
+        window.location.href = "/instructorEdit/delete/" + id;
+    }
 
-        if (!(/[0-9]/.test(ch))) {
-            evt.preventDefault();
-        }
+    function upd(id) {
+        console.log(id)
+        // window.location.href ="/instructorEdit/update/" +id;
     }
 
     if ("<%= status %>" == 1) {
@@ -266,6 +274,12 @@
         status = 0;
     }
 
-
+    function showDetail(id, firstname, lastname, faculty, branch) {
+        document.getElementById("id").value = id;
+        document.getElementById("firstname").value = firstname;
+        document.getElementById("lastname").value = lastname;
+        document.getElementById("faculty").value = faculty;
+        document.getElementById("branch").value = branch;
+    }
 
 </script>

@@ -56,20 +56,7 @@
         </div>
     </div> -->
     <section style="margin-top:10%">
-        <div class="container">
-            <form class="form">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search" aria-label="Search"
-                        style="padding-left: 20px; border-radius: 40px;" id="mysearch">
-                    <div class="input-group-addon"
-                        style="margin-left: 5px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
-                        <button class="btn btn-warning btn-sm" type="submit"
-                            style="border-radius: 20px;transform: translateY(10%)" id="search-btn"><i
-                                class="fa fa-search"></i></button>
-                    </div>
-                </div>
-            </form>
-        </div>
+        
 
         <br>
 
@@ -77,21 +64,8 @@
         <!---------------------------- form ------------------------------>
 
         <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
-            <br>
-
-            <form method="post" action="/semesterEdit/addStudent/<%= id %>">
+            <div style="display:none">
                 <div class="form-row">
-                    <div class="col-md-3.5 mb-4">
-                        <p style="float:right;font-size: 36px;color: #FF9900" name="courseId">รหัสวิชา: <%= id %></p>
-                    </div>
-                    <div class="col-md-5 mb-4">
-                        <p style="float:right;font-size: 36px;color: #FF9900" name="courseId">ชื่อวิชา:
-                            <%= data.subject_name %></p>
-                    </div>
-                </div>
-                <div class="form-row">
-
-
                     <div class="col-md-4 mb-3">
                         <label for="id">รหัสประจำตัว</label>
                         <input type="text" class="form-control" id="id" placeholder="Code" required name="id">
@@ -126,31 +100,30 @@
                         <label for="branch">ชั้นปี</label>
                         <input type="text" class="form-control" id="year" placeholder="Year" required name="year">
                     </div>
-
-
+                </div>
+            </div>
+            <br>
+            <div class="form-row justify-content-center">
+                <div class="col-md-11 mb-2 ">
+                    <label style="font-size:40px; margin-right:5%" for="id">รายชื่อนิสิตวิชา</label>
+                    <label style="font-size:40px; margin-right:5%" for="id"><%= subjectId %> <%= subjectName %></label>
+                    <br>
+                    <label style="font-size:40px; margin-right:5%" for="id">ห้องสอบ</label>
+                    <label style="font-size:40px;" for="id"><%= room.name %></label>
+                    <br>
+                    <label style="font-size:40px; margin-right:5%" for="id">วันที่สอบ</label>
+                    <label style="font-size:40px;" for="id"><%= data2.date %></label>
+                    <br>
+                    <label style="font-size:40px; margin-right:5%" for="id">เวลาสอบ</label>
+                    <label style="font-size:40px; margin-right:5%" for="id"><%= data2.start %> - <%= data2.end %></label>
                 </div>
 
-                <div class="form-row">
-                    <div class="col-md-4 mb-3">
+            </div>
+            
+            <br />
 
-                    </div>
 
-                    <div class="col-md-4 mb-3">
 
-                    </div>
-
-                    <div class="col-md-4 mb-3" style="margin-top: 3%">
-
-                        <button type="submit" class="btn btn-info add-new"
-                            style="background-color: #FF9900 ; border: #FF9900 ; float:right">
-                            <i class="fa fa-plus"></i>
-                            Add New / Edit Data
-                        </button>
-
-                    </div>
-                </div>
-
-            </form>
 
 
             <!-------------------- table ---------------------->
@@ -158,32 +131,35 @@
             <table class="table table-hover" style="background-color:white">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">เลขที่นั่ง</th>
                         <th scope="col">รหัสประจำตัว</th>
-                        <th scope="col"style="text-align:center">ชื่อ - นามสกุล</th>
-                        <th scope="col"style="text-align:center">คณะ</th>
-                        <th scope="col"style="text-align:center">สาขา</th>
-                        <th scope="col" style="text-align:center">ชั้นปี</th>
-                        <th scope="col">ตัวเลือก</th>
+                        <th scope="col">ชื่อ - นามสกุล</th>
+                        <th scope="col">คณะ</th>
+                        <th scope="col">สาขา</th>
+                        <th scope="col">ชั้นปี</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(let i=0; i < data.nisit.length; i++) {%>
+                    <% for(let i=0; i < data.length; i++) {%>
                     <tr>
                         <th scope="row"><%= i+1 %></th>
-                        <td><%= data.nisit[i].user_id %></td>
-                        <td><%= data.nisit[i].firstname %> <%= data.nisit[i].lastname %></td>
-                        <td><%= data.nisit[i].faculty %></td>
-                        <td><%= data.nisit[i].branch %></td>
-                        <td style="text-align:center"><%= data.nisit[i].year %></td>
-                        <td>
+        
+                        <td><%= data[i].user_id %></td>
+                        <td><%= data[i].firstname %> <%= data[i].lastname %></td>
+                        <td><%= data[i].faculty %></td>
+                        <td><%= data[i].branch %></td>
+                        <td><%= data[i].year %></td>
 
-                            <a class="edit" title="Edit" data-toggle="tooltip"
-                                onclick="showDetail('<%= data.nisit[i].user_id %>','<%= data.nisit[i].firstname %>','<%= data.nisit[i].lastname %>','<%= data.nisit[i].faculty %>','<%= data.nisit[i].branch %>','<%= data.nisit[i].year %>')"><i
-                                    class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip"
-                                onclick="del('<%= id %>','<%= data.nisit[i]._id %>')"><i
-                                    class="material-icons">&#xE872;</i></a></td>
+                        <div style="display:none">
+                        <input type="text" name="id" value="<%= data[i].user_id %>"></input>
+                        <input type="text" name="firstname" value="<%= data[i].firstname %>"></input>
+                        <input type="text" name="lastname" value="<%= data[i].lastname %>"></input>
+                        <input type="text" name="faculty" value="<%= data[i].faculty %>"></input>
+                        <input type="text" name="branch" value="<%= data[i].branch %>"></input>
+                        <input type="text" name="year" value="<%= data[i].year %>"></input>
+                        </div>
+                      
                     </tr>
                     <% } %>
                 </tbody>
@@ -209,63 +185,38 @@
 
 
     <!-- navbar -->
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container">
+    <nav class="navbar navbar-default" role="navigation" >
+        <div class="container" >
 
             <div id="sidebar-wrapper" class="sidebar-toggle">
 
                 <div class="left">
                     <!-- <div class="item active">
-                            <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
-                        </div> -->
-
-                    <a href="/studentEdit" style="text-decoration: none"><div class="item">
-                                <i class="fas fa-user-graduate"></i> จัดการนิสิต
-                        </div></a>
-                    <a href="/instructorEdit" style="text-decoration: none">
-                        <div class="item">
-                            <i class="fas fa-user-graduate"></i> จัดการอาจารย์
-                        </div>
-                    </a>
+                        <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
+                    </div> -->
+                    
+                    <!-- <a href="/studentEdit" style="text-decoration: none"><div class="item">
+                            <i class="fas fa-user-graduate"></i> จัดการนิสิต
+                    </div></a> -->
+                    <a href="/teacher/teacherYearSelect" style="text-decoration: none"><div class="item">
+                            <i class="fas fa-sticky-note"></i> รายวิชาที่รับผิดชอบ
+                    </div></a>
                     <!-- <a href="/buildingEdit" style="text-decoration: none"><div class="item">
-                            <i class="fas fa-building"></i> จัดการตึก
-                        </div></a> -->
-                    <a href="/addYear" style="text-decoration: none">
-                        <div class="item">
-                            <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
-                        </div>
-                    </a>
-                    <a href="/roomYearSelect" style="text-decoration: none">
-                        <div class="item">
-                            <i class="fas fa-couch"></i> จัดการห้อง
-                        </div>
-                    </a>
-                    <a href="/subjectYearSelect" style="text-decoration: none">
-                        <div class="item">
-                            <i class="fas fa-book"></i> จัดการวิชา
-                        </div>
-                    </a>
-                    <a href="/courseYearSelect" style="text-decoration: none">
-                        <div class="item">
-                            <i class="fas fa-book-open"></i> จัดการคอร์ส
-                        </div>
-                    </a>
-                    <div class="item">
-                        <i class="fas fa-tools"></i> จัดการห้องสอบ
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-chair"></i> จัดการที่นั่งสอบ
-                    </div>
+                        <i class="fas fa-building"></i> จัดการตึก
+                    </div></a> -->
+                    
+                    
                     <!-- <div class="item">
-                                <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
-                        </div>
-                        <div class="item">
-                                <i class="fas fa-user-check"></i> เช็คชื่อนิสิต
-                        </div> -->
+                            <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
+                    </div>
+                    <div class="item">
+                            <i class="fas fa-user-check"></i> เช็คชื่อนิสิต
+                    </div> -->
                 </div>
             </div>
         </div>
     </nav>
+
 
 
 
@@ -340,10 +291,19 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
-    function del(id, index) {
-        window.location.href = '/semesterEdit/delete/' + id + '/' + index;
+    function del(id) {
+        console.log(id)
+        window.location.href = "/courseEdit/deleteStudent/" + id;
     }
 
+    function upd(id) {
+        console.log(id)
+        // window.location.href ="/instructorEdit/update/" +id;
+    }
+
+    function add(){
+        window.location.href = "/courseEdit/addStudentEdit";
+    }
 
     if ("<%= status %>" == 1) {
         swal("Oops", "<%= message %>", "error").then(() => window.location.href = "/studentEdit")

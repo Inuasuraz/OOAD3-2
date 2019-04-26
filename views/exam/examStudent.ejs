@@ -11,10 +11,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/instructorEdit.css">
+    <link rel="stylesheet" type="text/css" href="/css/studentEdit.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/javascript" src="/js/instructorEdit.js">
+    <link rel="stylesheet" type="text/javascript" src="/js/studentEdit.js">
     <title>Document</title>
 </head>
 
@@ -78,9 +78,7 @@
 
         <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
             <br>
-
             <div style="display:none">
-                
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="id">รหัสประจำตัว</label>
@@ -89,78 +87,77 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="firstname">ชื่อ</label>
-                        <input type="text" class="form-control" id="firstname" placeholder="Firstname" required name="firstname">
+                        <input type="text" class="form-control" id="firstname" placeholder="Firstname" required
+                            name="firstname">
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label for="lastname">นามสกุล</label>
-                        <input type="text" class="form-control" id="lastname" placeholder="Lastname" required name="lastname">
+                        <input type="text" class="form-control" id="lastname" placeholder="Lastname" required
+                            name="lastname">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="faculty">คณะ</label>
-                        <input type="text" class="form-control" id="faculty" placeholder="Faculty" required name="faculty">
+                        <input type="text" class="form-control" id="faculty" placeholder="Faculty" required
+                            name="faculty">
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label for="branch">สาขา</label>
-                        <input type="text" class="form-control" id="branch" placeholder="Branch" required  name="branch">
+                        <input type="text" class="form-control" id="branch" placeholder="Branch" required name="branch">
                     </div>
 
-                    <div class="col-md-4 mb-3" style="margin-top: 3%">
-
-                           
-                        
+                    <div class="col-md-4 mb-3">
+                        <label for="branch">ชั้นปี</label>
+                        <input type="text" class="form-control" id="year" placeholder="Year" required name="year">
                     </div>
+                </div>
+            </div>
+            <br>
+            <div class="form-row justify-content-center">
+                <div class="col-md-11 mb-2 ">
+                    <label style="font-size:40px; margin-right:5%" for="id">จัดการสอบ</label>
+                    <label style="font-size:40px; margin-right:5%" for="id"><%= year %></label>
+                    <label style="font-size:40px;" for="id">รายชื่อนิสิต</label>
                 </div>
 
             </div>
-
-            <button type="submit" class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right"  onclick="add()">
-                    <i class="fa fa-plus"></i> 
-                    Add New
-            </button>
+         
             <br /><br />
+
+
+
+
 
             <!-------------------- table ---------------------->
 
             <table class="table table-hover" style="background-color:white">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">เลขที่นั่งสอบ</th>
                         <th scope="col">รหัสประจำตัว</th>
                         <th scope="col">ชื่อ - นามสกุล</th>
                         <th scope="col">คณะ</th>
                         <th scope="col">สาขา</th>
-                        <th scope="col">ตัวเลือก</th>
+                        <th scope="col">ชั้นปี</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(let i=0; i < data.length; i++) {%>
+                    <% for(let i=0; i < data[0].course.student.length; i++) {%>
                     <tr>
                         <th scope="row"><%= i+1 %></th>
-                        <form action="/addInstructorEdit" method="POST">
-                        <td><%= data[i].user_id %></td>
-                        <td><%= data[i].firstname %> <%= data[i].lastname %></td>
-                        <td><%= data[i].faculty %></td>
-                        <td><%= data[i].branch %></td>
-                        <div style="display:none">
-                                <input type="text" name="id" value="<%= data[i].user_id %>"></input>
-                                <input type="text" name="firstname" value="<%= data[i].firstname %>"></input>
-                                <input type="text" name="lastname" value="<%= data[i].lastname %>"></input>
-                                <input type="text" name="faculty" value="<%= data[i].faculty %>"></input>
-                                <input type="text" name="branch" value="<%= data[i].branch %>"></input>
-                        </div>
-                        <td>
-                          
-                                <button type="submit" style="padding: 0;
-                                border: none;
-                                background: none;"><a  class="edit" title="Edit" data-toggle="tooltip">
-                                    <i class="material-icons">&#xE254;</i></a></button>
-                        </form>
-                            <a class="delete" title="Delete" data-toggle="tooltip"  onclick="del('<%= data[i].user_id %>')"><i class="material-icons">&#xE872;</i></a></td>
+                        
+                        <td><%= data[0].course.student[i].user_id %></td>
+                        <td><%= data[0].course.student[i].firstname %> <%= data[0].course.student[i].lastname %></td>
+                        <td><%= data[0].course.student[i].faculty %></td>
+                        <td><%= data[0].course.student[i].branch %></td>
+                        <td><%= data[0].course.student[i].year %></td>
+                       
+                        
                     </tr>
                     <% } %>
                 </tbody>
@@ -196,9 +193,9 @@
                             <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
                         </div> -->
                         
-                        <a href="/studentEdit" style="text-decoration: none"><div class="item">
+                        <!-- <a href="/studentEdit" style="text-decoration: none"><div class="item">
                                 <i class="fas fa-user-graduate"></i> จัดการนิสิต
-                        </div></a>
+                        </div></a> -->
                         <a href="/instructorEdit" style="text-decoration: none"><div class="item">
                                 <i class="fas fa-user-graduate"></i> จัดการอาจารย์
                         </div></a>
@@ -308,38 +305,40 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
-        function del(id){
-            console.log(id)
-            window.location.href = "/instructorEdit/delete/" +id;
-        }
-    
-        function upd(id){
-            console.log(id)
-            // window.location.href ="/instructorEdit/update/" +id;
-        }
+    function del(id) {
+        console.log(id)
+        window.location.href = "/courseEdit/deleteStudent/" + id;
+    }
 
-        function add(){
-        window.location.href = "/addInstructorEdit";
-        }
-    
-        if("<%= status %>" == 1 ){
-            console.log("EIEI")
-            swal ( "Oops" , "<%= message %>" ,  "error" ).then(()=> window.location.href = "/instructorEdit")
-            message = "";
-            status = 0;
-            
-        }else if ("<%= status %>" == 2){
-            swal("Success", "<%= message %>", "success").then(()=> window.location.href = "/instructorEdit");
-            message = "";
-            status = 0;
-        }
+    function upd(id) {
+        console.log(id)
+        // window.location.href ="/instructorEdit/update/" +id;
+    }
 
-        function showDetail(id, firstname, lastname, faculty, branch){
-            document.getElementById("id").value = id;
-            document.getElementById("firstname").value = firstname;
-            document.getElementById("lastname").value = lastname;
-            document.getElementById("faculty").value = faculty;
-            document.getElementById("branch").value = branch;
-        }
-        
+    function add(){
+        window.location.href = "/courseEdit/addStudentEdit";
+    }
+
+    if ("<%= status %>" == 1) {
+        swal("Oops", "<%= message %>", "error").then(() => window.location.href = "/studentEdit")
+        message = "";
+        status = 0;
+        // window.location.href = "/studentEdit"
+
+    } else if ("<%= status %>" == 2) {
+        swal("Success", "<%= message %>", "success").then(() => window.location.href = "/studentEdit")
+        message = "";
+        status = 0;
+        // window.location.href = "/studentEdit"
+    }
+
+    function showDetail(id, firstname, lastname, faculty, branch, year) {
+        document.getElementById("id").value = id;
+        document.getElementById("firstname").value = firstname;
+        document.getElementById("lastname").value = lastname;
+        document.getElementById("faculty").value = faculty;
+        document.getElementById("branch").value = branch;
+        document.getElementById("year").value = year;
+    }
+
 </script>
