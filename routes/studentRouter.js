@@ -5,12 +5,11 @@ const Year = require('../models/year');
 const Course = require('../models/course')
 const Room = require('../models/room')
 const Exam = require('../models/exam')
-var username;
-var year;
+
+
 
 //Variable about course
-var courseId;
-var studentObjId;
+var year;
 
 Router.get('/addStudentEdit', (req, res) => {
     var id = req.body.id
@@ -107,31 +106,17 @@ Router.get('/student/studentYearSelect', (req, res) => {
 })
 
 Router.post('/student/studentSubject',(req,res) =>{
-    if (year == null) {
-        year = req.body.year
-    } else {
-        if (year == req.body.year) {
-
-        } else {
-            year = req.body.year
-        }
-    }
+    year = req.body.year
     Course.find({$and:[{"year":year},{student: { "$in" : [studentObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
-        console.log(result)
+        
+        console.log(result[0])
         res.render('student/studentSubject', { status: 0, message: "0", data: result, username, year })
     })
 })
 
 Router.get('/student/studentSubject',(req,res) =>{
-    if (year == null) {
-        year = req.body.year
-    } else {
-        if (year == req.body.year) {
 
-        } else {
-            year = req.body.year
-        }
-    }
+    year = req.body.year
     Course.find({$and:[{"year":year},{student: { "$in" : [studentObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
         console.log(result)
         res.render('student/studentSubject', { status: 0, message: "0", data: result, username, year })
@@ -140,7 +125,9 @@ Router.get('/student/studentSubject',(req,res) =>{
 
 Router.post('/student/studentExam', (req, res) => {
     courseId = req.body.courseId;
+    console.log(courseId)
     var subjectId = req.body.subjectId
+    console.log(subjectId)
     var subjectName = req.body.subjectName
     var examroom
 
@@ -149,7 +136,7 @@ Router.post('/student/studentExam', (req, res) => {
         if (result){
             Room.findOne({'_id': result.room},(err,resultRoom) =>{
                 examroom = resultRoom
-                Course.findOne({ '_id': courseId }).populate('student').exec((err, result1) => {
+                Course.findOne({$and:[{"year":year},{student: { "$in" : [studentObjId]}},{ '_id':courseId }]}).populate('student').exec((err, result1) => {
                     res.render('student/studentExamList', { status: 0, message: "2", data: result1.student,data2: result,room:resultRoom, username, year ,subjectId,subjectName})
                 })
             })

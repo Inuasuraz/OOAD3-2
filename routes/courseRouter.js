@@ -104,6 +104,7 @@ Router.post('/addCourse/addFinish', (req, res) => {
 
 Router.post('/courseEdit/addStudent', (req, res) => {
     courseId = req.body.courseId;
+    console.log(courseId)
 
     Course.findOne({ '_id': courseId }).populate('student').exec((err, result) => {
         group = result.group
