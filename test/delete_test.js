@@ -1,36 +1,40 @@
 //inside read_test.js
 const assert = require('assert');
 const Room = require('../models/room')
-let ro;
+const Subject = require('../models/subject');
 
-describe('Delete room details', () => {
+describe('Delete Subject', () => {
     beforeEach((done) => {
-      ro = new Room({  name: 'HongHong' });
-      ro.save()
+        subject = new Subject({
+            code:'886006459',
+            name: 'Sex Education',
+            year: '2561/2'
+        });
+      subject.save()
           .then(() => done());
     });
-    it('removes a room using its instance', (done) => {
-      ro.remove()
-        .then(() => Room.findOne({ name: 'HongHong' }))
-        .then((room) => {
-          assert(room === null);
+    it('removes a subject using its instance', (done) => {
+      subject.remove()
+        .then(() => Subject.findOne({ name: '886006459' }))
+        .then((subjects) => {
+          assert(subjects === null);
           done();
         });
     });
-    it('removes multiple rooms', (done) => {
-      Room.remove({ name: 'HongHong' })
-        .then(() => Room.findOne({ name: 'HongHong' }))
-        .then((room) => {
-          assert(room === null);
+    it('removes multiple subjects', (done) => {
+      Subject.remove({ name: '886006459' })
+        .then(() => Subject.findOne({ name: '886006459' }))
+        .then((subjects) => {
+          assert(subjects === null);
           done();
         });
     });
   
-    it('removes a room', (done) => {
-      Room.findOneAndRemove({ name: 'HongHong' })
-        .then(() => Room.findOne({ name: 'HongHong' }))
-        .then((room) => {
-          assert(room === null);
+    it('removes a subject', (done) => {
+      Subject.findOneAndRemove({ name: '886006459' })
+        .then(() => Subject.findOne({ name: '886006459' }))
+        .then((subjects) => {
+          assert(subjects === null);
           done();
         });
     });
