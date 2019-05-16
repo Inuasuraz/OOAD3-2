@@ -3,6 +3,7 @@ const assert = require('assert');
 const Room = require('../models/room')
 const Course = require('../models/course')
 const Subject = require('../models/subject');
+const Exam = require('../models/exam');
 
 describe('Creating Subject', () => {
     it('creates new Subject', (done) => {
@@ -21,22 +22,24 @@ describe('Creating Subject', () => {
     });
 });
 
-// describe('Creating Course', () => {
-//     it('creates Course group1 year 2556/2', (done) => {
-//         //assertion is not included in mocha so 
-//         //require assert which was installed along with mocha
-//         course = new Course({
-//             subject: '5cceb4981c9d440000db54bc',
-//             instructor: ['5cceb9e91c9d440000db54bd'],
-//             student:[],
-//             group: '1',
-//             year: '2561/2',
+describe('Creating Exam', () => {
+    it('creates Exam', (done) => {
+        //assertion is not included in mocha so 
+        //require assert which was installed along with mocha
+        exam = new Exam({
+            course: '5cceb4981c9d440000db54bc',
+            instructor: ['5cceb9e91c9d440000db54bd'],
+            room: '5cceb4981c9d440000db54bc',
+            date: '17/08/2540',
+            start: '18.00',
+            end: '20.00',
+            year: '2561/2',
     
-//         });
-//         course.save() //takes some time and returns a promise
-//             .then(() => {
-//                 assert(!course.isNew); //if poke is saved to db it is not new
-//                 done();
-//             });
-//     });
-// });
+        });
+        exam.save() //takes some time and returns a promise
+            .then(() => {
+                assert(!exam.isNew); //if poke is saved to db it is not new
+                done();
+            });
+    });
+});

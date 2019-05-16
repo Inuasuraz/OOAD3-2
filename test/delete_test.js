@@ -2,6 +2,7 @@
 const assert = require('assert');
 const Room = require('../models/room')
 const Subject = require('../models/subject');
+const Exam = require('../models/exam');
 
 describe('Delete Subject', () => {
     beforeEach((done) => {
@@ -13,7 +14,7 @@ describe('Delete Subject', () => {
       subject.save()
           .then(() => done());
     });
-    it('removes a subject using its instance', (done) => {
+    it('removes a exam using its instance', (done) => {
       subject.remove()
         .then(() => Subject.findOne({ name: '886006459' }))
         .then((subjects) => {
@@ -30,7 +31,7 @@ describe('Delete Subject', () => {
         });
     });
   
-    it('removes a subject', (done) => {
+    it('removes a exam', (done) => {
       Subject.findOneAndRemove({ name: '886006459' })
         .then(() => Subject.findOne({ name: '886006459' }))
         .then((subjects) => {
@@ -39,4 +40,47 @@ describe('Delete Subject', () => {
         });
     });
   
+})
+
+describe('Delete Exam', () => {
+  beforeEach((done) => {
+    exam = new Exam({
+      course: '5cceb4981c9d440000db54bc',
+      instructor: ['5cceb9e91c9d440000db54bd'],
+      room: '5cceb4981c9d440000db54bc',
+      date: '17/08/2540',
+      start: '18.00',
+      end: '20.00',
+      year: '2561/2',
+
+    });
+    exam.save()
+        .then(() => done());
+  });
+  it('removes a exam using its instance', (done) => {
+    exam.remove()
+      .then(() => Exam.findOne({ course: '5cceb4981c9d440000db54bc',date: '17/08/2540', start: '18.00'}))
+      .then((exams) => {
+        assert(exams === null);
+        done();
+      });
+  });
+  it('removes multiple Exam', (done) => {
+    Exam.remove({course: '5cceb4981c9d440000db54bc',date: '17/08/2540', start: '18.00' })
+      .then(() => Exam.findOne({course: '5cceb4981c9d440000db54bc',date: '17/08/2540', start: '18.00' }))
+      .then((exams) => {
+        assert(exams === null);
+        done();
+      });
+  });
+
+  it('removes a exam', (done) => {
+    Exam.findOneAndRemove({ course: '5cceb4981c9d440000db54bc',date: '17/08/2540', start: '18.00' })
+      .then(() => Exam.findOne({ course: '5cceb4981c9d440000db54bc',date: '17/08/2540', start: '18.00' }))
+      .then((exams) => {
+        assert(exams === null);
+        done();
+      });
+  });
+
 })
