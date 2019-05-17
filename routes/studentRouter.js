@@ -5,12 +5,10 @@ const Year = require('../models/year');
 const Course = require('../models/course')
 const Room = require('../models/room')
 const Exam = require('../models/exam')
-var username;
-var year;
+
 
 //Variable about course
-var courseId;
-var studentObjId;
+
 
 Router.get('/addStudentEdit', (req, res) => {
     var id = req.body.id
@@ -107,15 +105,7 @@ Router.get('/student/studentYearSelect', (req, res) => {
 })
 
 Router.post('/student/studentSubject',(req,res) =>{
-    if (year == null) {
         year = req.body.year
-    } else {
-        if (year == req.body.year) {
-
-        } else {
-            year = req.body.year
-        }
-    }
     Course.find({$and:[{"year":year},{student: { "$in" : [studentObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
         console.log(result)
         res.render('student/studentSubject', { status: 0, message: "0", data: result, username, year })
@@ -123,15 +113,7 @@ Router.post('/student/studentSubject',(req,res) =>{
 })
 
 Router.get('/student/studentSubject',(req,res) =>{
-    if (year == null) {
         year = req.body.year
-    } else {
-        if (year == req.body.year) {
-
-        } else {
-            year = req.body.year
-        }
-    }
     Course.find({$and:[{"year":year},{student: { "$in" : [studentObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
         console.log(result)
         res.render('student/studentSubject', { status: 0, message: "0", data: result, username, year })

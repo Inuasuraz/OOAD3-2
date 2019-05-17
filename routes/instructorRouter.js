@@ -106,15 +106,7 @@ Router.get('/teacher/teacherYearSelect', (req, res) => {
 })
 
 Router.post('/teacher/teacherSubject',(req,res) =>{
-    if (year == null) {
-        year = req.body.year
-    } else {
-        if (year == req.body.year) {
-
-        } else {
-            year = req.body.year
-        }
-    }
+    year = req.body.year
     Course.find({$and:[{"year":year},{instructor: { "$in" : [teacherObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
         console.log(result)
         res.render('teacher/teacherSubject', { status: 0, message: "0", data: result, username, year })
