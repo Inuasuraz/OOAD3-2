@@ -35,7 +35,7 @@
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa fa-calendar" ></i> &nbsp; <%= year %></a>
+                        <a class="nav-link" href="#"><i class="fa fa-calendar" ></i> &nbsp; <%= semester %></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp; <%= username %></a>
@@ -293,24 +293,11 @@
             message = "";
             status = 0;
 
-        }else if ("<%= status %>" == 3){
-            document.getElementById("id").value = '<%= id %>';
-            document.getElementById("firstname").value = '<%= firstname %>';
-            document.getElementById("lastname").value = '<%= lastname %>';
-            document.getElementById("faculty").value = '<%= faculty %>';
-            document.getElementById("branch").value = '<%= branch %>';
-            document.getElementById("year").value = '<%= year %>';
-            document.getElementById("button").innerHTML = "Edit";
+        }else if("<%= status %>" == 3 ){
+            swal ( "Oops" , "<%= message %>" ,  "error").then(()=> window.location.href = "/addStudentEdit")
+            message = "";
             status = 0;
-        }
-
-        function showDetail(id, firstname, lastname, faculty, branch,year){
-            document.getElementById("id").value = id;
-            document.getElementById("firstname").value = firstname;
-            document.getElementById("lastname").value = lastname;
-            document.getElementById("faculty").value = faculty;
-            document.getElementById("branch").value = branch;
-            document.getElementById("year").value = year;
+            
         }
         
 </script>

@@ -22,17 +22,17 @@ Router.post('/addYear/add', (req, res) => {
 })
 
 Router.post('/changeYearAdmin',(req, res) =>{
-    year = req.body.year
+    semester = req.body.year
     res.redirect("/mainPage")
 })
 
 Router.post('/changeYearTeacher',(req, res) =>{
-    year = req.body.year
+    semester = req.body.year
     res.redirect("/teacher/mainTeacher")
 })
 
 Router.post('/changeYearStudent',(req, res) =>{
-    year = req.body.year
+    semester = req.body.year
     res.redirect("/student/mainStudent")
 })
 

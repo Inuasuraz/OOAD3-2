@@ -10,48 +10,48 @@ const Exam = require('../models/exam')
 
 Router.get('/exam/examYearSelect', (req, res) => {
     Year.find({}, (err, result) => {
-        res.render(('exam/examYearSelect'), { status: 0, message: 0, data: result, username })
+        res.render(('exam/examYearSelect'), { status: 0, message: 0, data: result, username , semester})
     })
 })
 
 Router.post('/exam/examEdit', (req, res) => {
-     year = req.body.year
+    semester = req.body.year
 
-    Exam.find({ 'year': year }).populate({
+    Exam.find({ 'year': semester }).populate({
         path: 'course',
         populate: [{ path: 'subject' }]
     }).populate('room').exec((err, result) => {
-        res.render('exam/examEdit', { status: 0, message: "0", data: result, username, year })
+        res.render('exam/examEdit', { status: 0, message: "0", data: result, username, semester })
     })
 
 })
 
 Router.get('/exam/examEdit', (req, res) => {
-    Exam.find({ 'year': year }).populate({
+    Exam.find({ 'year': semester }).populate({
         path: 'course',
         populate: [{ path: 'subject' }]
     }).populate('room').exec((err, result) => {
-        res.render('exam/examEdit', { status: 0, message: "0", data: result, username, year })
+        res.render('exam/examEdit', { status: 0, message: "0", data: result, username,semester })
     })
 
 })
 
 Router.get('/exam/addExam', (req, res) => {
-    Course.find({ 'year': year }).populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
-        res.render(('exam/addExam'), { status: 0, message: "0", data: result, username, year })
+    Course.find({ 'year': semester }).populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+        res.render(('exam/addExam'), { status: 0, message: "0", data: result, username , semester})
     })
 })
 
 Router.post('/exam/addExam/addExamRoom', (req, res) => {
     courseId2 = req.body.id
     console.log(courseId2)
-    Room.find({ 'year': year }, (err, result) => {
+    Room.find({ 'year': semester }, (err, result) => {
         res.render(('exam/addExamRoom'), {
             status: 0,
             message: "0",
             data: result,
             username,
-            year
+            semester
         })
     })
 
@@ -60,7 +60,7 @@ Router.post('/exam/addExam/addExamRoom', (req, res) => {
 Router.post('/exam/addExam/addDate', (req, res) => {
     examRoom = req.body.roomId
     console.log(examRoom)
-    res.render('exam/addExamDate', { status: 0, message: "0", username, year })
+    res.render('exam/addExamDate', { status: 0, message: "0", username, semester})
 
 })
 
@@ -68,7 +68,7 @@ Router.post('/exam/addExam/finish', (req, res) => {
     Exam.findOne({}, (err, result) => {
         if (result) {
             newExam = new Exam({
-                year: year,
+                year: semester,
                 course: courseId2,
                 room: examRoom,
                 date: req.body.date,
@@ -77,7 +77,7 @@ Router.post('/exam/addExam/finish', (req, res) => {
             })
         } else {
             newExam = new Exam({
-                year: year,
+                year: semester,
                 course: courseId2,
                 room: examRoom,
                 date: req.body.date,
@@ -106,7 +106,7 @@ Router.post('/exam/examStudent',(req,res) =>{
     Exam.find({_id: req.body.examId}).populate({
         path: 'course',
         populate: [{ path: 'student' }]}).exec((err, result) => {
-            res.render(('exam/examStudent'), { status: 0, message: "0", data: result, username, year })
+            res.render(('exam/examStudent'), { status: 0, message: "0", data: result, username ,semester})
         })
 })
 
