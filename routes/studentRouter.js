@@ -95,7 +95,12 @@ Router.get('/studentEdit/delete/:id', async (req, res) => {
 });
 
 Router.get('/student/mainStudent',(req,res) =>{
-    res.render('student/mainStudent', { username });
+    Year.find({},(err,result) =>{
+        if (err){
+        }else{
+            res.render('student/mainStudent', { username,year,data:result});
+        }
+    })
 })
 
 Router.get('/student/studentYearSelect', (req, res) => {
@@ -113,7 +118,6 @@ Router.post('/student/studentSubject',(req,res) =>{
 })
 
 Router.get('/student/studentSubject',(req,res) =>{
-        year = req.body.year
     Course.find({$and:[{"year":year},{student: { "$in" : [studentObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
         console.log(result)
         res.render('student/studentSubject', { status: 0, message: "0", data: result, username, year })

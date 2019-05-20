@@ -96,7 +96,13 @@ Router.post('/addinstructorEdit/submit', (req, res) => {
 //-------------------------------------------------------------
 
 Router.get('/teacher/mainTeacher',(req,res) =>{
-    res.render('teacher/mainTeacher', { username });
+    Year.find({},(err,result) =>{
+        if (err){
+            
+        }else{
+            res.render('teacher/mainTeacher', {username,year,data:result});
+        }
+    })
 })
 
 Router.get('/teacher/teacherYearSelect', (req, res) => {
@@ -107,6 +113,12 @@ Router.get('/teacher/teacherYearSelect', (req, res) => {
 
 Router.post('/teacher/teacherSubject',(req,res) =>{
     year = req.body.year
+    Course.find({$and:[{"year":year},{instructor: { "$in" : [teacherObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+        console.log(result)
+        res.render('teacher/teacherSubject', { status: 0, message: "0", data: result, username, year })
+    })
+})
+Router.get('/teacher/teacherSubject',(req,res) =>{
     Course.find({$and:[{"year":year},{instructor: { "$in" : [teacherObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
         console.log(result)
         res.render('teacher/teacherSubject', { status: 0, message: "0", data: result, username, year })

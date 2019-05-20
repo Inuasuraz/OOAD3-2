@@ -3,18 +3,28 @@ const Router = express.Router();
 const User = require('../models/user');
 const Student = require('../models/student');
 const Instructor = require('../models/instructor');
+const Year = require('../models/year');
 
 
 Router.post('/main', (req, res) => {
     username = req.body.username
     let password = req.body.password
+    year = "2561/2"
+
 
     User.findOne({ username }, (err, result) => {
         if (err) { console.log(err) }
         if (result) {
             if (result.password == password) {
                 console.log(result);
-                res.render('mainPage', { username });
+                Year.find({},(err,result) =>{
+                    if (err){
+                        
+                    }else{
+                        res.render('mainPage', {username,year,data:result});
+                    }
+                })
+                
             } else {
                 console.log("Password wrong");
                 res.render('loginPage', { status: 1, message: "Password is wrong" })
@@ -26,7 +36,14 @@ Router.post('/main', (req, res) => {
                     studentObjId = result2._id
                     console.log(studentObjId+" eiei")
                     if (username === password) {
-                        res.render('student/mainStudent', { username });
+                        Year.find({},(err,result) =>{
+                            if (err){
+                                
+                            }else{
+                                res.render('student/mainStudent', { username,year,data:result});
+                            }
+                        })
+                        
                     } else {
                         console.log("Password wrong");
                         res.render('loginPage', { status: 1, message: "Password is wrong" })
@@ -38,7 +55,13 @@ Router.post('/main', (req, res) => {
                             teacherObjId = result3._id
                             console.log(teacherObjId+" lnw")
                             if (username === password) {
-                                res.render('teacher/mainTeacher', { username });
+                                Year.find({},(err,result) =>{
+                                    if (err){
+                                        
+                                    }else{
+                                        res.render('teacher/mainTeacher', {username,year,data:result});
+                                    }
+                                })
                             } else {
                                 console.log("Password wrong");
                                 res.render('loginPage', { status: 1, message: "Password is wrong" })
@@ -56,7 +79,13 @@ Router.post('/main', (req, res) => {
 });
 
 Router.get('/mainPage', (req, res) => {
-    res.render('mainPage', { username })
+    Year.find({},(err,result) =>{
+        if (err){
+            
+        }else{
+            res.render('mainPage', {username,year,data:result});
+        }
+    })
 });
 
 module.exports = Router;

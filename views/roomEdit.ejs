@@ -46,13 +46,13 @@
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa fa-calendar"></i> &nbsp; 2561/2</a>
+                        <a class="nav-link" href="#"><i class="fa fa-calendar" ></i> &nbsp; <%= year %></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i> &nbsp; <%= username %></a>
+                        <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp; <%= username %></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i> &nbsp; log out</a>
+                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i>  &nbsp; log out</a>
                     </li>
 
                 </ul>
@@ -146,52 +146,43 @@
 
                 <div class="left">
                     <!-- <div class="item active">
-                            <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
-                        </div> -->
-
+                        <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
+                    </div> -->
+                    
                     <a href="/studentEdit" style="text-decoration: none"><div class="item">
-                                <i class="fas fa-user-graduate"></i> จัดการนิสิต
-                        </div></a>
-                    <a href="/instructorEdit" style="text-decoration: none">
-                        <div class="item">
+                            <i class="fas fa-user-graduate"></i> จัดการนิสิต
+                    </div></a>
+                    <a href="/instructorEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-user-graduate"></i> จัดการอาจารย์
-                        </div>
-                    </a>
+                    </div></a>
                     <!-- <a href="/buildingEdit" style="text-decoration: none"><div class="item">
-                            <i class="fas fa-building"></i> จัดการตึก
-                        </div></a> -->
-                    <a href="/addYear" style="text-decoration: none">
-                        <div class="item">
-                            <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
-                        </div>
-                    </a>
-                    <a href="/roomYearSelect" style="text-decoration: none">
-                        <div class="item">
-                            <i class="fas fa-couch"></i> จัดการห้อง
-                        </div>
-                    </a>
-                    <a href="/subjectYearSelect" style="text-decoration: none">
-                        <div class="item">
-                            <i class="fas fa-book"></i> จัดการวิชา
-                        </div>
-                    </a>
-                    <a href="/courseYearSelect" style="text-decoration: none">
-                        <div class="item">
-                            <i class="fas fa-book-open"></i> จัดการคอร์ส
-                        </div>
-                    </a>
+                        <i class="fas fa-building"></i> จัดการตึก
+                    </div></a> -->
+                    <a href="/addYear" style="text-decoration: none"><div class="item">
+                        <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
+                    </div></a>
+                    <a href="/roomEdit" style="text-decoration: none"><div class="item">
+                        <i class="fas fa-couch"></i> จัดการห้อง
+                    </div></a>
+                    <a href="/subjectEdit" style="text-decoration: none"><div class="item">
+                        <i class="fas fa-book"></i> จัดการวิชา
+                    </div></a>
+                    <a href="/courseEdit" style="text-decoration: none"><div class="item">
+                        <i class="fas fa-book-open"></i> จัดการคอร์ส
+                    </div></a>
+                    <a href="/exam/examEdit" style="text-decoration: none"><div class="item">
+                        <i class="fas fa-chair"></i> จัดการสอบ
+                    </div></a>
                     <div class="item">
-                        <i class="fas fa-tools"></i> จัดการห้องสอบ
+                            <i class="fas fa-tools"></i> จัดการห้องสอบ
                     </div>
-                    <div class="item">
-                        <i class="fas fa-chair"></i> จัดการที่นั่งสอบ
-                    </div>
+                    
                     <!-- <div class="item">
-                                <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
-                        </div>
-                        <div class="item">
-                                <i class="fas fa-user-check"></i> เช็คชื่อนิสิต
-                        </div> -->
+                            <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
+                    </div>
+                    <div class="item">
+                            <i class="fas fa-user-check"></i> เช็คชื่อนิสิต
+                    </div> -->
                 </div>
             </div>
         </div>
