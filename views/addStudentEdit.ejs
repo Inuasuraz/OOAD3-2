@@ -70,7 +70,7 @@
         <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
             <br>
 
-            <form method="post" action="/addStudentEdit/submit">
+            <form method="post" action="/addStudentEdit/submit" id="formSubmit">
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="id">รหัสประจำตัว</label>
@@ -298,6 +298,16 @@
             message = "";
             status = 0;
             
+        }else if ("<%= status %>" == 4){
+            document.getElementById("id").value = "<%= id %>"
+            document.getElementById("firstname").value = "<%= firstname %>"
+            document.getElementById("lastname").value = "<%= lastname %>"
+            document.getElementById("faculty").value = "<%= faculty %>"
+            document.getElementById("branch").value = "<%= branch %>"
+            document.getElementById("year").value = "<%= year %>"
+            document.getElementById("id").readOnly = true;
+            document.getElementById("formSubmit").action = '/studentEdit/editData/submit'
+            document.getElementById("button").innerText = "Edit Data"
         }
         
 </script>

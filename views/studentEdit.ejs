@@ -35,13 +35,14 @@
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa fa-calendar" ></i> &nbsp; <%= semester %></a>
+                        <a class="nav-link" href="#"><i class="fa fa-calendar"></i> &nbsp; <%= semester %></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp; <%= username %></a>
+                        <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp;
+                            <%= username %></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i>  &nbsp; log out</a>
+                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i> &nbsp; log out</a>
                     </li>
 
                 </ul>
@@ -118,7 +119,8 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right" onclick="add()">
+            <button class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right"
+                onclick="add()">
                 <i class="fa fa-plus"></i>
                 Add New
             </button>
@@ -147,30 +149,30 @@
                     <tr>
                         <th scope="row"><%= i+1 %></th>
                         <form action="/addStudentEdit" method="POST">
-                        <td><%= data[i].user_id %></td>
-                        <td><%= data[i].firstname %> <%= data[i].lastname %></td>
-                        <td><%= data[i].faculty %></td>
-                        <td><%= data[i].branch %></td>
-                        <td><%= data[i].year %></td>
-                        <div style="display:none">
-                        <input type="text" name="id" value="<%= data[i].user_id %>"></input>
-                        <input type="text" name="firstname" value="<%= data[i].firstname %>"></input>
-                        <input type="text" name="lastname" value="<%= data[i].lastname %>"></input>
-                        <input type="text" name="faculty" value="<%= data[i].faculty %>"></input>
-                        <input type="text" name="branch" value="<%= data[i].branch %>"></input>
-                        <input type="text" name="year" value="<%= data[i].year %>"></input>
-                        </div>
-                        <td>
-                        
+                            <td><%= data[i].user_id %></td>
+                            <td><%= data[i].firstname %> <%= data[i].lastname %></td>
+                            <td><%= data[i].faculty %></td>
+                            <td><%= data[i].branch %></td>
+                            <td><%= data[i].year %></td>
+                            <div style="display:none">
+                                <input type="text" name="id" value="<%= data[i].user_id %>"></input>
+                                <input type="text" name="firstname" value="<%= data[i].firstname %>"></input>
+                                <input type="text" name="lastname" value="<%= data[i].lastname %>"></input>
+                                <input type="text" name="faculty" value="<%= data[i].faculty %>"></input>
+                                <input type="text" name="branch" value="<%= data[i].branch %>"></input>
+                                <input type="text" name="year" value="<%= data[i].year %>"></input>
+                            </div>
+                            <td>
 
-                            <button type="submit" style="padding: 0;
+
+                                <button type="submit" style="padding: 0;
                             border: none;
-                            background: none;"><a  class="edit" title="Edit" data-toggle="tooltip">
-                                <i class="material-icons">&#xE254;</i></a></button>
+                            background: none;" formaction="/studentEdit/editData"><a class="edit" title="Edit" data-toggle="tooltip">
+                                        <i class="material-icons">&#xE254;</i></a></button>
                         </form>
-                            <a class="delete" title="Delete" data-toggle="tooltip"
-                                onclick="del('<%= data[i].user_id %>')"><i class="material-icons">&#xE872;</i></a>
-                            </td>
+                        <a class="delete" title="Delete" data-toggle="tooltip"
+                            onclick="del('<%= data[i].user_id %>')"><i class="material-icons">&#xE872;</i></a>
+                        </td>
                     </tr>
                     <% } %>
                 </tbody>
@@ -205,35 +207,49 @@
                     <!-- <div class="item active">
                         <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
                     </div> -->
-                    
-                    <a href="/studentEdit" style="text-decoration: none"><div class="item">
+
+                    <a href="/studentEdit" style="text-decoration: none">
+                        <div class="item">
                             <i class="fas fa-user-graduate"></i> จัดการนิสิต
-                    </div></a>
-                    <a href="/instructorEdit" style="text-decoration: none"><div class="item">
+                        </div>
+                    </a>
+                    <a href="/instructorEdit" style="text-decoration: none">
+                        <div class="item">
                             <i class="fas fa-user-graduate"></i> จัดการอาจารย์
-                    </div></a>
+                        </div>
+                    </a>
                     <!-- <a href="/buildingEdit" style="text-decoration: none"><div class="item">
                         <i class="fas fa-building"></i> จัดการตึก
                     </div></a> -->
-                    <a href="/addYear" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
-                    </div></a>
-                    <a href="/roomEdit" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-couch"></i> จัดการห้อง
-                    </div></a>
-                    <a href="/subjectEdit" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-book"></i> จัดการวิชา
-                    </div></a>
-                    <a href="/courseEdit" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-book-open"></i> จัดการคอร์ส
-                    </div></a>
-                    <a href="/exam/examEdit" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-chair"></i> จัดการสอบ
-                    </div></a>
+                    <a href="/addYear" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
+                        </div>
+                    </a>
+                    <a href="/roomEdit" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-couch"></i> จัดการห้อง
+                        </div>
+                    </a>
+                    <a href="/subjectEdit" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-book"></i> จัดการวิชา
+                        </div>
+                    </a>
+                    <a href="/courseEdit" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-book-open"></i> จัดการคอร์ส
+                        </div>
+                    </a>
+                    <a href="/exam/examEdit" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-chair"></i> จัดการสอบ
+                        </div>
+                    </a>
                     <div class="item">
-                            <i class="fas fa-tools"></i> จัดการห้องสอบ
+                        <i class="fas fa-tools"></i> จัดการห้องสอบ
                     </div>
-                    
+
                     <!-- <div class="item">
                             <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
                     </div>
@@ -328,7 +344,7 @@
         // window.location.href ="/instructorEdit/update/" +id;
     }
 
-    function add(){
+    function add() {
         window.location.href = "/addStudentEdit";
     }
 
