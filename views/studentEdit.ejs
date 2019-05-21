@@ -167,7 +167,8 @@
 
                                 <button type="submit" style="padding: 0;
                             border: none;
-                            background: none;" formaction="/studentEdit/editData"><a class="edit" title="Edit" data-toggle="tooltip">
+                            background: none;" formaction="/studentEdit/editData"><a class="edit" title="Edit"
+                                        data-toggle="tooltip">
                                         <i class="material-icons">&#xE254;</i></a></button>
                         </form>
                         <a class="delete" title="Delete" data-toggle="tooltip"
@@ -336,7 +337,20 @@
 <script>
     function del(id) {
         console.log(id)
-        window.location.href = "/studentEdit/delete/" + id;
+        swal({
+            title: "ต้องการลบ " + id + " จริงหรือไม่ ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("ลบสำเร็จ", {
+                        icon: "success",
+                    }).then(() => window.location.href = "/studentEdit/delete/" + id);
+                }
+            });
+        
     }
 
     function upd(id) {
