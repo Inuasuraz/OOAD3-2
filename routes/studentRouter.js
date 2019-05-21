@@ -6,9 +6,6 @@ const Course = require('../models/course')
 const Room = require('../models/room')
 const Exam = require('../models/exam')
 
-
-//Variable about course
-
 Router.post('/addStudentEdit', (req, res) => {
     // var id = req.body.id
     // var firstname = req.body.firstname
@@ -23,6 +20,12 @@ Router.post('/addStudentEdit', (req, res) => {
     res.render('addStudentEdit', { status: 3, message: "0", username, semester})
 })
 
+Router.get('/studentEdit', (req, res) => {
+    Student.find({}, (err, result) => {
+        // console.log(result);
+        res.render('studentEdit', { status: 0, message: "0", data: result, username , semester});
+    });
+});
 
 Router.get('/addStudentEdit', (req, res) => {
     var id = req.body.id
@@ -57,18 +60,6 @@ Router.post('/studentEdit/editData', (req, res) => {
 
     
 })
-
-
-
-
-// ---------------------- studentEdit ---------------------------------
-
-Router.get('/studentEdit', (req, res) => {
-    Student.find({}, (err, result) => {
-        // console.log(result);
-        res.render('studentEdit', { status: 0, message: "0", data: result, username , semester});
-    });
-});
 
 Router.post('/studentEdit/editData/Submit', (req, res) => {
     const newStudent = new Student({

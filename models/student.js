@@ -24,7 +24,7 @@ const studentSchema = new Schema({
         type: String
     },
     password: {
-        type: String
+        type: String,default: "password"
     },
     user_type: {
         type: String

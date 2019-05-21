@@ -35,13 +35,14 @@
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa fa-calendar" ></i> &nbsp; <%= semester %></a>
+                        <a class="nav-link" href="#"><i class="fa fa-calendar"></i> &nbsp; <%= semester %></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp; <%= username %></a>
+                        <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp;
+                            <%= username %></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i>  &nbsp; log out</a>
+                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i> &nbsp; log out</a>
                     </li>
 
                 </ul>
@@ -59,7 +60,7 @@
     </div> -->
     <section style="margin-top:10%">
         <div class="container">
-         
+
         </div>
 
         <br>
@@ -74,60 +75,66 @@
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="id">รหัสประจำตัว</label>
-                        <input type="text" class="form-control" id="id" placeholder="Code" required name="id">
+                        <input type="text" class="form-control" id="id" placeholder="Code" required name="id"
+                            onkeypress="return isNumberKey(event)" onkeydown="if(event.ctrlKey && event.keyCode==86){return false;}" maxlength="8" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
                     </div>
 
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-4 mb-3" style="display: none">
                         <label for="id">พาสเวิร์ด</label>
-                        <input type="text" class="form-control" id="password" placeholder="Code" required name="password">
+                        <input type="text" class="form-control" id="password" placeholder="Code" required
+                            name="password" value="password" onkeydown="if(event.ctrlKey && event.keyCode==86){return false;}" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label for="firstname">ชื่อ</label>
-                        <input type="text" class="form-control" id="firstname" placeholder="Firstname" required name="firstname">
+                        <input type="text" class="form-control" id="firstname" placeholder="Firstname" required
+                            name="firstname" maxlength="20"  onkeydown="if(event.ctrlKey && event.keyCode==86){return false;}"onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label for="lastname">นามสกุล</label>
-                        <input type="text" class="form-control" id="lastname" placeholder="Lastname" required name="lastname">
+                        <input type="text" class="form-control" id="lastname" placeholder="Lastname" required
+                            name="lastname" maxlength="20"  onkeydown="if(event.ctrlKey && event.keyCode==86){return false;}"onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="faculty">คณะ</label>
-                        <input type="text" class="form-control" id="faculty" placeholder="Faculty" required name="faculty">
+                        <input type="text" class="form-control" id="faculty" placeholder="Faculty" required
+                            name="faculty" maxlength="20" onkeydown="if(event.ctrlKey && event.keyCode==86){return false;}" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label for="branch">สาขา</label>
-                        <input type="text" class="form-control" id="branch" placeholder="Branch" required  name="branch">
+                        <input type="text" class="form-control" onkeydown="if(event.ctrlKey && event.keyCode==86){return false;}" id="branch" placeholder="Branch" required name="branch" maxlength="20" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label for="branch">ชั้นปี</label>
-                        <input type="text" class="form-control" id="year" placeholder="Year" required  name="year">
+                        <input type="text" class="form-control" onkeydown="if(event.ctrlKey && event.keyCode==86){return false;}" id="year" placeholder="Year" required name="year" onkeypress="return isNumberKey(event)" maxlength="1" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
                     </div>
 
-                    
+
                 </div>
 
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
-                       
+
                     </div>
 
                     <div class="col-md-4 mb-3">
-                  
+
                     </div>
 
                     <div class="col-md-4 mb-3" style="margin-top: 3%">
 
-                            <button type="submit" id="button" class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right">
-                                    <i class="fa fa-plus"></i> 
-                                    Add New
-                                </button>
-                        
+                        <button type="submit" id="button" class="btn btn-info add-new"
+                            style="background-color: #FF9900 ; border: #FF9900 ; float:right">
+                            <i class="fa fa-plus"></i>
+                            Add New
+                        </button>
+
                     </div>
                 </div>
 
@@ -165,35 +172,49 @@
                     <!-- <div class="item active">
                         <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
                     </div> -->
-                    
-                    <a href="/studentEdit" style="text-decoration: none"><div class="item">
+
+                    <a href="/studentEdit" style="text-decoration: none">
+                        <div class="item">
                             <i class="fas fa-user-graduate"></i> จัดการนิสิต
-                    </div></a>
-                    <a href="/instructorEdit" style="text-decoration: none"><div class="item">
+                        </div>
+                    </a>
+                    <a href="/instructorEdit" style="text-decoration: none">
+                        <div class="item">
                             <i class="fas fa-user-graduate"></i> จัดการอาจารย์
-                    </div></a>
+                        </div>
+                    </a>
                     <!-- <a href="/buildingEdit" style="text-decoration: none"><div class="item">
                         <i class="fas fa-building"></i> จัดการตึก
                     </div></a> -->
-                    <a href="/addYear" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
-                    </div></a>
-                    <a href="/roomEdit" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-couch"></i> จัดการห้อง
-                    </div></a>
-                    <a href="/subjectEdit" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-book"></i> จัดการวิชา
-                    </div></a>
-                    <a href="/courseEdit" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-book-open"></i> จัดการคอร์ส
-                    </div></a>
-                    <a href="/exam/examEdit" style="text-decoration: none"><div class="item">
-                        <i class="fas fa-chair"></i> จัดการสอบ
-                    </div></a>
+                    <a href="/addYear" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
+                        </div>
+                    </a>
+                    <a href="/roomEdit" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-couch"></i> จัดการห้อง
+                        </div>
+                    </a>
+                    <a href="/subjectEdit" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-book"></i> จัดการวิชา
+                        </div>
+                    </a>
+                    <a href="/courseEdit" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-book-open"></i> จัดการคอร์ส
+                        </div>
+                    </a>
+                    <a href="/exam/examEdit" style="text-decoration: none">
+                        <div class="item">
+                            <i class="fas fa-chair"></i> จัดการสอบ
+                        </div>
+                    </a>
                     <div class="item">
-                            <i class="fas fa-tools"></i> จัดการห้องสอบ
+                        <i class="fas fa-tools"></i> จัดการห้องสอบ
                     </div>
-                    
+
                     <!-- <div class="item">
                             <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
                     </div>
@@ -278,94 +299,102 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
-        function del(id){
-            console.log(id)
-            window.location.href = "/studentEdit/delete/" +id;
-        }
-    
-        function upd(id){
-            console.log(id)
-            // window.location.href ="/instructorEdit/update/" +id;
-        }
-    
-        if("<%= status %>" == 1 ){
-            swal ( "Oops" , "<%= message %>" ,  "error").then(()=> window.location.href = "/studentEdit")
-            message = "";
-            status = 0;
-            
-        }else if ("<%= status %>" == 2){
-            swal("Success", "<%= message %>", "success").then(()=> window.location.href = "/studentEdit")
-            message = "";
-            status = 0;
 
-        }else if("<%= status %>" == 3 ){
-            swal ( "Oops" , "<%= message %>" ,  "error").then(()=> window.location.href = "/addStudentEdit")
-            message = "";
-            status = 0;
-            
-        }else if ("<%= status %>" == 4){
-            document.getElementById("id").value = "<%= id %>"
-            document.getElementById("password").value = "<%= password %>"
-            document.getElementById("firstname").value = "<%= firstname %>"
-            document.getElementById("lastname").value = "<%= lastname %>"
-            document.getElementById("faculty").value = "<%= faculty %>"
-            document.getElementById("branch").value = "<%= branch %>"
-            document.getElementById("year").value = "<%= year %>"
-            document.getElementById("id").readOnly = true;
-            document.getElementById("formSubmit").action = '/studentEdit/editData/submit'
-            document.getElementById("button").innerText = "Edit Data"
-            status = 0;
-        }
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+    function del(id) {
+        console.log(id)
+        window.location.href = "/studentEdit/delete/" + id;
+    }
 
-        window.onhashchange = function() {
-            window.location.href = "/studentEdit"
-        }
+    function upd(id) {
+        console.log(id)
+        // window.location.href ="/instructorEdit/update/" +id;
+    }
 
-        function checkSpell(){
-            var idlen = document.getElementById("id").value.replace(/\s+/g, '');
-            var firstlen = document.getElementById("firstname").value.replace(/\s+/g, '');
-            var lastlen = document.getElementById("lastname").value.replace(/\s+/g, '');
-            var facullen = document.getElementById("faculty").value.replace(/\s+/g, '');
-            var branchlen = document.getElementById("branch").value.replace(/\s+/g, '');
-            var yearlen = document.getElementById("year").value.replace(/\s+/g, '');
-            var passlen = document.getElementById("password").value.replace(/\s+/g, '');
+    if ("<%= status %>" == 1) {
+        swal("Oops", "<%= message %>", "error").then(() => window.location.href = "/studentEdit")
+        message = "";
+        status = 0;
 
-            var letters = /^[A-Z]|[a-z]|[u0E01-u0E5B]+$/;  
-            var letters2 = /^[0-9]+$/;  
+    } else if ("<%= status %>" == 2) {
+        swal("Success", "<%= message %>", "success").then(() => window.location.href = "/studentEdit")
+        message = "";
+        status = 0;
 
-            document.getElementById("id").value = document.getElementById("id").value.replace(/\s+/g, '');
+    } else if ("<%= status %>" == 3) {
+        swal("Oops", "<%= message %>", "error").then(() => window.location.href = "/addStudentEdit")
+        message = "";
+        status = 0;
 
-            if (idlen.length > 0 && firstlen.length > 0 && lastlen.length > 0 && facullen.length > 0 && branchlen.length > 0 && yearlen.length > 0 && passlen.length > 0){
-                if (letter.test(firstlen)){
-                    if (letter.test(lastlen)){
-                        if (letter.test(facullen)){
-                            if(letter.test(branchlen)){
-                                if (letter2.test(yearlen)){
-                                    return true
-                                }else{
-                                    swal ( "Oops" , "กรุณากรอกข้อมูลให้ถูกต้อง" ,  "error")
-                                    return false
-                                }
-                            }else{
-                                swal ( "Oops" , "กรุณากรอกข้อมูลให้ถูกต้อง" ,  "error")
-                                return false
-                            }
-                        }else{
-                            swal ( "Oops" , "กรุณากรอกข้อมูลให้ถูกต้อง" ,  "error")
+    } else if ("<%= status %>" == 4) {
+        document.getElementById("id").value = "<%= id %>"
+        document.getElementById("password").value = "<%= password %>"
+        document.getElementById("firstname").value = "<%= firstname %>"
+        document.getElementById("lastname").value = "<%= lastname %>"
+        document.getElementById("faculty").value = "<%= faculty %>"
+        document.getElementById("branch").value = "<%= branch %>"
+        document.getElementById("year").value = "<%= year %>"
+        document.getElementById("id").readOnly = true;
+        document.getElementById("formSubmit").action = '/studentEdit/editData/submit'
+        document.getElementById("button").innerText = "Edit Data"
+        status = 0;
+    }
+
+    window.onhashchange = function () {
+        window.location.href = "/studentEdit"
+    }
+
+    function checkSpellKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    /* function checkSpell() {
+        var idlen = document.getElementById("id").value.replace(/\s+/g, '');
+        var firstlen = document.getElementById("firstname").value.replace(/\s+/g, '');
+        var lastlen = document.getElementById("lastname").value.replace(/\s+/g, '');
+        var facullen = document.getElementById("faculty").value.replace(/\s+/g, '');
+        var branchlen = document.getElementById("branch").value.replace(/\s+/g, '');
+        var yearlen = document.getElementById("year").value.replace(/\s+/g, '');
+        var passlen = document.getElementById("password").value.replace(/\s+/g, '');
+
+        var letters = /^[A-Z]|[a-z]|[u0E01-u0E5B]+$/;
+
+        document.getElementById("id").value = document.getElementById("id").value.replace(/\s+/g, '');
+
+        if (idlen.length > 0 && firstlen.length > 0 && lastlen.length > 0 && facullen.length > 0 && branchlen.length > 0 && yearlen.length > 0 && passlen.length > 0) {
+            if (letter.test(firstlen)) {
+                if (letter.test(lastlen)) {
+                    if (letter.test(facullen)) {
+                        if (letter.test(branchlen)) {
+                           return true
+                        } else {
+                            swal("Oops", "กรุณากรอกข้อมูลให้ถูกต้อง", "error")
                             return false
                         }
-                    }else{
-                        swal ( "Oops" , "กรุณากรอกข้อมูลให้ถูกต้อง" ,  "error")
+                    } else {
+                        swal("Oops", "กรุณากรอกข้อมูลให้ถูกต้อง", "error")
                         return false
                     }
-                }else{
-                    swal ( "Oops" , "กรุณากรอกข้อมูลให้ถูกต้อง" ,  "error")
+                } else {
+                    swal("Oops", "กรุณากรอกข้อมูลให้ถูกต้อง", "error")
                     return false
                 }
-            }else{
-                swal ( "Oops" , "กรุณากรอกข้อมูลให้ครบถ้วน" ,  "error")
+            } else {
+                swal("Oops", "กรุณากรอกข้อมูลให้ถูกต้อง", "error")
                 return false
             }
+        } else {
+            swal("Oops", "กรุณากรอกข้อมูลให้ครบถ้วน", "error")
+            return false
         }
-        
+    } */
+
 </script>

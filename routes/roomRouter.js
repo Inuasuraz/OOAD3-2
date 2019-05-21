@@ -42,14 +42,15 @@ Router.post('/addRoom/submit', (req, res) => {
             Room.findOneAndUpdate({ name: req.body.room }, { "$set": { "building": req.body.building, "roomType": req.body.type, "year": req.body.year } }, { upsert: true }, function (err, doc) {
                 if (err) console.log("ERR")
                 else console.log("OK")
-            });
-
-            Subject.find({}, (err, result) => {
-
-                // res.render('studentEdit', { status: 2, message: "แก้ไขข้อมูลสำเร็จ", data: result, username });
                 res.redirect('/roomEdit')
-
             });
+
+            // Room.find({}, (err, result) => {
+
+            //     // res.render('studentEdit', { status: 2, message: "แก้ไขข้อมูลสำเร็จ", data: result, username });
+                
+
+            // });
 
         } else {
             newRoom.save((err, result) => {

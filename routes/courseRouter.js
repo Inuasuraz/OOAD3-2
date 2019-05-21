@@ -127,36 +127,41 @@ Router.get('/courseEdit/addStudentEdit', (req, res) => {
     var faculty = req.body.faculty
     var branch = req.body.branch
     var stdYear = req.body.year
-    res.render(('courseAddStudentEdit'), { status: 0, message: "0", username, id, firstname, lastname, faculty, branch, semester, courseId ,stdYear})
+    Student.find({}, (err ,result)=>{
+        //  console.log(result)
+        res.render(('courseAddStudentEdit'), { status: 0, message: "0", username, id, firstname, lastname, faculty,semester , branch, courseId,stdYear , data:result})
+    })
 })
 
 Router.post('/courseEdit/addStudentEdit', (req, res) => {
-
-
     var id = req.body.id
     var firstname = req.body.firstname
     var lastname = req.body.lastname
     var faculty = req.body.faculty
     var branch = req.body.branch
     var stdYear = req.body.year
-    res.render(('courseAddStudentEdit'), { status: 3, message: "0", username, id, firstname, lastname, faculty,semester , branch, courseId,stdYear })
+    Student.findOne({user_id : id}, (err ,result)=>{
+        res.render(('courseAddStudentEdit'), { status: 3, message: "0", username, id, firstname, lastname, faculty,semester , branch, courseId,stdYear , data:result})
+    })
+
+    
 })
 
 Router.post('/courseEdit/addStudent/add', (req, res) => {
-    console.log(courseId)
+    console.log(req.body.year)
 
     newStudent = new Student({
-        user_id: req.body.id,
+        user_id: req.body.id_std,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         faculty: req.body.faculty,
         branch: req.body.branch,
-        year: semester
+        year: req.body.year
     })
 
-    Student.findOne({ user_id: req.body.id }, (err, result) => {
+    Student.findOne({ user_id: req.body.id_std }, (err, result) => {
         if (result) {
-            Student.findOneAndUpdate({ user_id: req.body.id }, { "$set": { "firstname": req.body.firstname, "lastname": req.body.lastname, "faculty": req.body.faculty, "branch": req.body.branch, "year": req.body.year } }, { upsert: true }, function (err, doc) {
+            Student.findOneAndUpdate({ user_id: req.body.id_std }, { "$set": { "firstname": req.body.firstname, "lastname": req.body.lastname, "faculty": req.body.faculty, "branch": req.body.branch, "year": req.body.year } }, { upsert: true }, function (err, doc) {
                 Course.findOne({ student: result._id, year: semester ,group: group,subject: subjectId}, (err, result2) => {
                     if (result2) {
                         res.redirect('/courseEdit/addStudent')
