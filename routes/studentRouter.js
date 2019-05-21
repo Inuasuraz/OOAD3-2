@@ -9,33 +9,6 @@ const Exam = require('../models/exam')
 
 //Variable about course
 
-
-Router.get('/addStudentEdit', (req, res) => {
-    var id = req.body.id
-    var firstname = req.body.firstname
-    var lastname = req.body.lastname
-    var faculty = req.body.faculty
-    var branch = req.body.branch
-    var year = req.body.year
-    res.render('addStudentEdit', { status: 0, message: "0", username, id, firstname, lastname, faculty, branch ,year ,  semester})
-})
-
-Router.post('/studentEdit/editData', (req, res) => {
-    var id = req.body.id
-    var firstname = req.body.firstname
-    var lastname = req.body.lastname
-    var faculty = req.body.faculty
-    var branch = req.body.branch
-    var year = req.body.year
-
-    console.log(firstname)
-    console.log(lastname)
-
-    res.render('addStudentEdit', { status: 4, message: "0", username, id, firstname, lastname, faculty, branch , year , semester})
-})
-
-
-
 Router.post('/addStudentEdit', (req, res) => {
     // var id = req.body.id
     // var firstname = req.body.firstname
@@ -49,6 +22,44 @@ Router.post('/addStudentEdit', (req, res) => {
 
     res.render('addStudentEdit', { status: 3, message: "0", username, semester})
 })
+
+
+Router.get('/addStudentEdit', (req, res) => {
+    var id = req.body.id
+    var firstname = req.body.firstname
+    var lastname = req.body.lastname
+    var faculty = req.body.faculty
+    var branch = req.body.branch
+    var year = req.body.year
+
+        // res.render('addStudentEdit', { status: 0, message: "0", username, id, password ,firstname, lastname, faculty, branch , year , semester, password})
+  
+    res.render('addStudentEdit', { status: 0, message: "0", username, id, firstname, lastname, faculty, branch ,year , password: "", user_type: "", semester})
+})
+
+Router.post('/studentEdit/editData', (req, res) => {
+    var id = req.body.id
+    // var password = req.body.password
+    var firstname = req.body.firstname
+    var lastname = req.body.lastname
+    var faculty = req.body.faculty
+    var branch = req.body.branch
+    var year = req.body.year
+
+    Student.findOne({ user_id: req.body.id }, (err, result) => {
+        console.log(result)
+        console.log(result.password)
+        res.render('addStudentEdit', { status: 4, message: "0", username, id  ,firstname, lastname, faculty, branch , year , semester, password: result.password})
+    });
+
+    console.log(firstname)
+    console.log(lastname)
+
+    
+})
+
+
+
 
 // ---------------------- studentEdit ---------------------------------
 
@@ -66,13 +77,15 @@ Router.post('/studentEdit/editData/Submit', (req, res) => {
         lastname: req.body.lastname,
         faculty: req.body.faculty,
         branch: req.body.branch,
-        year: req.body.year
+        year: req.body.year,
+        password: req.body.password,
+        user_type: "student"
     });
 
     Student.findOne({ user_id: req.body.id }, (err, result) => {
         if (result) {
 
-            Student.findOneAndUpdate({ user_id: req.body.id }, { "$set": { "firstname": req.body.firstname, "lastname": req.body.lastname, "faculty": req.body.faculty, "branch": req.body.branch, "year": req.body.year } }, { upsert: true }, function (err, doc) {
+            Student.findOneAndUpdate({ user_id: req.body.id }, { "$set": { "firstname": req.body.firstname, "lastname": req.body.lastname, "faculty": req.body.faculty, "branch": req.body.branch, "year": req.body.year, "password": req.body.password , "user_type": "student" } }, { upsert: true }, function (err, doc) {
                 if (err) console.log("ERR")
                 else console.log("OK")
             });
@@ -109,7 +122,9 @@ Router.post('/addStudentEdit/submit', (req, res) => {
         lastname: req.body.lastname,
         faculty: req.body.faculty,
         branch: req.body.branch,
-        year: req.body.year
+        year: req.body.year,
+        password: req.body.password,
+        user_type: "student"
     });
 
     Student.findOne({ user_id: req.body.id }, (err, result) => {
@@ -127,7 +142,7 @@ Router.post('/addStudentEdit/submit', (req, res) => {
 
             // });
 
-                res.render('addStudentEdit', { status: 3, message: "รหัสประจำตัวซ้ำกับในระบบ", username , semester });
+                res.render('addStudentEdit', { status: 3, message: "รหัสประจำตัวซ้ำกับในระบบ", username , semester, id: "",firstname: "", lastname: "", faculty: "", branch: "" , year: "" , semester: "", password: ""});
             
 
         } else {
@@ -147,11 +162,6 @@ Router.post('/addStudentEdit/submit', (req, res) => {
 Router.get('/studentEdit/delete/:id', async (req, res) => {
     Student.findOne({ user_id: req.params.id }, await function (err, result) {
         result.remove();
-
-        console.log(result);
-        console.log("HELLO")
-
-
         res.redirect('/studentEdit');
     });
 });

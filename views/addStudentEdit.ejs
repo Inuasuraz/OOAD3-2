@@ -70,11 +70,16 @@
         <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
             <br>
 
-            <form method="post" action="/addStudentEdit/submit" id="formSubmit">
+            <form method="post" action="/addStudentEdit/submit" id="formSubmit" onsubmit="return checkSpell()">
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="id">รหัสประจำตัว</label>
                         <input type="text" class="form-control" id="id" placeholder="Code" required name="id">
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="id">พาสเวิร์ด</label>
+                        <input type="text" class="form-control" id="password" placeholder="Code" required name="password">
                     </div>
 
                     <div class="col-md-4 mb-3">
@@ -300,6 +305,7 @@
             
         }else if ("<%= status %>" == 4){
             document.getElementById("id").value = "<%= id %>"
+            document.getElementById("password").value = "<%= password %>"
             document.getElementById("firstname").value = "<%= firstname %>"
             document.getElementById("lastname").value = "<%= lastname %>"
             document.getElementById("faculty").value = "<%= faculty %>"
@@ -308,6 +314,58 @@
             document.getElementById("id").readOnly = true;
             document.getElementById("formSubmit").action = '/studentEdit/editData/submit'
             document.getElementById("button").innerText = "Edit Data"
+            status = 0;
+        }
+
+        window.onhashchange = function() {
+            window.location.href = "/studentEdit"
+        }
+
+        function checkSpell(){
+            var idlen = document.getElementById("id").value.replace(/\s+/g, '');
+            var firstlen = document.getElementById("firstname").value.replace(/\s+/g, '');
+            var lastlen = document.getElementById("lastname").value.replace(/\s+/g, '');
+            var facullen = document.getElementById("faculty").value.replace(/\s+/g, '');
+            var branchlen = document.getElementById("branch").value.replace(/\s+/g, '');
+            var yearlen = document.getElementById("year").value.replace(/\s+/g, '');
+            var passlen = document.getElementById("password").value.replace(/\s+/g, '');
+
+            var letters = /^[A-Z]|[a-z]|[u0E01-u0E5B]+$/;  
+            var letters2 = /^[0-9]+$/;  
+
+            document.getElementById("id").value = document.getElementById("id").value.replace(/\s+/g, '');
+
+            if (idlen.length > 0 && firstlen.length > 0 && lastlen.length > 0 && facullen.length > 0 && branchlen.length > 0 && yearlen.length > 0 && passlen.length > 0){
+                if (letter.test(firstlen)){
+                    if (letter.test(lastlen)){
+                        if (letter.test(facullen)){
+                            if(letter.test(branchlen)){
+                                if (letter2.test(yearlen)){
+                                    return true
+                                }else{
+                                    swal ( "Oops" , "กรุณากรอกข้อมูลให้ถูกต้อง" ,  "error")
+                                    return false
+                                }
+                            }else{
+                                swal ( "Oops" , "กรุณากรอกข้อมูลให้ถูกต้อง" ,  "error")
+                                return false
+                            }
+                        }else{
+                            swal ( "Oops" , "กรุณากรอกข้อมูลให้ถูกต้อง" ,  "error")
+                            return false
+                        }
+                    }else{
+                        swal ( "Oops" , "กรุณากรอกข้อมูลให้ถูกต้อง" ,  "error")
+                        return false
+                    }
+                }else{
+                    swal ( "Oops" , "กรุณากรอกข้อมูลให้ถูกต้อง" ,  "error")
+                    return false
+                }
+            }else{
+                swal ( "Oops" , "กรุณากรอกข้อมูลให้ครบถ้วน" ,  "error")
+                return false
+            }
         }
         
 </script>
