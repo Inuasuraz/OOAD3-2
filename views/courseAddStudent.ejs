@@ -58,20 +58,6 @@
         </div>
     </div> -->
     <section style="margin-top:10%">
-        <div class="container">
-            <form class="form">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search" aria-label="Search"
-                        style="padding-left: 20px; border-radius: 40px;" id="mysearch">
-                    <div class="input-group-addon"
-                        style="margin-left: 5px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
-                        <button class="btn btn-warning btn-sm" type="submit"
-                            style="border-radius: 20px;transform: translateY(10%)" id="search-btn"><i
-                                class="fa fa-search"></i></button>
-                    </div>
-                </div>
-            </form>
-        </div>
 
         <br>
 
@@ -148,7 +134,7 @@
                         <th scope="col">คณะ</th>
                         <th scope="col">สาขา</th>
                         <th scope="col">ชั้นปี</th>
-                        <th scope="col">ตัวเลือก</th>
+                        <th scope="col">ลบ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -162,20 +148,15 @@
                         <td><%= data[i].branch %></td>
                         <td><%= data[i].year %></td>
                         <div style="display:none">
-                        <input type="text" name="id" value="<%= data[i].user_id %>"></input>
-                        <input type="text" name="firstname" value="<%= data[i].firstname %>"></input>
-                        <input type="text" name="lastname" value="<%= data[i].lastname %>"></input>
-                        <input type="text" name="faculty" value="<%= data[i].faculty %>"></input>
-                        <input type="text" name="branch" value="<%= data[i].branch %>"></input>
-                        <input type="text" name="year" value="<%= data[i].year %>"></input>
+                        <input type="text" name="id" value="<%= data[i].user_id %>" readonly="true"></input>
+                        <input type="text" name="firstname" value="<%= data[i].firstname %>" readonly="true"></input>
+                        <input type="text" name="lastname" value="<%= data[i].lastname %>" readonly="true"></input>
+                        <input type="text" name="faculty" value="<%= data[i].faculty %>"readonly="true"></input>
+                        <input type="text" name="branch" value="<%= data[i].branch %>" readonly=true></input>
+                        <input type="text" name="year" value="<%= data[i].year %>" readonly=true></input>
                         </div>
                         <td>
                         
-
-                            <button type="submit" style="padding: 0;
-                            border: none;
-                            background: none;"><a  class="edit" title="Edit" data-toggle="tooltip">
-                                <i class="material-icons">&#xE254;</i></a></button>
                         </form>
                             <a class="delete" title="Delete" data-toggle="tooltip"
                                 onclick="del('<%= data[i]._id %>')"><i class="material-icons">&#xE872;</i></a>

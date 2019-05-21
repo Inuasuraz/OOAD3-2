@@ -35,13 +35,14 @@
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa fa-calendar" ></i> &nbsp; <%= semester %></a>
+                        <a class="nav-link" href="#"><i class="fa fa-calendar"></i> &nbsp; <%= semester %></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp; <%= username %></a>
+                        <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp;
+                            <%= username %></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i>  &nbsp; log out</a>
+                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i> &nbsp; log out</a>
                     </li>
 
                 </ul>
@@ -58,7 +59,7 @@
         </div>
     </div> -->
     <section style="margin-top:10%">
-        
+
 
         <br>
 
@@ -117,16 +118,21 @@
                     <label style="font-size:40px;" for="id"><%= data2.date %></label>
                     <br>
                     <label style="font-size:40px; margin-right:5%" for="id">เวลาสอบ</label>
-                    <label style="font-size:40px; margin-right:5%" for="id"><%= data2.start %> - <%= data2.end %></label>
+                    <label style="font-size:40px; margin-right:5%" for="id"><%= data2.start %> -
+                        <%= data2.end %></label>
                 </div>
 
             </div>
-            
+
             <br />
 
 
 
-
+            <button class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right" onclick="window.location.href='/student/studentExamTable'" >
+                <i class="fa fa-plus"></i>
+                Add Course
+            </button>
+            <br> <br>
 
             <!-------------------- table ---------------------->
 
@@ -139,14 +145,29 @@
                         <th scope="col">คณะ</th>
                         <th scope="col">สาขา</th>
                         <th scope="col">ชั้นปี</th>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
                     <% for(let i=0; i < data.length; i++) {%>
                     <tr>
-                        <th scope="row"><%= i+1 %></th>
-        
+                        <%if(i == 0){%>
+                        <th scope="row">A<%= i+1 %></th>
+                        <% }else if(i%6 == 0) {%>
+                        <th scope="row">G<%= i-5 %></th>
+                        <% }else if(i%5 == 0){%>
+                        <th scope="row">F<%= i-4 %></th>
+                        <% }else if(i%4 == 0){%>
+                        <th scope="row">E<%= i-3 %></th>
+                        <% }else if(i%3 == 0){%>
+                        <th scope="row">D<%= i-2 %></th>
+                        <% }else if(i%2 == 0){%>
+                        <th scope="row">C<%= i-1 %></th>
+                        <% }else if(i%1 == 0){%>
+                        <th scope="row">B<%= i %></th>
+                        <% }else {%>
+                        <th scope="row">A<%= i-6 %></th>
+                        <% } %>
                         <td><%= data[i].user_id %></td>
                         <td><%= data[i].firstname %> <%= data[i].lastname %></td>
                         <td><%= data[i].faculty %></td>
@@ -154,14 +175,14 @@
                         <td><%= data[i].year %></td>
 
                         <div style="display:none">
-                        <input type="text" name="id" value="<%= data[i].user_id %>"></input>
-                        <input type="text" name="firstname" value="<%= data[i].firstname %>"></input>
-                        <input type="text" name="lastname" value="<%= data[i].lastname %>"></input>
-                        <input type="text" name="faculty" value="<%= data[i].faculty %>"></input>
-                        <input type="text" name="branch" value="<%= data[i].branch %>"></input>
-                        <input type="text" name="year" value="<%= data[i].year %>"></input>
+                            <input type="text" name="id" value="<%= data[i].user_id %>"></input>
+                            <input type="text" name="firstname" value="<%= data[i].firstname %>"></input>
+                            <input type="text" name="lastname" value="<%= data[i].lastname %>"></input>
+                            <input type="text" name="faculty" value="<%= data[i].faculty %>"></input>
+                            <input type="text" name="branch" value="<%= data[i].branch %>"></input>
+                            <input type="text" name="year" value="<%= data[i].year %>"></input>
                         </div>
-                      
+
                     </tr>
                     <% } %>
                 </tbody>
@@ -187,8 +208,8 @@
 
 
     <!-- navbar -->
-    <nav class="navbar navbar-default" role="navigation" >
-        <div class="container" >
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
 
             <div id="sidebar-wrapper" class="sidebar-toggle">
 
@@ -196,18 +217,20 @@
                     <!-- <div class="item active">
                         <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
                     </div> -->
-                    
+
                     <!-- <a href="/studentEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-user-graduate"></i> จัดการนิสิต
                     </div></a> -->
-                    <a href="/student/studentSubject" style="text-decoration: none"><div class="item">
+                    <a href="/student/studentSubject" style="text-decoration: none">
+                        <div class="item">
                             <i class="fas fa-sticky-note"></i> รายวิชา
-                    </div></a>
+                        </div>
+                    </a>
                     <!-- <a href="/buildingEdit" style="text-decoration: none"><div class="item">
                         <i class="fas fa-building"></i> จัดการตึก
                     </div></a> -->
-                    
-                    
+
+
                     <!-- <div class="item">
                             <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
                     </div>
@@ -302,7 +325,7 @@
         // window.location.href ="/instructorEdit/update/" +id;
     }
 
-    function add(){
+    function add() {
         window.location.href = "/courseEdit/addStudentEdit";
     }
 

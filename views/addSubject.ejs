@@ -271,6 +271,7 @@
 
     } else if ("<%= status %>" == 3) {
         document.getElementById("code").value = '<%= code %>';
+        document.getElementById("code").readOnly = true;
         document.getElementById("name").value = '<%= name %>';
         document.getElementById("button").innerHTML = "EDIT"
 

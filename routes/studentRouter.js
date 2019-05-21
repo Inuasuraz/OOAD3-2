@@ -106,6 +106,10 @@ Router.post('/studentEdit/editData/Submit', (req, res) => {
 
 });
 
+Router.get('/student/studentExamTable', (req,res) =>{
+    res.render('student/studentExamTable')
+})
+
 Router.post('/addStudentEdit/submit', (req, res) => {
     const newStudent = new Student({
         user_id: req.body.id,
@@ -203,7 +207,7 @@ Router.post('/student/studentExam', (req, res) => {
             })
             
         }else{
-            Course.find({$and:[{"year":year},{student: { "$in" : [studentObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result1) => {
+            Course.find({$and:[{"year":semester},{student: { "$in" : [studentObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result1) => {
                 console.log(result)
                 res.render('student/studentSubject', { status: 1, message: "ยังไม่มีการสอบ", data: result1, username, semester})
             })
