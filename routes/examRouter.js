@@ -15,15 +15,9 @@ Router.get('/exam/examYearSelect', (req, res) => {
 })
 
 Router.post('/exam/examEdit', (req, res) => {
-<<<<<<< HEAD
-    year = req.body.year
-
-    Exam.find({ 'year': year }).populate({
-=======
     semester = req.body.year
 
     Exam.find({ 'year': semester }).populate({
->>>>>>> addCourse
         path: 'course',
         populate: [{ path: 'subject' }]
     }).populate('room').exec((err, result) => {

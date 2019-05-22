@@ -155,11 +155,6 @@ Router.get('/teacher/teacherYearSelect', (req, res) => {
 })
 
 Router.post('/teacher/teacherSubject',(req,res) =>{
-<<<<<<< HEAD
-
-    year = req.body.year
-    Course.find({$and:[{"year":year},{instructor: { "$in" : [teacherObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
-=======
     Course.find({$and:[{"year":semester},{instructor: { "$in" : [teacherObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
         console.log(result)
         res.render('teacher/teacherSubject', { status: 0, message: "0", data: result, username , semester})
@@ -168,7 +163,6 @@ Router.post('/teacher/teacherSubject',(req,res) =>{
 
 Router.get('/teacher/teacherSubject',(req,res) =>{
     Course.find({$and:[{"year":semester},{instructor: { "$in" : [teacherObjId]}}]}).populate('course').populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
->>>>>>> addCourse
         console.log(result)
         res.render('teacher/teacherSubject', { status: 0, message: "0", data: result, username , semester })
     })
