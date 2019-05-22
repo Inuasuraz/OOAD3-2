@@ -128,7 +128,8 @@
 
 
 
-            <button class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right" onclick="window.location.href='/student/studentExamTable'" >
+            <button class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right"
+                onclick="window.location.href='/student/studentExamTable'">
                 <i class="fa fa-user-circle"></i>
                 Look Chair
             </button>
@@ -152,22 +153,76 @@
                     <% for(let i=0; i < data.length; i++) {%>
                     <tr>
                         <%if(i == 0){%>
-                        <th scope="row">A<%= i+1 %></th>
-                        <% }else if(i%6 == 0) {%>
-                        <th scope="row">G<%= i-5 %></th>
-                        <% }else if(i%5 == 0){%>
-                        <th scope="row">F<%= i-4 %></th>
-                        <% }else if(i%4 == 0){%>
-                        <th scope="row">E<%= i-3 %></th>
-                        <% }else if(i%3 == 0){%>
-                        <th scope="row">D<%= i-2 %></th>
-                        <% }else if(i%2 == 0){%>
-                        <th scope="row">C<%= i-1 %></th>
-                        <% }else if(i%1 == 0){%>
-                        <th scope="row">B<%= i %></th>
-                        <% }else {%>
-                        <th scope="row">A<%= i-6 %></th>
-                        <% } %>
+                        <th scope="row">A1 </th>
+                        <% }else if(i == 1){%>
+                        <th scope="row">B1</th>
+                        <% }else if(i == 2){%>
+                        <th scope="row">C1</th>
+                        <% }else if(i == 3){%>
+                        <th scope="row">D1</th>
+                        <% }else if(i == 4){%>
+                        <th scope="row">E1</th>
+                        <% }else if(i == 5){%>
+                        <th scope="row">F1</th>
+                        <% }else if(i == 6){%>
+                        <th scope="row">G1</th>
+                        <% }else if(i == 7){%>
+                        <th scope="row">A2</th>
+                        <% }else if(i == 8) {%>
+                        <th scope="row">B2</th>
+                        <% }else if(i == 9){%>
+                        <th scope="row">C2</th>
+                        <% }else if(i == 10){%>
+                        <th scope="row">D2</th>
+                        <% }else if(i == 11){%>
+                        <th scope="row">E2</th>
+                        <% }else if(i == 12){%>
+                        <th scope="row">F2</th>
+                        <% }else if(i == 13){%>
+                        <th scope="row">G2/th>
+                        <% }else if(i == 14){%>
+                        <th scope="row">A3</th>
+                        <% }else if(i == 15) {%>
+                        <th scope="row">B3</th>
+                        <% }else if(i == 16){%>
+                        <th scope="row">C3</th>
+                        <% }else if(i == 17){%>
+                        <th scope="row">D3</th>
+                        <% }else if(i == 18){%>
+                        <th scope="row">E3</th>
+                        <% }else if(i == 19){%>
+                        <th scope="row">F3</th>
+                        <% }else if(i == 20){%>
+                        <th scope="row">G3</th>
+                        <% }else if(i == 21){%>
+                        <th scope="row">A4</th>
+                        <% }else if(i == 22) {%>
+                        <th scope="row">B4</th>
+                        <% }else if(i == 23){%>
+                        <th scope="row">C4</th>
+                        <% }else if(i == 24){%>
+                        <th scope="row">D4</th>
+                        <% }else if(i == 25){%>
+                        <th scope="row">E4</th>
+                        <% }else if(i == 26){%>
+                        <th scope="row">F4</th>
+                        <% }else if(i == 27){%>
+                        <th scope="row">G4</th>
+                        <% }else if(i == 28){%>
+                        <th scope="row">A5</th>
+                        <% }else if(i == 29) {%>
+                        <th scope="row">B5</th>
+                        <% }else if(i == 30){%>
+                        <th scope="row">C5</th>
+                        <% }else if(i == 31){%>
+                        <th scope="row">D5</th>
+                        <% }else if(i == 32){%>
+                        <th scope="row">E5</th>
+                        <% }else if(i == 33){%>
+                        <th scope="row">F5</th>
+                        <% }else if(i == 34){%>
+                        <th scope="row">G5</th>
+                        <% }%>
                         <td><%= data[i].user_id %></td>
                         <td><%= data[i].firstname %> <%= data[i].lastname %></td>
                         <td><%= data[i].faculty %></td>
