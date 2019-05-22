@@ -342,6 +342,16 @@
         message = "";
         status = 0;
         // window.location.href = "/studentEdit"
+    } else if ("<%= status %>" == 5){
+        swal("Oops", "มีรายชื่อนิสิตนี้อยู่ในคอร์สแล้ว", "error").then(() => window.location.href = "/courseEdit/addStudent")
+        message = "";
+        status = 0;
+
+    }else if ("<%= status %>" == 6){
+        swal("Success", "เพิ่มนิสิตสำเร็จ", "success").then(() => window.location.href = "/courseEdit/addStudent")
+        message = "";
+        status = 0;
+
     }
 
     function showDetail(id, firstname, lastname, faculty, branch, year) {

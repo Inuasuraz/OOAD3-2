@@ -164,7 +164,7 @@ Router.post('/courseEdit/addStudent/add', (req, res) => {
             Student.findOneAndUpdate({ user_id: req.body.id_std }, { "$set": { "firstname": req.body.firstname, "lastname": req.body.lastname, "faculty": req.body.faculty, "branch": req.body.branch, "year": req.body.year } }, { upsert: true }, function (err, doc) {
                 Course.findOne({ student: result._id, year: semester ,group: group,subject: subjectId}, (err, result2) => {
                     if (result2) {
-                        res.redirect('/courseEdit/addStudent')
+                        res.render('courseAddStudent', { status: 5, message: "2", data: [], username, semester })
                     } else {
                         Course.findOneAndUpdate({ _id: courseId }, {
                             $push: {
@@ -172,7 +172,7 @@ Router.post('/courseEdit/addStudent/add', (req, res) => {
                             }
                         }, function (err, doc) {
                             if (err) console.log(err)
-                            else res.redirect('/courseEdit/addStudent')
+                            else res.render('courseAddStudent', { status: 6, message: "2", data: [], username, semester })
                         });
                     }
                 })
