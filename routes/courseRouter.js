@@ -11,29 +11,29 @@ const Student = require('../models/student');
 
 Router.get('/courseYearSelect', (req, res) => {
     Year.find({}, (err, result) => {
-        res.render(('courseYearSelect'), { status: 0, message: 0, data: result, username })
+        res.render(('courseYearSelect'), { status: 0, message: 0, data: result, username , semester})
     })
 })
 
 Router.post('/courseEdit', (req, res) => {
-    year = req.body.year
-    Course.find({ 'year': year }).populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
-        res.render('courseEdit', { status: 0, message: "0", data: result, username, year })
+    semester = req.body.year
+    Course.find({ 'year': semester }).populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+        res.render('courseEdit', { status: 0, message: "0", data: result, username , semester })
     })
 
 })
 
 Router.get('/courseEdit', (req, res) => {
 
-    Course.find({ 'year': year }).populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
-        res.render('courseEdit', { status: 0, message: "0", data: result, username, year })
+    Course.find({ 'year': semester }).populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+        res.render('courseEdit', { status: 0, message: "0", data: result, username , semester})
     })
 
 })
 
 Router.get('/addCourse/addSubject', (req, res) => {
-    Subject.find({ 'year': year }, (err, result) => {
-        res.render(('courseAddSubject'), { status: 0, message: "0", data: result, username, year })
+    Subject.find({ 'year': semester }, (err, result) => {
+        res.render(('courseAddSubject'), { status: 0, message: "0", data: result, username , semester })
     })
 })
 
@@ -46,7 +46,7 @@ Router.post('/addCourse/addInstructor', (req, res) => {
                 message: "0",
                 data: result2,
                 username,
-                year
+                semester
             })
         })
     })
@@ -54,13 +54,13 @@ Router.post('/addCourse/addInstructor', (req, res) => {
 
 Router.post('/addCourse/addRoom', (req, res) => {
     instructorId = req.body.checkbox;
-    Room.find({ 'year': year }, (err, result) => {
+    Room.find({ 'year': semester }, (err, result) => {
         res.render(('courseAddRoom'), {
             status: 0,
             message: "0",
             data: result,
             username,
-            year
+            semester
         })
     })
 
@@ -70,25 +70,24 @@ Router.post('/addCourse/addFinish', (req, res) => {
     roomId = req.body.roomId;
     Course.find({ 'subject': subjectId }, (err, result) => {
         if (result) {
-            console.log(result)
+            // console.log(result)
             group = result.length + 1
             newCourse = new Course({
-                year: year,
                 subject: subjectId,
                 group: group,
-
                 instructor: instructorId,
                 room: roomId,
-                student: []
+                student: [],
+                year: semester
             })
         } else {
             newCourse = new Course({
-                year: year,
                 subject: subjectId,
                 group: "1",
                 instructor: instructorId,
                 room: roomId,
-                student: []
+                student: [],
+                year: semester
             })
         }
         newCourse.save((err, result) => {
@@ -97,8 +96,8 @@ Router.post('/addCourse/addFinish', (req, res) => {
     })
 
 
-    Course.find({ 'year': year }).populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
-        res.render('courseEdit', { status: 0, message: "2", data: result, username, year })
+    Course.find({ 'year': semester }).populate('subject').populate('instructor').populate('room').populate('student').exec((err, result) => {
+        res.render('courseEdit', { status: 0, message: "2", data: result, username, semester })
     })
 })
 
@@ -109,14 +108,14 @@ Router.post('/courseEdit/addStudent', (req, res) => {
     Course.findOne({ '_id': courseId }).populate('student').exec((err, result) => {
         group = result.group
         subjectId = result.subject
-        res.render('courseAddStudent', { status: 0, message: "2", data: result.student, username, year })
+        res.render('courseAddStudent', { status: 0, message: "2", data: result.student, username , semester })
     })
 })
 
 Router.get('/courseEdit/addStudent', (req, res) => {
 
     Course.findOne({ '_id': courseId }).populate('student').exec((err, result) => {
-        res.render('courseAddStudent', { status: 0, message: "2", data: result.student, username, year })
+        res.render('courseAddStudent', { status: 0, message: "2", data: result.student, username, semester })
     })
 })
 
@@ -129,39 +128,44 @@ Router.get('/courseEdit/addStudentEdit', (req, res) => {
     var faculty = req.body.faculty
     var branch = req.body.branch
     var stdYear = req.body.year
-    res.render(('courseAddStudentEdit'), { status: 0, message: "0", username, id, firstname, lastname, faculty, branch, year, courseId ,stdYear})
+    Student.find({}, (err ,result)=>{
+        //  console.log(result)
+        res.render(('courseAddStudentEdit'), { status: 0, message: "0", username, id, firstname, lastname, faculty,semester , branch, courseId,stdYear , data:result})
+    })
 })
 
 Router.post('/courseEdit/addStudentEdit', (req, res) => {
-
-
     var id = req.body.id
     var firstname = req.body.firstname
     var lastname = req.body.lastname
     var faculty = req.body.faculty
     var branch = req.body.branch
     var stdYear = req.body.year
-    res.render(('courseAddStudentEdit'), { status: 3, message: "0", username, id, firstname, lastname, faculty, branch, year, courseId,stdYear })
+    Student.findOne({user_id : id}, (err ,result)=>{
+        res.render(('courseAddStudentEdit'), { status: 3, message: "0", username, id, firstname, lastname, faculty,semester , branch, courseId,stdYear , data:result})
+    })
+
+    
 })
 
 Router.post('/courseEdit/addStudent/add', (req, res) => {
-    console.log(courseId)
+    console.log(req.body.year)
 
     newStudent = new Student({
-        user_id: req.body.id,
+        user_id: req.body.id_std,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         faculty: req.body.faculty,
         branch: req.body.branch,
-        year: year
+        year: req.body.year
     })
 
-    Student.findOne({ user_id: req.body.id }, (err, result) => {
+    Student.findOne({ user_id: req.body.id_std }, (err, result) => {
         if (result) {
-            Student.findOneAndUpdate({ user_id: req.body.id }, { "$set": { "firstname": req.body.firstname, "lastname": req.body.lastname, "faculty": req.body.faculty, "branch": req.body.branch, "year": req.body.year } }, { upsert: true }, function (err, doc) {
-                Course.findOne({ student: result._id, year: year ,group: group,subject: subjectId}, (err, result2) => {
+            Student.findOneAndUpdate({ user_id: req.body.id_std }, { "$set": { "firstname": req.body.firstname, "lastname": req.body.lastname, "faculty": req.body.faculty, "branch": req.body.branch, "year": req.body.year } }, { upsert: true }, function (err, doc) {
+                Course.findOne({ student: result._id, year: semester ,group: group,subject: subjectId}, (err, result2) => {
                     if (result2) {
-                        res.redirect('/courseEdit/addStudent')
+                        res.render('courseAddStudent', { status: 5, message: "2", data: [], username, semester })
                     } else {
                         Course.findOneAndUpdate({ _id: courseId }, {
                             $push: {
@@ -169,7 +173,7 @@ Router.post('/courseEdit/addStudent/add', (req, res) => {
                             }
                         }, function (err, doc) {
                             if (err) console.log(err)
-                            else res.redirect('/courseEdit/addStudent')
+                            else res.render('courseAddStudent', { status: 6, message: "2", data: [], username, semester })
                         });
                     }
                 })

@@ -34,12 +34,14 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
-
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i> &nbsp; <%= username %></a>
+                        <a class="nav-link" href="#"><i class="fa fa-calendar" ></i> &nbsp; <%= semester %></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i> &nbsp; log out</a>
+                        <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp; <%= username %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i>  &nbsp; log out</a>
                     </li>
 
                 </ul>
@@ -56,20 +58,6 @@
         </div>
     </div> -->
     <section style="margin-top:10%">
-        <div class="container">
-            <form class="form">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search" aria-label="Search"
-                        style="padding-left: 20px; border-radius: 40px;" id="mysearch">
-                    <div class="input-group-addon"
-                        style="margin-left: 5px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
-                        <button class="btn btn-warning btn-sm" type="submit"
-                            style="border-radius: 20px;transform: translateY(10%)" id="search-btn"><i
-                                class="fa fa-search"></i></button>
-                    </div>
-                </div>
-            </form>
-        </div>
 
         <br>
 
@@ -120,7 +108,7 @@
             <div class="form-row justify-content-center">
                 <div class="col-md-11 mb-2 ">
                     <label style="font-size:40px; margin-right:5%" for="id">จัดการสอบ</label>
-                    <label style="font-size:40px; margin-right:5%" for="id"><%= year %></label>
+                    <label style="font-size:40px; margin-right:5%" for="id"><%= semester %></label>
                     <label style="font-size:40px;" for="id">รายชื่อนิสิต</label>
                 </div>
 
@@ -193,9 +181,9 @@
                             <i class="fas fa-fw fa-user-circle"></i> ข้อมูลนิสิต
                         </div> -->
                         
-                        <!-- <a href="/studentEdit" style="text-decoration: none"><div class="item">
+                        <a href="/studentEdit" style="text-decoration: none"><div class="item">
                                 <i class="fas fa-user-graduate"></i> จัดการนิสิต
-                        </div></a> -->
+                        </div></a>
                         <a href="/instructorEdit" style="text-decoration: none"><div class="item">
                                 <i class="fas fa-user-graduate"></i> จัดการอาจารย์
                         </div></a>
@@ -205,21 +193,22 @@
                         <a href="/addYear" style="text-decoration: none"><div class="item">
                             <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
                         </div></a>
-                        <a href="/roomYearSelect" style="text-decoration: none"><div class="item">
+                        <a href="/roomEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-couch"></i> จัดการห้อง
                         </div></a>
-                        <a href="/subjectYearSelect" style="text-decoration: none"><div class="item">
+                        <a href="/subjectEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-book"></i> จัดการวิชา
                         </div></a>
-                        <a href="/courseYearSelect" style="text-decoration: none"><div class="item">
+                        <a href="/courseEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-book-open"></i> จัดการคอร์ส
+                        </div></a>
+                        <a href="/exam/examEdit" style="text-decoration: none"><div class="item">
+                            <i class="fas fa-chair"></i> จัดการสอบ
                         </div></a>
                         <div class="item">
                                 <i class="fas fa-tools"></i> จัดการห้องสอบ
                         </div>
-                        <div class="item">
-                                <i class="fas fa-chair"></i> จัดการที่นั่งสอบ
-                        </div>
+                        
                         <!-- <div class="item">
                                 <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
                         </div>

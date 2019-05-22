@@ -34,12 +34,14 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
-
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i> &nbsp; <%= username %></a>
+                        <a class="nav-link" href="#"><i class="fa fa-calendar" ></i> &nbsp; <%= semester %></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i> &nbsp; log out</a>
+                        <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp; <%= username %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i>  &nbsp; log out</a>
                     </li>
 
                 </ul>
@@ -75,18 +77,29 @@
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="id">รหัสประจำตัว</label>
-                        <input type="text" class="form-control" id="id" placeholder="Code" required name="id">
+                        <!-- <input type="text" class="form-control" id="id" placeholder="Code" required name="id"> -->
+                        <select class="browser-default custom-select" onchange="showName(value)" required id="validationCustom00">
+                            <option id="vall" selected >เลือกนิสิตที่จะเพิ่ม</option>
+                            <% for(let i=0; i < data.length; i++) {%>
+                                <option value='<%=data[i].user_id %>|<%=data[i].firstname %>|<%=data[i].lastname %>|<%=data[i].faculty %>|<%=data[i].branch %>|<%=data[i].year %>'><%= data[i].user_id %></data></option> 
+                                
+                            <% } %>
+                            
+                        </select>
+                    </div>
+                    <div style="display:none">
+                            <input type="text" class="form-control" id="id_std" required name="id_std">
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label for="firstname">ชื่อ</label>
-                        <input type="text" class="form-control" id="firstname" placeholder="Firstname" required
+                        <input type="text" class="form-control" id="firstname" readonly="true" placeholder="Firstname" required
                             name="firstname">
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label for="lastname">นามสกุล</label>
-                        <input type="text" class="form-control" id="lastname" placeholder="Lastname" required
+                        <input type="text" class="form-control" id="lastname" readonly="true" placeholder="Lastname" required
                             name="lastname">
                     </div>
                 </div>
@@ -94,18 +107,18 @@
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="faculty">คณะ</label>
-                        <input type="text" class="form-control" id="faculty" placeholder="Faculty" required
+                        <input type="text" class="form-control" id="faculty" readonly="true" placeholder="Faculty" required
                             name="faculty">
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label for="branch">สาขา</label>
-                        <input type="text" class="form-control" id="branch" placeholder="Branch" required name="branch">
+                        <input type="text" class="form-control" id="branch" readonly="true" placeholder="Branch" required name="branch">
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label for="branch">ชั้นปี</label>
-                        <input type="text" class="form-control" id="year" placeholder="Year" required name="year">
+                        <input type="text" class="form-control" id="year" readonly="true" placeholder="Year" required name="year">
                     </div>
 
                 </div>
@@ -121,7 +134,7 @@
 
                     <div class="col-md-4 mb-3" style="margin-top: 3%">
 
-                        <button type="submit" id="button" class="btn btn-info add-new"
+                        <button type="submit" id="button1" class="btn btn-info add-new"
                             style="background-color: #FF9900 ; border: #FF9900 ; float:right">
                             <i class="fa fa-plus"></i>
                             Add New
@@ -177,21 +190,22 @@
                         <a href="/addYear" style="text-decoration: none"><div class="item">
                             <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
                         </div></a>
-                        <a href="/roomYearSelect" style="text-decoration: none"><div class="item">
+                        <a href="/roomEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-couch"></i> จัดการห้อง
                         </div></a>
-                        <a href="/subjectYearSelect" style="text-decoration: none"><div class="item">
+                        <a href="/subjectEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-book"></i> จัดการวิชา
                         </div></a>
-                        <a href="/courseYearSelect" style="text-decoration: none"><div class="item">
+                        <a href="/courseEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-book-open"></i> จัดการคอร์ส
+                        </div></a>
+                        <a href="/exam/examEdit" style="text-decoration: none"><div class="item">
+                            <i class="fas fa-chair"></i> จัดการสอบ
                         </div></a>
                         <div class="item">
                                 <i class="fas fa-tools"></i> จัดการห้องสอบ
                         </div>
-                        <div class="item">
-                                <i class="fas fa-chair"></i> จัดการที่นั่งสอบ
-                        </div>
+                        
                         <!-- <div class="item">
                                 <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
                         </div>
@@ -277,6 +291,17 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
+    function showName(val){
+        arr = val.split("|");
+        console.log(arr[4])
+        document.getElementById("id_std").value = arr[0]
+        document.getElementById("firstname").value = arr[1];
+        document.getElementById("lastname").value = arr[2];
+        document.getElementById("faculty").value = arr[3];
+        document.getElementById("branch").value = arr[4];
+        document.getElementById("year").value = arr[5];
+    }
+
     function del(id) {
         console.log(id)
         window.location.href = "/studentEdit/delete/" + id;
@@ -298,14 +323,13 @@
         status = 0;
 
     } else if ("<%= status %>" == 3) {
-        document.getElementById("id").value = '<%= id %>';
-        document.getElementById("firstname").value = '<%= firstname %>';
-        document.getElementById("lastname").value = '<%= lastname %>';
-        document.getElementById("faculty").value = '<%= faculty %>';
-        document.getElementById("branch").value = '<%= branch %>';
-        document.getElementById("year").value = '<%= stdYear %>';
-        document.getElementById("button").innerHTML = "Edit";
-        status = 0;
+        document.getElementById("vall").innerHTML = '<%= data.user_id %>';
+        document.getElementById("firstname").value = '<%= data.firstname %>';
+        document.getElementById("lastname").value = '<%= data.lastname %>';
+        document.getElementById("faculty").value = '<%= data.faculty %>';
+        document.getElementById("branch").value = '<%= data.branch %>';
+        document.getElementById("year").value = '<%= data.year %>';
+        document.getElementById("button1").innerText = "Edit Data";
     }
 
     function showDetail(id, firstname, lastname, faculty, branch, year) {

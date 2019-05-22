@@ -15,8 +15,8 @@ const StudentRouter = require('./routes/studentRouter')
 const InstructorRouter = require('./routes/instructorRouter')
 const YearRouter = require('./routes/yearRouter')
 
-var username;
-var year;
+let username;
+var semester = "2561/2";
 var subjectId;
 var instructorId;
 var group = 1;

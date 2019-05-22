@@ -11,22 +11,22 @@ Router.get('/roomYearSelect', (req, res) => {
 
 Router.get('/roomEdit', (req, res) => {
 
-    Room.find({ 'year': year }, (err, result2) => {
-        res.render('roomEdit', { status: 0, message: "0", data: result2, username, year })
+    Room.find({ 'year': semester }, (err, result2) => {
+        res.render('roomEdit', { status: 0, message: "0", data: result2, username, semester })
     })
 
 })
 
 Router.post('/roomEdit', (req, res) => {
-    year = req.body.year
+    semester = req.body.year
 
-    Room.find({ 'year': year }, (err, result) => {
-        res.render(('roomEdit'), { status: 0, message: "0", data: result, username, year })
+    Room.find({ 'year': semester }, (err, result) => {
+        res.render(('roomEdit'), { status: 0, message: "0", data: result, username, semester })
     })
 })
 
 Router.get('/addRoom', (req, res) => {
-    res.render('addRoom', { status: 0, message: "0", username, year })
+    res.render('addRoom', { status: 0, message: "0", username, semester })
 })
 
 Router.post('/addRoom/submit', (req, res) => {
@@ -34,7 +34,7 @@ Router.post('/addRoom/submit', (req, res) => {
         building: req.body.building,
         name: req.body.room,
         roomType: req.body.type,
-        year: req.body.year
+        semester: req.body.year
     });
 
     Room.findOne({ name: req.body.name }, (err, result) => {
@@ -42,14 +42,15 @@ Router.post('/addRoom/submit', (req, res) => {
             Room.findOneAndUpdate({ name: req.body.room }, { "$set": { "building": req.body.building, "roomType": req.body.type, "year": req.body.year } }, { upsert: true }, function (err, doc) {
                 if (err) console.log("ERR")
                 else console.log("OK")
-            });
-
-            Subject.find({}, (err, result) => {
-
-                // res.render('studentEdit', { status: 2, message: "แก้ไขข้อมูลสำเร็จ", data: result, username });
                 res.redirect('/roomEdit')
-
             });
+
+            // Room.find({}, (err, result) => {
+
+            //     // res.render('studentEdit', { status: 2, message: "แก้ไขข้อมูลสำเร็จ", data: result, username });
+                
+
+            // });
 
         } else {
             newRoom.save((err, result) => {

@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 //tell mongoose to use es6 implementation of promises
 mongoose.Promise = global.Promise;
-const uri = "mongodb+srv://admin:1212312121@cluster0-vxefs.gcp.mongodb.net/test?retryWrites=true";
+const uri = "mongodb+srv://admin:a12345678@cluster0-rzump.mongodb.net/test?retryWrites=true";
 mongoose.connect(uri, { useNewUrlParser: true }); 
 mongoose.connection
     .once('open', () => console.log('Connected!'))
@@ -10,9 +10,15 @@ mongoose.connection
         console.warn('Error : ',error);
     });
 //Called hooks which runs before something.
-// beforeEach((done) => {
-//     mongoose.connection.collections.pokemons.drop(() => {
-//          //this function runs after the drop is completed
-//         done(); //go ahead everything is done now.
-//     }); 
-// });
+beforeEach((done) => {
+    mongoose.connection.collections.subjects.drop(() => {
+         //this function runs after the drop is completed
+        mongoose.connection.collections.exams.drop(() => {
+            //this function runs after the drop is completed
+           done(); 
+           //go ahead everything is done now.
+       });
+    });
+    
+    
+});

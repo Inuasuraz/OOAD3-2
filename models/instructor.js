@@ -19,6 +19,12 @@ const instructorSchema = new mongoose.Schema({
     },
     branch :{
         type:String
+    },
+    password: {
+        type: String,default: "password"
+    },
+    user_type: {
+        type: String
     }
 })
 

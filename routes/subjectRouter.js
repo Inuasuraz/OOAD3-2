@@ -5,36 +5,36 @@ const Subject = require('../models/subject')
 
 Router.get('/subjectYearSelect', (req, res) => {
     Year.find({}, (err, result) => {
-        res.render(('subjectYearSelect'), { status: 0, message: "0", data: result, username})
+        res.render(('subjectYearSelect'), { status: 0, message: "0", data: result, username, semester})
     })
 })
 
 Router.get('/subjectEdit', (req, res) => {
 
-    Subject.find({ 'year': year }, (err, result2) => {
-        res.render('subjectEdit', { status: 0, message: "0", data: result2, username, year })
+    Subject.find({ 'year': semester }, (err, result2) => {
+        res.render('subjectEdit', { status: 0, message: "0", data: result2, username, semester })
     })
 
 })
 
 Router.post('/subjectEdit', (req, res) => {
-    year = req.body.year
+    semester = req.body.year
 
-    Subject.find({ 'year': year }, (err, result2) => {
-        res.render('subjectEdit', { status: 0, message: "0", data: result2, username, year })
+    Subject.find({ 'year': semester }, (err, result2) => {
+        res.render('subjectEdit', { status: 0, message: "0", data: result2, username, semester})
     })
 })
 
 Router.get('/addSubject', (req, res) => {
     var code = req.body.id
     var name = req.body.firstname
-    res.render('addSubject', { status: 0, message: "0", username, code, name, year })
+    res.render('addSubject', { status: 0, message: "0", username, code, name , semester})
 })
 
 Router.post('/addSubject', (req, res) => {
     var code = req.body.code
     var name = req.body.name
-    res.render('addSubject', { status: 3, message: "0", username, code, name, year })
+    res.render('addSubject', { status: 3, message: "0", username, code, name , semester })
 })
 
 

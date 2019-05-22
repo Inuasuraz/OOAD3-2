@@ -28,7 +28,9 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-calendar" ></i> &nbsp; <%= semester %></a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp; <%= username %></a>
                     </li>
@@ -41,10 +43,18 @@
         </div>
     </nav>
 
+
+    <section style="margin-top:10%">
+
+
+        <br>
+
+
+        <!---------------------------- form ------------------------------>
     <!-- <div class="banner">
         <div class="container">
             <div class="banner-text">
-
+                
 
             </div>
         </div>
@@ -58,6 +68,46 @@
 
 
     <!-- navbar -->
+    <div class="container" style="background-color: rgb(0, 0, 0,0.6) ; color: #FF9900; border-radius: 20px">
+        <br>
+
+        <form method="POST" action="/changeYearAdmin">
+            <div class="form-row justify-content-center">
+                <div class="col-md-8 mb-4 ">
+                        <label style="font-size:40px" for="id">เปลี่ยนปีการศึกษา</label>
+                </div>
+                <div class="col-md-5 mb-3 " >
+                    <label for="id">ปีการศึกษา/ภาคเรียน</label>
+                    <select class="browser-default custom-select" required name="year" id="validationCustom00">
+                        <option selected value="">เลือกปีการศึกษา/ภาคเรียน</option>
+                        <% for(let i=0; i < data.length; i++) {%>
+                            <option value='<%=data[i].year %>'><%= data[i].year %></data></option> 
+                        <% } %>
+                        
+                    </select>
+                </div>    
+            </div>
+            <br>
+            <div class="form-row justify-content-center" >
+                <div class="col-md-5 mb-3" style="text-align:center;">
+                    <button type="submit" class="btn btn-info " style="background-color: #FF9900 ; border: #FF9900 ; width: 40%;">
+                        <i class="far fa-check-square"></i>
+                        Select
+                    </button>
+                </div>
+                
+            </div>
+
+        </form>
+
+
+        <!-------------------- table ---------------------->
+
+        <!-- add button -->
+
+
+
+    </div>
     <nav class="navbar navbar-default" role="navigation" >
         <div class="container" >
 
@@ -80,16 +130,16 @@
                     <a href="/addYear" style="text-decoration: none"><div class="item">
                         <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
                     </div></a>
-                    <a href="/roomYearSelect" style="text-decoration: none"><div class="item">
+                    <a href="/roomEdit" style="text-decoration: none"><div class="item">
                         <i class="fas fa-couch"></i> จัดการห้อง
                     </div></a>
-                    <a href="/subjectYearSelect" style="text-decoration: none"><div class="item">
+                    <a href="/subjectEdit" style="text-decoration: none"><div class="item">
                         <i class="fas fa-book"></i> จัดการวิชา
                     </div></a>
-                    <a href="/courseYearSelect" style="text-decoration: none"><div class="item">
+                    <a href="/courseEdit" style="text-decoration: none"><div class="item">
                         <i class="fas fa-book-open"></i> จัดการคอร์ส
                     </div></a>
-                    <a href="/exam/examYearSelect" style="text-decoration: none"><div class="item">
+                    <a href="/exam/examEdit" style="text-decoration: none"><div class="item">
                         <i class="fas fa-chair"></i> จัดการสอบ
                     </div></a>
                     <div class="item">

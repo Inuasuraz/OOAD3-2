@@ -21,4 +21,19 @@ Router.post('/addYear/add', (req, res) => {
     res.redirect('/mainPage')
 })
 
+Router.post('/changeYearAdmin',(req, res) =>{
+    semester = req.body.year
+    res.redirect("/mainPage")
+})
+
+Router.post('/changeYearTeacher',(req, res) =>{
+    semester = req.body.year
+    res.redirect("/teacher/mainTeacher")
+})
+
+Router.post('/changeYearStudent',(req, res) =>{
+    semester = req.body.year
+    res.redirect("/student/mainStudent")
+})
+
 module.exports = Router;

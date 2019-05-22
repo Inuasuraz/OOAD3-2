@@ -34,12 +34,14 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
-
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i> &nbsp; <%= username %></a>
+                        <a class="nav-link" href="#"><i class="fa fa-calendar" ></i> &nbsp; <%= semester %></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i> &nbsp; log out</a>
+                        <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp; <%= username %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i>  &nbsp; log out</a>
                     </li>
 
                 </ul>
@@ -56,20 +58,6 @@
         </div>
     </div> -->
     <section style="margin-top:10%">
-        <div class="container">
-            <form class="form">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search" aria-label="Search"
-                        style="padding-left: 20px; border-radius: 40px;" id="mysearch">
-                    <div class="input-group-addon"
-                        style="margin-left: 5px; z-index: 3; border-radius: 40px; background-color: transparent; border:none;">
-                        <button class="btn btn-warning btn-sm" type="submit"
-                            style="border-radius: 20px;transform: translateY(10%)" id="search-btn"><i
-                                class="fa fa-search"></i></button>
-                    </div>
-                </div>
-            </form>
-        </div>
 
         <br>
 
@@ -120,12 +108,12 @@
             <div class="form-row justify-content-center">
                 <div class="col-md-11 mb-2 ">
                     <label style="font-size:40px; margin-right:5%" for="id">จัดการคอร์ส</label>
-                    <label style="font-size:40px; margin-right:5%" for="id"><%= year %></label>
+                    <label style="font-size:40px; margin-right:5%" for="id"><%= semester %></label>
                     <label style="font-size:40px;" for="id">เพิ่มนิสิต</label>
                 </div>
 
             </div>
-            <button class="btn btn-info add-new" style="background-color: #FF9900 ; border: #FF9900 ; float:right" onclick="add()">
+            <button class="btn btn-info add-new" id="addSus" style="background-color: #FF9900 ; border: #FF9900 ; float:right" onclick="add()">
                 <i class="fa fa-plus"></i>
                 Add New
             </button>
@@ -146,7 +134,7 @@
                         <th scope="col">คณะ</th>
                         <th scope="col">สาขา</th>
                         <th scope="col">ชั้นปี</th>
-                        <th scope="col">ตัวเลือก</th>
+                        <th scope="col">ลบ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -160,20 +148,15 @@
                         <td><%= data[i].branch %></td>
                         <td><%= data[i].year %></td>
                         <div style="display:none">
-                        <input type="text" name="id" value="<%= data[i].user_id %>"></input>
-                        <input type="text" name="firstname" value="<%= data[i].firstname %>"></input>
-                        <input type="text" name="lastname" value="<%= data[i].lastname %>"></input>
-                        <input type="text" name="faculty" value="<%= data[i].faculty %>"></input>
-                        <input type="text" name="branch" value="<%= data[i].branch %>"></input>
-                        <input type="text" name="year" value="<%= data[i].year %>"></input>
+                        <input type="text" name="id" value="<%= data[i].user_id %>" readonly="true"></input>
+                        <input type="text" name="firstname" value="<%= data[i].firstname %>" readonly="true"></input>
+                        <input type="text" name="lastname" value="<%= data[i].lastname %>" readonly="true"></input>
+                        <input type="text" name="faculty" value="<%= data[i].faculty %>"readonly="true"></input>
+                        <input type="text" name="branch" value="<%= data[i].branch %>" readonly=true></input>
+                        <input type="text" name="year" value="<%= data[i].year %>" readonly=true></input>
                         </div>
                         <td>
                         
-
-                            <button type="submit" style="padding: 0;
-                            border: none;
-                            background: none;"><a  class="edit" title="Edit" data-toggle="tooltip">
-                                <i class="material-icons">&#xE254;</i></a></button>
                         </form>
                             <a class="delete" title="Delete" data-toggle="tooltip"
                                 onclick="del('<%= data[i]._id %>')"><i class="material-icons">&#xE872;</i></a>
@@ -225,21 +208,22 @@
                         <a href="/addYear" style="text-decoration: none"><div class="item">
                             <i class="fas fa-calendar-plus"></i> เพิ่มปีการศึกษา
                         </div></a>
-                        <a href="/roomYearSelect" style="text-decoration: none"><div class="item">
+                        <a href="/roomEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-couch"></i> จัดการห้อง
                         </div></a>
-                        <a href="/subjectYearSelect" style="text-decoration: none"><div class="item">
+                        <a href="/subjectEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-book"></i> จัดการวิชา
                         </div></a>
-                        <a href="/courseYearSelect" style="text-decoration: none"><div class="item">
+                        <a href="/courseEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-book-open"></i> จัดการคอร์ส
+                        </div></a>
+                        <a href="/exam/examEdit" style="text-decoration: none"><div class="item">
+                            <i class="fas fa-chair"></i> จัดการสอบ
                         </div></a>
                         <div class="item">
                                 <i class="fas fa-tools"></i> จัดการห้องสอบ
                         </div>
-                        <div class="item">
-                                <i class="fas fa-chair"></i> จัดการที่นั่งสอบ
-                        </div>
+                        
                         <!-- <div class="item">
                                 <i class="fas fa-print"></i> พิมพ์ใบเช็คชื่อ
                         </div>
@@ -325,6 +309,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
+ 
+    
+
     function del(id) {
         console.log(id)
         window.location.href = "/courseEdit/deleteStudent/" + id;
@@ -336,7 +323,12 @@
     }
 
     function add(){
-        window.location.href = "/courseEdit/addStudentEdit";
+        if("<%=  data.length %>" >= 40){
+            swal("Oops", "คนเกินนะจ๊ะ", "error")
+        }else{
+            window.location.href = "/courseEdit/addStudentEdit";
+        }
+        
     }
 
     if ("<%= status %>" == 1) {
@@ -350,6 +342,16 @@
         message = "";
         status = 0;
         // window.location.href = "/studentEdit"
+    } else if ("<%= status %>" == 5){
+        swal("Oops", "มีรายชื่อนิสิตนี้อยู่ในคอร์สแล้ว", "error").then(() => window.location.href = "/courseEdit/addStudent")
+        message = "";
+        status = 0;
+
+    }else if ("<%= status %>" == 6){
+        swal("Success", "เพิ่มนิสิตสำเร็จ", "success").then(() => window.location.href = "/courseEdit/addStudent")
+        message = "";
+        status = 0;
+
     }
 
     function showDetail(id, firstname, lastname, faculty, branch, year) {
@@ -360,5 +362,7 @@
         document.getElementById("branch").value = branch;
         document.getElementById("year").value = year;
     }
+
+
 
 </script>

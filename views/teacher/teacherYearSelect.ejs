@@ -24,7 +24,7 @@
         style="background-color: #1B1B1B;height:60px">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" href="/mainPage"><img src="/img/icon.png" style="height:50px"></a>
+            <a class="navbar-brand" href="/teacher/mainTeacher"><img src="/img/icon.png" style="height:50px"></a>
 
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -34,12 +34,14 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
-
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user"></i> &nbsp; <%= username %></a>
+                        <a class="nav-link" href="#"><i class="fa fa-calendar" ></i> &nbsp; <%= semester %></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i> &nbsp; log out</a>
+                        <a class="nav-link" href="#"><i class="fas fa-user" id="userName"></i> &nbsp; <%= username %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-sign-out-alt"></i>  &nbsp; log out</a>
                     </li>
 
                 </ul>
@@ -132,7 +134,7 @@
                     <!-- <a href="/studentEdit" style="text-decoration: none"><div class="item">
                             <i class="fas fa-user-graduate"></i> จัดการนิสิต
                     </div></a> -->
-                    <a href="/teacher/teacherYearSelect" style="text-decoration: none"><div class="item">
+                    <a href="/teacher/teacherSubject" style="text-decoration: none"><div class="item">
                             <i class="fas fa-sticky-note"></i> รายวิชาที่รับผิดชอบ
                     </div></a>
                     <!-- <a href="/buildingEdit" style="text-decoration: none"><div class="item">
